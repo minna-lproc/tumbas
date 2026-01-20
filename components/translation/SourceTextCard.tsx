@@ -19,9 +19,9 @@ export const SourceTextCard = ({ sourceText }: SourceTextCardProps) => {
         <span className="rounded-full bg-teal-100 px-3 py-1 text-xs font-medium text-teal-800 dark:bg-teal-900 dark:text-teal-200">
           {sourceText.category || 'General'}
         </span>
-        <span className="text-sm text-gray-500 dark:text-gray-400">
+        {/*<span className="text-sm text-gray-500 dark:text-gray-400">
           Level {sourceText.difficulty_level}
-        </span>
+        </span>*/}
       </div>
       <p className="text-lg leading-relaxed text-gray-900 dark:text-white">
         {sourceText.text_content}
