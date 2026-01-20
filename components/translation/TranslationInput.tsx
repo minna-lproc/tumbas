@@ -1,6 +1,7 @@
 'use client';
 
 import { useState } from 'react';
+import { VoiceInputButton } from '../utils/VoiceInputButton';
 
 interface TranslationInputProps {
   value: string;
@@ -22,11 +23,10 @@ export const TranslationInput = ({
   return (
     <div className="w-full">
       <div
-        className={`relative rounded-xl border-2 bg-white transition-colors dark:bg-gray-800 ${
-          isFocused
+        className={`relative rounded-xl border-2 bg-white transition-colors dark:bg-gray-800 ${isFocused
             ? 'border-teal-500 dark:border-teal-400'
             : 'border-gray-300 dark:border-gray-600'
-        }`}
+          }`}
       >
         <textarea
           value={value}
@@ -38,11 +38,20 @@ export const TranslationInput = ({
           rows={6}
           className="w-full resize-none rounded-xl border-0 bg-transparent px-4 py-4 text-lg text-gray-900 placeholder-gray-400 focus:outline-none dark:text-white dark:placeholder-gray-500"
         />
-        <div className="absolute bottom-2 right-4 text-sm text-gray-500 dark:text-gray-400">
-          <span className={remainingChars < 50 ? 'text-orange-500' : ''}>
-            {characterCount}/{maxLength}
-          </span>
-        </div>
+
+          <div className="absolute bottom-2 left-4">
+            <VoiceInputButton
+              onTranscript={(text) => onChange(value + ' ' + text)}
+              disabled={false}
+            />
+          </div>
+
+          <div className="absolute bottom-2 right-4 text-sm text-gray-500 dark:text-gray-400">
+            <span className={remainingChars < 50 ? 'text-orange-500' : ''}>
+              {characterCount}/{maxLength}
+            </span>
+          </div>
+
       </div>
     </div>
   );

@@ -26,11 +26,11 @@ export const VoiceInputButton = ({ onTranscript, disabled = false }: VoiceInputB
         whileTap={{ scale: disabled ? 1 : 0.95 }}
         onClick={handleClick}
         disabled={disabled}
-        className={`flex h-14 w-14 items-center justify-center rounded-full ${
+        className={`flex items-center justify-center rounded-full ${
           isListening
-            ? 'bg-red-500 hover:bg-red-600'
-            : 'bg-teal-600 hover:bg-teal-700 dark:bg-teal-500 dark:hover:bg-teal-600'
-        } text-white shadow-lg transition-colors disabled:cursor-not-allowed disabled:opacity-50`}
+            ? 'text-red-500 hover:text-red-600'
+            : 'text-gray-500 hover:text-teal-700 dark:hover:text-teal-600'
+        }  shadow-lg transition-colors disabled:cursor-not-allowed disabled:opacity-50`}
         aria-label={isListening ? 'Stop recording' : 'Start voice input'}
       >
         {isListening ? (
