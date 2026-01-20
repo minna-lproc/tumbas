@@ -51,22 +51,22 @@ export const TranslationCard = ({
         <SourceTextCard sourceText={sourceText} />
         <div className="space-y-4">
           <TranslationInput value={translation} onChange={onTranslationChange} />
-          <div className="flex justify-center">
+          {/*<div className="flex justify-center">
             <VoiceInputButton
               onTranscript={(text) => onTranslationChange(translation + ' ' + text)}
               disabled={loading}
             />
-          </div>
+          </div>*/}
         </div>
         <div className="flex gap-4">
-          <motion.button
+          {/*<motion.button
             whileHover={{ scale: 1.02 }}
             whileTap={{ scale: 0.98 }}
             onClick={onSkip}
             className="flex h-14 min-w-[48px] flex-1 items-center justify-center rounded-xl border-2 border-gray-300 bg-white px-6 text-base font-semibold text-gray-700 transition-colors hover:border-gray-400 hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-gray-500 focus:ring-offset-2 dark:border-gray-600 dark:bg-gray-800 dark:text-gray-300 dark:hover:border-gray-500 dark:hover:bg-gray-700"
           >
             Skip
-          </motion.button>
+          </motion.button> */}
           <SubmitButton
             onClick={onSubmit}
             disabled={!translation.trim()}

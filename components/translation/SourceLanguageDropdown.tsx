@@ -15,7 +15,7 @@ export const SourceLanguageDropdown = ({ sourceText }: SourceLanguageDropdownPro
       exit={{ opacity: 0, y: -20 }}
       className="rounded-xl w-1/2 bg-white shadow-lg dark:bg-gray-800"
     >
-      <div className="mb-4 w-full h-full items-center flex">
+      <div className="mb-4 w-full h-full items-center flex ">
 
         <select 
             name=""
