@@ -13,14 +13,14 @@ export const SourceLanguageDropdown = ({ sourceText }: SourceLanguageDropdownPro
       initial={{ opacity: 0, y: 20 }}
       animate={{ opacity: 1, y: 0 }}
       exit={{ opacity: 0, y: -20 }}
-      className="rounded-xl w-1/2 h-12 px-6 bg-white shadow-lg dark:bg-gray-800 "
+      className="rounded-xl w-1/2 bg-white shadow-lg dark:bg-gray-800"
     >
-      <div className="w-full items-center flex h-full">
+      <div className="mb-4 w-full h-full items-center flex">
 
         <select 
             name=""
             id=""
-            className='w-full bg-white dark:bg-gray-800'
+            className='w-full px-6 py-3 rounded-xl appearance-auto border-r-20 border-transparent bg-white dark:bg-gray-800'
             required>
             <option value="en">English</option>
             <option value="tl">Tagalog</option>
