@@ -1,0 +1,82 @@
+'use client';
+
+import { motion, PanInfo } from 'framer-motion';
+import { SourceTextCard } from './SourceTextCard';
+import { TranslationInput } from './TranslationInput';
+import { ConfirmButton } from './ConfirmButton';
+import { VoiceInputButton } from '../translation/VoiceInputButton';
+import { SourceLanguageDropdown } from './SourceLanguageDropdown';
+import type { SourceText } from '@/lib/types/translation';
+
+interface ReviewCardProps {
+  sourceText: SourceText;
+  translation: string;
+  onTranslationChange: (value: string) => void;
+  onSubmit: () => void;
+  onSkip: () => void;
+  loading?: boolean;
+}
+
+const SWIPE_THRESHOLD = 50;
+
+export const ReviewCard = ({
+  sourceText,
+  translation,
+  onTranslationChange,
+  onSubmit,
+  onSkip,
+  loading = false,
+}: ReviewCardProps) => {
+  const handleDragEnd = (_event: MouseEvent | TouchEvent | PointerEvent, info: PanInfo) => {
+    if (info.offset.x > SWIPE_THRESHOLD) {
+      onSkip();
+    }
+  };
+
+  return (
+    <motion.div
+      drag="x"
+      dragConstraints={{ left: 0, right: 0 }}
+      dragElastic={0.2}
+      onDragEnd={handleDragEnd}
+      className="w-full"
+    >
+      <div className="space-y-6">
+
+        <p className='text-2xl font-semibold'>
+          Review
+        </p>
+
+        <SourceLanguageDropdown sourceText={sourceText} />
+        <SourceTextCard sourceText={sourceText} />
+        <div className="space-y-4">
+          <TranslationInput value={translation} onChange={onTranslationChange} />
+          {/*<div className="flex justify-center">
+            <VoiceInputButton
+              onTranscript={(text) => onTranslationChange(translation + ' ' + text)}
+              disabled={loading}
+            />
+          </div>*/}
+        </div>
+        <div className="flex gap-4">
+          {/*<motion.button
+            whileHover={{ scale: 1.02 }}
+            whileTap={{ scale: 0.98 }}
+            onClick={onSkip}
+            className="flex h-14 min-w-[48px] flex-1 items-center justify-center rounded-xl border-2 border-gray-300 bg-white px-6 text-base font-semibold text-gray-700 transition-colors hover:border-gray-400 hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-gray-500 focus:ring-offset-2 dark:border-gray-600 dark:bg-gray-800 dark:text-gray-300 dark:hover:border-gray-500 dark:hover:bg-gray-700"
+          >
+            Skip
+          </motion.button> */}
+          <ConfirmButton
+            onClick={onSubmit}
+            disabled={!translation.trim()}
+            loading={loading}
+          />
+        </div>
+        <p className="text-center text-sm text-gray-500 dark:text-gray-400">
+          Swipe right to skip • Tap to review
+        </p>
+      </div>
+    </motion.div>
+  );
+};

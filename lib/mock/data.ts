@@ -85,6 +85,13 @@ export const getNextSourceText = (): SourceText | null => {
   return available || null;
 };
 
+// Get next translation text
+export const getNextTranslation = (): Translation | null => {
+  const translatedIds = new Set(mockTranslations.map((t) => t.source_text_id));
+  const available = mockTranslations.find((translation) => !translatedIds.has(translation.source_text_id));
+  return available || null;
+};
+
 // Get recent translations with source text
 export const getRecentTranslations = () => {
   return mockTranslations

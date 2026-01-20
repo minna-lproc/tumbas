@@ -2,8 +2,8 @@
 
 import { useState, useCallback } from 'react';
 // import { supabase } from '@/lib/supabase/client';
-import type { SourceText } from '@/lib/types/translation';
-import { getNextSourceText, mockTranslations } from '@/lib/mock/data';
+import type { SourceText, Translation } from '@/lib/types/translation';
+import { getNextSourceText, mockTranslations, getNextTranslation } from '@/lib/mock/data';
 
 // Supabase commented out - using mock data for UI development
 export const useTranslation = () => {
@@ -57,9 +57,23 @@ export const useTranslation = () => {
     }
   }, []);
 
+  const fetchNextTranslation = useCallback(async (): Promise<Translation | null> => {
+    try {
+      // Simulate API delay
+      await new Promise((resolve) => setTimeout(resolve, 300));
+      
+      // Return next available translation from mock data
+      return getNextTranslation();
+    } catch (err) {
+      setError(err instanceof Error ? err.message : 'An error occurred');
+      return null;
+    }
+  }, []);
+
   return {
     submitTranslation,
     fetchNextSourceText,
+    fetchNextTranslation,
     loading,
     error,
   };
