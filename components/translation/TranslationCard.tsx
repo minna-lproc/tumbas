@@ -5,6 +5,7 @@ import { SourceTextCard } from './SourceTextCard';
 import { TranslationInput } from './TranslationInput';
 import { SubmitButton } from './SubmitButton';
 import { VoiceInputButton } from './VoiceInputButton';
+import { SourceLanguageDropdown } from './SourceLanguageDropdown';
 import type { SourceText } from '@/lib/types/translation';
 
 interface TranslationCardProps {
@@ -41,6 +42,12 @@ export const TranslationCard = ({
       className="w-full"
     >
       <div className="space-y-6">
+
+        <p className='text-2xl font-semibold'>
+          Translate
+        </p>
+
+        <SourceLanguageDropdown sourceText={sourceText} />
         <SourceTextCard sourceText={sourceText} />
         <div className="space-y-4">
           <TranslationInput value={translation} onChange={onTranslationChange} />
