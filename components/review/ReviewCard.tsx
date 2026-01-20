@@ -4,8 +4,8 @@ import { motion, PanInfo } from 'framer-motion';
 import { SourceTextCard } from './SourceTextCard';
 import { TranslationInput } from './TranslationInput';
 import { ConfirmButton } from './ConfirmButton';
-import { VoiceInputButton } from '../translation/VoiceInputButton';
-import { SourceLanguageDropdown } from './SourceLanguageDropdown';
+import { VoiceInputButton } from '../utils/VoiceInputButton';
+import { SourceLanguageDropdown } from '../utils/SourceLanguageDropdown';
 import type { SourceText } from '@/lib/types/translation';
 
 interface ReviewCardProps {
