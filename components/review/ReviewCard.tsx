@@ -5,7 +5,6 @@ import { SourceTextCard } from './SourceTextCard';
 import { TranslationInput } from './TranslationInput';
 import { ConfirmButton } from './ConfirmButton';
 import { VoiceInputButton } from '../utils/VoiceInputButton';
-import { SourceLanguageDropdown } from '../utils/SourceLanguageDropdown';
 import type { SourceText } from '@/lib/types/translation';
 
 interface ReviewCardProps {
@@ -47,7 +46,6 @@ export const ReviewCard = ({
           Review
         </p>
 
-        <SourceLanguageDropdown sourceText={sourceText} />
         <SourceTextCard sourceText={sourceText} />
         <div className="space-y-4">
           <TranslationInput value={translation} onChange={onTranslationChange} />
