@@ -1,18 +1,39 @@
+
+// languages
+export interface Language {
+  id: string;
+  name: string;
+  iso_code: string;
+  is_source: boolean;
+}
+
+// source text
 export interface SourceText {
   id: string;
   text_content: string;
   language: string;
-  category: string | null;
-  difficulty_level: number;
-  status: string;
   created_at: string;
 }
 
+// parallel source text for multiple languages
+export interface ParallelSourceText {
+  id: string;
+  source_texts: Array<SourceText>;
+  status: 'pending' | 'in progress' | 'translated';
+}
+
+// translation
 export interface Translation {
   id: string;
   source_text_id: string;
   user_id: string;
   translation_text: string;
+  voice_recording_url?: string;
+  voice_recording_duration?: number;
+  voice_recording_blob?: Blob;
   dialect: string;
   created_at: string;
+  review_status: 'pending' | 'in progress' | 'approved' | 'modified';
+  evaluator_id?: string;
+  reviewed_at?: string;
 }

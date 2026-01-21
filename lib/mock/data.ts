@@ -1,12 +1,49 @@
-import type { SourceText, Translation } from '@/lib/types/translation';
+import type { Language, SourceText, Translation } from '@/lib/types/translation';
 import type { User } from '@/lib/types/auth';
 
 // Mock user data
+
+export const mockLanguage: Language[] = [
+  {
+    id: '1',
+    name: 'English',
+    iso_code: 'en',
+    is_source: true
+  },
+  {
+    id: '2',
+    name: 'Tagalog',
+    iso_code: 'tl',
+    is_source: true
+  },
+  {
+    id: '3',
+    name: 'Cebuano',
+    iso_code: 'ceb',
+    is_source: true
+  },
+  {
+    id: '4',
+    name: 'Siargaonon',
+    iso_code: 'sia',
+    is_source: false
+  }
+
+];
+
 export const mockUser: User = {
   id: 'mock-user-1',
   email: 'user@example.com',
   username: 'testuser',
   total_translations: 15,
+  first_name: '',
+  last_name: '',
+  is_active: false,
+  is_admin: false,
+  is_evaluator: false,
+  date_joined: '',
+  source_language: mockLanguage[0],
+  target_language: mockLanguage[0]
 };
 
 // Mock source texts
@@ -15,45 +52,30 @@ export const mockSourceTexts: SourceText[] = [
     id: '1',
     text_content: 'Hello, how are you today?',
     language: 'en',
-    category: 'Greetings',
-    difficulty_level: 1,
-    status: 'pending',
     created_at: new Date().toISOString(),
   },
   {
     id: '2',
     text_content: 'The weather is beautiful today.',
     language: 'en',
-    category: 'Weather',
-    difficulty_level: 1,
-    status: 'pending',
     created_at: new Date().toISOString(),
   },
   {
     id: '3',
     text_content: 'I would like to order a coffee, please.',
     language: 'en',
-    category: 'Food & Drink',
-    difficulty_level: 2,
-    status: 'pending',
     created_at: new Date().toISOString(),
   },
   {
     id: '4',
     text_content: 'Can you help me find the nearest hospital?',
     language: 'en',
-    category: 'Directions',
-    difficulty_level: 2,
-    status: 'pending',
     created_at: new Date().toISOString(),
   },
   {
     id: '5',
     text_content: 'Thank you very much for your assistance.',
     language: 'en',
-    category: 'Gratitude',
-    difficulty_level: 1,
-    status: 'pending',
     created_at: new Date().toISOString(),
   },
 ];
@@ -67,6 +89,7 @@ export const mockTranslations: Translation[] = [
     translation_text: 'Kumusta ka kuman?',
     dialect: 'siargaonon',
     created_at: new Date(Date.now() - 86400000).toISOString(),
+    review_status: 'pending'
   },
   {
     id: 't2',
@@ -75,6 +98,7 @@ export const mockTranslations: Translation[] = [
     translation_text: 'Maayo ang panahon kuman.',
     dialect: 'siargaonon',
     created_at: new Date(Date.now() - 3600000).toISOString(),
+    review_status: 'pending'
   },
 ];
 
