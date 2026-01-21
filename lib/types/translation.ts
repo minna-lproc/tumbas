@@ -11,7 +11,7 @@ export interface Language {
 export interface SourceText {
   id: string;
   text_content: string;
-  language: string;
+  language: Language;
   created_at: string;
 }
 
@@ -31,7 +31,7 @@ export interface Translation {
   voice_recording_url?: string;
   voice_recording_duration?: number;
   voice_recording_blob?: Blob;
-  dialect: string;
+  language: Language;
   created_at: string;
   review_status: 'pending' | 'in progress' | 'approved' | 'modified';
   evaluator_id?: string;

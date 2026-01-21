@@ -1,8 +1,9 @@
-import type { Language, SourceText, Translation } from '@/lib/types/translation';
+import type { Language, ParallelSourceText, SourceText, Translation } from '@/lib/types/translation';
 import type { User } from '@/lib/types/auth';
+import { id } from 'zod/locales';
+import { m } from 'framer-motion';
 
 // Mock user data
-
 export const mockLanguage: Language[] = [
   {
     id: '1',
@@ -28,56 +29,159 @@ export const mockLanguage: Language[] = [
     iso_code: 'sia',
     is_source: false
   }
-
 ];
 
-export const mockUser: User = {
-  id: 'mock-user-1',
-  email: 'user@example.com',
-  username: 'testuser',
-  total_translations: 15,
-  first_name: '',
-  last_name: '',
-  is_active: false,
-  is_admin: false,
-  is_evaluator: false,
-  date_joined: '',
-  source_language: mockLanguage[0],
-  target_language: mockLanguage[0]
-};
+export const mockUser: User[] = [
+  {
+    id: 'mock-user-1',
+    email: 'user@example.com',
+    username: 'testuser',
+    total_translations: 15,
+    first_name: 'Translator',
+    last_name: 'User',
+    is_active: true,
+    is_admin: false,
+    is_evaluator: false,
+    date_joined: '',
+    source_language: mockLanguage[0],
+    target_language: mockLanguage[4]
+  },
+  {
+    id: 'mock-user-2',
+    email: 'user2@example.com',
+    username: 'testuser2',
+    total_translations: 8,
+    first_name: 'Translator 2',
+    last_name: 'User',
+    is_active: true,
+    is_admin: false,
+    is_evaluator: false,
+    date_joined: '',
+    source_language: mockLanguage[1],
+    target_language: mockLanguage[4]
+  },
+  {
+    id: 'mock-evaluator-1',
+    email: 'evaluator@example.com',
+    username: 'testevaluator',
+    total_translations: 0,
+    first_name: 'Evaluator',
+    last_name: 'User',
+    is_active: true,
+    is_admin: false,
+    is_evaluator: true,
+    date_joined: '',
+    source_language: mockLanguage[0],
+    target_language: mockLanguage[4]
+  },
+  {
+    id: 'mock-evaluator-2',
+    email: 'evaluator2@example.com',
+    username: 'testevaluator2',
+    total_translations: 0,
+    first_name: 'Evaluator 2',
+    last_name: 'User',
+    is_active: true,
+    is_admin: false,
+    is_evaluator: true,
+    date_joined: '',
+    source_language: mockLanguage[2],
+    target_language: mockLanguage[4]
+  },
+  {
+    id: 'mock-admin',
+    email: 'admin@example.com',
+    username: 'testadmin',
+    total_translations: 0,
+    first_name: 'Admin',
+    last_name: 'User',
+    is_active: true,
+    is_admin: true,
+    is_evaluator: true,
+    date_joined: '',
+    source_language: undefined,
+    target_language: undefined
+  }
+];
 
 // Mock source texts
 export const mockSourceTexts: SourceText[] = [
   {
     id: '1',
     text_content: 'Hello, how are you today?',
-    language: 'en',
+    language: mockLanguage[0],
     created_at: new Date().toISOString(),
   },
   {
     id: '2',
     text_content: 'The weather is beautiful today.',
-    language: 'en',
+    language: mockLanguage[0],
     created_at: new Date().toISOString(),
   },
   {
     id: '3',
     text_content: 'I would like to order a coffee, please.',
-    language: 'en',
+    language: mockLanguage[0],
     created_at: new Date().toISOString(),
   },
   {
     id: '4',
     text_content: 'Can you help me find the nearest hospital?',
-    language: 'en',
+    language: mockLanguage[0],
     created_at: new Date().toISOString(),
   },
   {
     id: '5',
     text_content: 'Thank you very much for your assistance.',
-    language: 'en',
+    language: mockLanguage[0],
     created_at: new Date().toISOString(),
   },
+  {
+    id: '6',
+    text_content: 'Gusto kong mag-order ng kape.',
+    language: mockLanguage[1],
+    created_at: new Date().toISOString(),
+  },
+  {
+    id: '7',
+    text_content: 'Palihug kog order ug kape.',
+    language: mockLanguage[2],
+    created_at: new Date().toISOString(),
+  },
+  {
+    id: '8',
+    text_content: 'Hello, kumusta ka ngayon?',
+    language: mockLanguage[1],
+    created_at: new Date().toISOString(),
+  }
+];
+
+export const mockParallelSourceTexts: ParallelSourceText[] = [
+  {
+    id: 'pst1',
+    source_texts: [mockSourceTexts[0], mockSourceTexts[7]],
+    status: 'translated'
+  },
+  {
+    id: 'pst2',
+    source_texts: [mockSourceTexts[1]],
+    status: 'pending'
+  },
+  {
+    id: 'pst3',
+    source_texts: [mockSourceTexts[2], mockSourceTexts[5], mockSourceTexts[6]],
+    status: 'pending'
+  },
+  {
+    id: 'pst4',
+    source_texts: [mockSourceTexts[3]],
+    status: 'pending'
+  },
+  {
+    id: 'pst5',
+    source_texts: [mockSourceTexts[4]],
+    status: 'in progress'
+  }
 ];
 
 // Mock translations
@@ -85,18 +189,20 @@ export const mockTranslations: Translation[] = [
   {
     id: 't1',
     source_text_id: '1',
-    user_id: mockUser.id,
+    user_id: mockUser[0].id,
     translation_text: 'Kumusta ka kuman?',
-    dialect: 'siargaonon',
+    language: mockLanguage[3],
     created_at: new Date(Date.now() - 86400000).toISOString(),
-    review_status: 'pending'
+    review_status: 'approved',
+    evaluator_id: mockUser[2].id,
+    reviewed_at: new Date(Date.now() - 43200000).toISOString(),
   },
   {
     id: 't2',
     source_text_id: '2',
-    user_id: mockUser.id,
+    user_id: mockUser[0].id,
     translation_text: 'Maayo ang panahon kuman.',
-    dialect: 'siargaonon',
+    language: mockLanguage[3],
     created_at: new Date(Date.now() - 3600000).toISOString(),
     review_status: 'pending'
   },

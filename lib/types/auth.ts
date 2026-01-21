@@ -18,7 +18,7 @@ export interface User {
   is_admin: boolean;
   is_evaluator: boolean;
   date_joined: string;
-  total_translations: number;
+  total_translations?: number; //should be removed
 }
 
 export interface RegisterData {
@@ -29,6 +29,8 @@ export interface RegisterData {
   last_name: string;
   is_admin: boolean;
   is_evaluator: boolean;
+  source_language?: Language;
+  target_language?: Language;
 }
 
 export interface RegisterResult {
