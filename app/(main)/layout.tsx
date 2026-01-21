@@ -1,5 +1,6 @@
 import Link from 'next/link';
 import { createServerSupabaseClient } from '@/lib/supabase/server';
+import { ThemeToggle } from '@/components/utils/ThemeToggle';
 
 export default async function MainLayout({
   children,
@@ -42,6 +43,8 @@ export default async function MainLayout({
                 >
                   Profile
                 </Link>
+
+                <ThemeToggle />
               </div>
             </div>
             {user && (
