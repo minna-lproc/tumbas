@@ -1,26 +1,71 @@
 @import "tailwindcss";
 
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
+  --background: #fafdfb;
+  --foreground: #072128;
 }
 
 @theme inline {
   --color-background: var(--background);
   --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
+  --font-sans: var(--font-montserrat);
+  --font-mono: var(--font-montserrat);
+
+  /* main color */
+
+  --color-turquoise-50: #eafaf9;
+  --color-turquoise-100: #d6f5f2;
+  --color-turquoise-200: #adebe6;
+  --color-turquoise-300: #84e1d9;
+  --color-turquoise-400: #5bd7cd;
+  --color-turquoise-500: #37cec1;
+  --color-turquoise-600: #28a49a;
+  --color-turquoise-700: #1e7b73;
+  --color-turquoise-800: #14524d;
+  --color-turquoise-900: #0a2926;
+  --color-turquoise-950: #071d1b;
+
+  --color-gray: #9ba6a9;
+
+  /* green accent? */
+  --color-emerald-50: #ecf8f0;
+  --color-emerald-100: #daf1e0;
+  --color-emerald-200: #b5e3c1;
+  --color-emerald-300: #8fd6a2;
+  --color-emerald-400: #6ac883;
+  --color-emerald-500: #45ba64;
+  --color-emerald-600: #379550;
+  --color-emerald-700: #29703c;
+  --color-emerald-800: #1c4a28;
+  --color-emerald-900: #0e2514;
+  --color-emerald-950: #0a1a0e;
+
+  /* yellow accent? */
+  --color-gold-50: #fbf7ea;
+  --color-gold-100: #f7f0d4;
+  --color-gold-200: #efe1a9;
+  --color-gold-300: #e7d27e;
+  --color-gold-400: #dec354;
+  --color-gold-500: #d6b429;
+  --color-gold-600: #ab9021;
+  --color-gold-700: #816c18;
+  --color-gold-800: #564810;
+  --color-gold-900: #2b2408;
+  --color-gold-950: #1e1906;
+
 }
 
 @media (prefers-color-scheme: dark) {
   :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
+    --background: #04121d;
+    --foreground: #fafdfb;
+
+    --gray: #6b7280;
+    --color-background-2: #072128;
   }
 }
 
 body {
   background: var(--background);
   color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
 }
