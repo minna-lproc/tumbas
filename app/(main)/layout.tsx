@@ -1,6 +1,9 @@
 import Link from 'next/link';
+import Image from 'next/image';
 import { createServerSupabaseClient } from '@/lib/supabase/server';
 import { ThemeToggle } from '@/components/utils/ThemeToggle';
+import tumbas from '../assets/tumbas.png';
+import Nav from '@/components/utils/Nav';
 
 export default async function MainLayout({
   children,
@@ -13,49 +16,51 @@ export default async function MainLayout({
   } = await supabase.auth.getUser();
 
   return (
-    <div className="min-h-screen">
-      <nav className="border-b mb-4">
-        <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-          <div className="flex h-16 items-center justify-between">
-            <div className="flex items-center gap-8">
-              <Link
-                href="/translate"
-                className="text-xl font-bold"
-              >
-                Tumbas
-              </Link>
-              <div className="hidden gap-6 sm:flex">
-                <Link
-                  href="/translate"
-                  className="transition-colors "
-                >
-                  Translate
-                </Link>
-                <Link
-                  href="/dashboard"
-                  className="transition-colors "
-                >
-                  Dashboard
-                </Link>
-                <Link
-                  href="/profile"
-                  className="transition-colors"
-                >
-                  Profile
-                </Link>
+    <div className="h-screen overflow-hidden">
+      {/* Desktop Navbar */}
+      <nav className="hidden lg:block border-b mb-4 bg-background text-foreground border-border">
+        <div className="mx-auto max-w-7xl px-8">
+          <div className="flex h-14 items-center justify-between">
 
-                <ThemeToggle />
-              </div>
+            <Link
+              href="/translate"
+              className="h-20 w-20 items-center justify-center flex"
+            >
+              <Image src={tumbas} alt='Tumbas' />
+            </Link>
+
+            <div className="ml-auto flex gap-6">
+              <Nav />
+              <ThemeToggle />
             </div>
-            {user && (
-              <div className="text-sm ">
-                {user.email}
-              </div>
-            )}
+
           </div>
         </div>
       </nav>
-      {children}
+
+      {/* Mobile Topbar */}
+      <div className="lg:hidden fixed top-0 left-0 right-0 z-50 bg-background text-foreground border-b border-border">
+        <div className="flex h-14 items-center justify-between px-4">
+          <Link href="/translate" className="h-20 w-20 flex items-center justify-center">
+            <Image src={tumbas} alt='Tumbas' />
+          </Link>
+          <div className="flex items-center gap-4">
+            <ThemeToggle />
+          </div>
+        </div>
+      </div>
+
+      {/* Main Content */}
+      <main className="min-h-full pt-16 pb-16 lg:pt-0 lg:pb-0">
+        {children}
+      </main>
+
+      {/* Mobile Bottom Navbar */}
+      <nav className="lg:hidden fixed bottom-0 left-0 right-0 z-50 bg-background text-foreground border-t border-border">
+        <div className="h-14">
+          <Nav mobile={true} />
+        </div>
+      </nav>
     </div>
   );
 }

@@ -3,6 +3,24 @@
 :root {
   --background: #fafdfb;
   --foreground: #072128;
+
+  --btn-background: var(--color-turquoise-600);
+  --btn-hover-background: var(--color-turquoise-700);
+  --btn-active-background: var(--color-turquoise-600);
+
+  --btn-text: #fafdfb;
+
+  --gray: #6b7280;
+}
+
+.dark {
+  --background: #04121d;
+  --foreground: #fafdfb;
+}
+
+.icon {
+  width: 16px;
+  height: 16px;
 }
 
 @theme inline {
@@ -10,6 +28,18 @@
   --color-foreground: var(--foreground);
   --font-sans: var(--font-montserrat);
   --font-mono: var(--font-montserrat);
+
+  /* button colors */
+  --color-btn: var(--btn-background);
+  --color-btn-hover: var(--btn-hover-background);
+  --color-btn-active: var(--btn-active-background);
+  --color-btn-focus: var(--btn-background);
+  --color-btn-text: var(--btn-text);
+  
+
+  --color-border: var(--gray);
+
+  --color-secondary-text: var(--gray);
 
   /* main color */
 
@@ -53,16 +83,6 @@
   --color-gold-900: #2b2408;
   --color-gold-950: #1e1906;
 
-}
-
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #04121d;
-    --foreground: #fafdfb;
-
-    --gray: #6b7280;
-    --color-background-2: #072128;
-  }
 }
 
 body {

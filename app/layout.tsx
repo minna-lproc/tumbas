@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { Geist, Geist_Mono, Montserrat } from "next/font/google";
 import "./globals.css";
+import { ThemeProvider } from "@/components/utils/ThemeProvider";
 
 /*
 const geistSans = Geist({
@@ -41,8 +42,11 @@ export default function RootLayout({
     <html lang="en">
       <body
         className={`${montserrat.variable} antialiased`}
+        suppressHydrationWarning
       >
-        {children}
+        <ThemeProvider>
+          {children}
+        </ThemeProvider>
       </body>
     </html>
   );

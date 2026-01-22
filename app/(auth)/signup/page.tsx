@@ -100,17 +100,17 @@ export default function SignupPage() {
   };
 
   return (
-    <div className="flex min-h-screen items-center justify-center px-4 py-12  sm:px-6 lg:px-8">
+    <div className="flex min-h-screen items-center justify-center px-4 py-12  sm:px-6 lg:px-8 bg-background text-foreground">
       <div className="w-full max-w-md space-y-8">
         <div>
-          <h2 className="mt-6 text-center text-3xl font-bold tracking-tight ">
+          <h2 className="mt-6 text-center text-3xl font-semibold tracking-tight ">
             Create your account
           </h2>
-          <p className="mt-2 text-center text-sm ">
+          <p className="mt-2 text-center text-xs ">
             Or{' '}
             <Link
               href="/login"
-              className="font-medium "
+              className="font-medium text-btn hover:text-btn-hover"
             >
               sign in to your existing account
             </Link>
@@ -132,7 +132,9 @@ export default function SignupPage() {
                 {...register('username')}
                 type="text"
                 autoComplete="username"
-                className="relative block w-full rounded-lg border   px-3 py-3  focus:z-10 focus:border-teal-500 focus:outline-none focus:ring-teal-500 dark:border-gray-600  dark:focus:border-teal-400 dark:focus:ring-teal-400 sm:text-sm"
+                className="relative block w-full rounded-lg border border-border px-3 py-3 focus:z-10 
+                focus:border-btn-active focus:outline-none focus:ring--btn-active  
+                sm:text-sm text-secondary-text"
                 placeholder="Username (optional)"
               />
               {errors.username && (
@@ -150,7 +152,9 @@ export default function SignupPage() {
                 type="email"
                 autoComplete="email"
                 required
-                className="relative block w-full rounded-lg border  px-3 py-3  placeholder-gray-500 focus:z-10 focus:border-teal-500 focus:outline-none focus:ring-teal-500 dark:border-gray-600  dark:focus:border-teal-400 dark:focus:ring-teal-400 sm:text-sm"
+                className="relative block w-full rounded-lg border border-border px-3 py-3 focus:z-10 
+                focus:border-btn-active focus:outline-none focus:ring--btn-active  
+                sm:text-sm text-secondary-text"
                 placeholder="Email address"
               />
               {errors.email && (
@@ -168,7 +172,9 @@ export default function SignupPage() {
                 type="password"
                 autoComplete="new-password"
                 required
-                className="relative block w-full rounded-lg border  px-3 py-3  placeholder-gray-500 focus:z-10 focus:border-teal-500 focus:outline-none focus:ring-teal-500 dark:focus:border-teal-400 dark:focus:ring-teal-400 sm:text-sm"
+                className="relative block w-full rounded-lg border border-border px-3 py-3 focus:z-10 
+                focus:border-btn-active focus:outline-none focus:ring--btn-active  
+                sm:text-sm text-secondary-text z-10"
                 placeholder="Password"
               />
               {errors.password && (
@@ -183,7 +189,10 @@ export default function SignupPage() {
             <button
               type="submit"
               disabled={loading}
-              className="group relative flex w-full justify-center rounded-lg border border-transparent  px-4 py-3 text-sm font-medium  focus:outline-none focus:ring-2 focus:ring-teal-500 focus:ring-offset-2 disabled:opacity-50 disabled:cursor-not-allowed "
+              className="group relative flex w-full justify-center rounded-lg border 
+              border-transparent px-4 py-3 bg-btn text-foreground  hover:bg-btn-hover
+              text-sm font-medium  
+              focus:outline-none focus:ring-2 focus:ring-btn-focus focus:ring-offset-2 disabled:opacity-50 disabled:cursor-not-allowed "
             >
               {loading ? 'Creating account...' : 'Sign up'}
             </button>
@@ -191,10 +200,10 @@ export default function SignupPage() {
 
           <div className="relative">
             <div className="absolute inset-0 flex items-center">
-              <div className="w-full border-t border-gray-300 dark:border-gray-600" />
+              <div className="w-full border-t border-border" />
             </div>
             <div className="relative flex justify-center text-sm">
-              <span className="bg-gray-50 px-2 text-gray-500 dark:bg-gray-900 dark:text-gray-400">
+              <span className=" text-secondary-text px-2 bg-background">
                 Or continue with
               </span>
             </div>
@@ -205,7 +214,10 @@ export default function SignupPage() {
               type="button"
               onClick={() => handleSocialLogin('google')}
               disabled={loading}
-              className="inline-flex w-full items-center justify-center rounded-lg border px-4 py-3 text-sm font-medium  focus:outline-none focus:ring-2 focus:ring-teal-500 focus:ring-offset-2 disabled:opacity-50 disabled:cursor-not-allowed "
+              className="inline-flex w-full items-center justify-center rounded-lg 
+              border border-border px-4 py-3 text-sm font-medium 
+              focus:outline-none focus:ring-2 
+              focus:ring-btn-focus focus:ring-offset-2 disabled:opacity-50 disabled:cursor-not-allowed "
             >
               <svg className="h-5 w-5" viewBox="0 0 24 24">
                 <path

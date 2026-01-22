@@ -40,9 +40,9 @@ export const ReviewCard = ({
       onDragEnd={handleDragEnd}
       className="w-full"
     >
-      <div className="space-y-6">
+      <div className="space-y-4">
 
-        <p className='text-2xl font-semibold'>
+        <p className='text-xl font-semibold my-4'>
           Review
         </p>
 
@@ -71,7 +71,7 @@ export const ReviewCard = ({
             loading={loading}
           />
         </div>
-        <p className="text-center text-sm text-gray-500 dark:text-gray-400">
+        <p className="text-center text-xs text-secondary-text">
           Swipe right to skip • Tap to review
         </p>
       </div>

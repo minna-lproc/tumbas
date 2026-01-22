@@ -13,17 +13,14 @@ export const SourceTextCard = ({ sourceText }: SourceTextCardProps) => {
       initial={{ opacity: 0, y: 20 }}
       animate={{ opacity: 1, y: 0 }}
       exit={{ opacity: 0, y: -20 }}
-      className="rounded-xl  p-6 shadow-lg "
+      className="rounded-xl px-6 py-3 shadow-lg border border-border"
     >
-      <div className="mb-4 flex items-center justify-between">
-        <div className="mb-4 flex items-center justify-between">
-        <p className='text-sm '>Source sentence</p>
-      </div>  
-        {/*<span className="text-sm text-gray-500 dark:text-gray-400">
-          Level {sourceText.difficulty_level}
-        </span>*/}
+      <div className="mb-2 flex items-center justify-between">
+        <div className="flex items-center justify-between">
+          <p className='text-xs text-secondary-text'>Source sentence</p>
+        </div>
       </div>
-      <p className="text-lg leading-relaxed ">
+      <p className="text-sm lg:text-base leading-relaxed ">
         {sourceText.text_content}
       </p>
     </motion.div>

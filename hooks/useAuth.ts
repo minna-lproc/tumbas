@@ -9,12 +9,14 @@ import { mockUser } from '@/lib/mock/data';
 // Supabase commented out - using mock data for UI development
 export const useAuth = () => {
   // Mock user for UI development - memoized to prevent infinite loops
+  const mockUserData = mockUser[0]; // Assuming first user
   const user = useMemo(
     () =>
       ({
-        id: mockUser.id,
-        email: mockUser.email,
-      }) as User,
+        id: mockUserData.id,
+        email: mockUserData.email,
+        role: mockUserData.is_admin ? 'admin' : mockUserData.is_evaluator ? 'evaluator' : 'user',
+      }) as User & { role: string },
     []
   );
 

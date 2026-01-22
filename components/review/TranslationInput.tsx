@@ -1,6 +1,6 @@
 'use client';
 
-import { useState } from 'react';
+import { useState, useRef } from 'react';
 import type { Translation } from '@/lib/types/translation';
 import { VoiceInputButton } from '../utils/VoiceInputButton';
 
@@ -18,15 +18,30 @@ export const TranslationInput = ({
   maxLength = 1000,
 }: TranslationInputProps) => {
   const [isFocused, setIsFocused] = useState(false);
+  const [isVoiceListening, setIsVoiceListening] = useState(false);
+  const originalValueRef = useRef<string>('');
   const characterCount = value.length;
   const remainingChars = maxLength - characterCount;
+
+  const handleVoiceStart = () => {
+    setIsVoiceListening(true);
+    originalValueRef.current = value;
+  };
+
+  const handleVoiceStop = () => {
+    setIsVoiceListening(false);
+  };
+
+  const handleVoiceTranscript = (transcript: string) => {
+    onChange(originalValueRef.current + (originalValueRef.current ? ' ' : '') + transcript);
+  };
 
   return (
     <div className="w-full">
       <div
-        className={`relative rounded-xl border-2  transition-colors  ${isFocused
-            ? ''
-            : ''
+        className={`relative rounded-xl border transition-colors  ${isFocused
+            ? 'border-btn-focus shadow-lg'
+            : 'border-border'
           }`}
       >
         <textarea
@@ -37,17 +52,21 @@ export const TranslationInput = ({
           placeholder={placeholder}
           maxLength={maxLength}
           rows={6}
-          className="w-full resize-none rounded-xl border-0 bg-transparent px-4 py-4 text-lg  focus:outline-none "
+          className="w-full resize-none rounded-xl border-0 focus:outline-none
+          bg-transparent px-4 py-4 
+          text-sm lg:text-base placeholder:text-secondary-text"
         />
         <div className="absolute bottom-2 left-4">
           <VoiceInputButton
-            onTranscript={(text) => onChange(value + ' ' + text)}
+            onTranscript={handleVoiceTranscript}
+            onStart={handleVoiceStart}
+            onStop={handleVoiceStop}
             disabled={false}
           />
         </div>
 
-        <div className="absolute bottom-2 right-4 text-sm ">
-          <span className={remainingChars < 50 ? '' : ''}>
+        <div className="absolute bottom-2 right-4 text-xs text-secondary-text">
+          <span className={remainingChars < 50 ? 'text-orange-600' : ''}>
             {characterCount}/{maxLength}
           </span>
         </div>
