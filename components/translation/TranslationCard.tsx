@@ -1,7 +1,7 @@
 'use client';
 
 import { motion, PanInfo } from 'framer-motion';
-import { SourceTextCard } from './SourceTextCard';
+import { SourceTextCard } from '../utils/SourceTextCard';
 import { TranslationInput } from './TranslationInput';
 import { SubmitButton } from './SubmitButton';
 import { VoiceInputButton } from '../utils/VoiceInputButton';
@@ -71,7 +71,7 @@ export const TranslationCard = ({
             loading={loading}
           />
         </div>
-        <p className="text-center text-sm text-gray-500 dark:text-gray-400">
+        <p className="text-center text-sm ">
           Swipe right to skip • Tap to translate
         </p>
       </div>

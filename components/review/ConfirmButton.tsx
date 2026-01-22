@@ -21,7 +21,7 @@ export const ConfirmButton = ({
       whileTap={{ scale: disabled ? 1 : 0.98 }}
       onClick={onClick}
       disabled={disabled || loading}
-      className="flex h-14 w-full min-w-[48px] items-center justify-center rounded-xl bg-teal-600 px-6 text-base font-semibold text-white shadow-lg transition-colors hover:bg-teal-700 focus:outline-none focus:ring-2 focus:ring-teal-500 focus:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50 dark:bg-teal-500 dark:hover:bg-teal-600"
+      className="flex h-14 w-full min-w-[48px] items-center justify-center rounded-xl  px-6 text-base font-semibold  shadow-lg transition-colors hover:bg-teal-700 focus:outline-none focus:ring-2 focus:ring-teal-500 focus:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50"
     >
       {loading ? (
         <span className="flex items-center gap-2">

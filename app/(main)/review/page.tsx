@@ -56,10 +56,10 @@ export default function ReviewPage() {
 
   if (authLoading || loading) {
     return (
-      <div className="flex min-h-screen items-center justify-center bg-gray-50 dark:bg-gray-900">
+      <div className="flex min-h-screen items-center justify-center ">
         <div className="text-center">
           <div className="mb-4 inline-block h-12 w-12 animate-spin rounded-full border-4 border-solid border-teal-600 border-r-transparent"></div>
-          <p className="text-gray-600 dark:text-gray-400">Loading...</p>
+          <p className="">Loading...</p>
         </div>
       </div>
     );
@@ -67,12 +67,12 @@ export default function ReviewPage() {
 
   if (!currentSourceText) {
     return (
-      <div className="flex min-h-screen items-center justify-center bg-gray-50 px-4 dark:bg-gray-900">
+      <div className="flex min-h-screen items-center justify-center">
         <div className="text-center">
-          <h2 className="mb-4 text-2xl font-bold text-gray-900 dark:text-white">
+          <h2 className="mb-4 text-2xl font-bold">
             All caught up!
           </h2>
-          <p className="text-gray-600 dark:text-gray-400">
+          <p className="">
             There are no more texts to translate at the moment.
           </p>
         </div>
@@ -81,11 +81,11 @@ export default function ReviewPage() {
   }
 
   return (
-    <div className="min-h-screen bg-gray-50 px-4 py-8 dark:bg-gray-900 sm:px-6 lg:px-8">
+    <div className="min-h-screen  sm:px-6 lg:px-8">
       <div className="mx-auto max-w-2xl">
         {error && (
-          <div className="mb-6 rounded-lg bg-red-50 p-4 dark:bg-red-900/20">
-            <p className="text-sm text-red-800 dark:text-red-200">{error}</p>
+          <div className="mb-6 rounded-lg  p-4 ">
+            <p className="text-sm">{error}</p>
           </div>
         )}
         <ReviewCard

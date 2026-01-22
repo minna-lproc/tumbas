@@ -71,10 +71,10 @@ export default function DashboardPage() {
 
   if (authLoading || loading) {
     return (
-      <div className="flex min-h-screen items-center justify-center bg-gray-50 dark:bg-gray-900">
+      <div className="flex min-h-screen items-center justify-center ">
         <div className="text-center">
           <div className="mb-4 inline-block h-12 w-12 animate-spin rounded-full border-4 border-solid border-teal-600 border-r-transparent"></div>
-          <p className="text-gray-600 dark:text-gray-400">Loading...</p>
+          <p className="">Loading...</p>
         </div>
       </div>
     );
@@ -82,31 +82,31 @@ export default function DashboardPage() {
 
   if (!stats) {
     return (
-      <div className="flex min-h-screen items-center justify-center bg-gray-50 dark:bg-gray-900">
-        <p className="text-gray-600 dark:text-gray-400">Failed to load statistics</p>
+      <div className="flex min-h-screen items-center justify-center ">
+        <p className="">Failed to load statistics</p>
       </div>
     );
   }
 
   return (
-    <div className="min-h-screen bg-gray-50 px-4 py-8 dark:bg-gray-900 sm:px-6 lg:px-8">
+    <div className="min-h-screen  px-4 py-8  sm:px-6 lg:px-8">
       <div className="mx-auto max-w-7xl">
-        <h1 className="mb-8 text-3xl font-bold text-gray-900 dark:text-white">Dashboard</h1>
+        <h1 className="mb-8 text-3xl font-bold ">Dashboard</h1>
         <div className="space-y-6">
           <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
-            <div className="rounded-xl bg-white p-6 shadow-md dark:bg-gray-800">
-              <p className="text-sm font-medium text-gray-600 dark:text-gray-400">
+            <div className="rounded-xl  p-6 shadow-md ">
+              <p className="text-sm font-medium ">
                 Total Translations
               </p>
-              <p className="mt-2 text-3xl font-bold text-gray-900 dark:text-white">
+              <p className="mt-2 text-3xl font-bold ">
                 {stats.total_translations}
               </p>
             </div>
-            <div className="rounded-xl bg-white p-6 shadow-md dark:bg-gray-800">
-              <p className="text-sm font-medium text-gray-600 dark:text-gray-400">
+            <div className="rounded-xl p-6 shadow-md ">
+              <p className="text-sm font-medium ">
                 Translations Today
               </p>
-              <p className="mt-2 text-3xl font-bold text-gray-900 dark:text-white">
+              <p className="mt-2 text-3xl font-bold ">
                 {stats.translations_today}
               </p>
             </div>

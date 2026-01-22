@@ -1,7 +1,7 @@
 'use client';
 
 import { motion, PanInfo } from 'framer-motion';
-import { SourceTextCard } from './SourceTextCard';
+import { SourceTextCard } from '../utils/SourceTextCard';
 import { TranslationInput } from './TranslationInput';
 import { ConfirmButton } from './ConfirmButton';
 import { VoiceInputButton } from '../utils/VoiceInputButton';

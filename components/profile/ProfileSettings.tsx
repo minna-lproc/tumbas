@@ -49,32 +49,32 @@ export const ProfileSettings = ({ currentUsername, onUpdate }: ProfileSettingsPr
   };
 
   return (
-    <div className="rounded-xl bg-white p-6 shadow-md dark:bg-gray-800">
-      <h3 className="mb-4 text-lg font-semibold text-gray-900 dark:text-white">Settings</h3>
+    <div className="rounded-xl  p-6 shadow-md ">
+      <h3 className="mb-4 text-lg font-semibold ">Settings</h3>
       <form onSubmit={handleSubmit(onSubmit)} className="space-y-4">
         <div>
-          <label className="block text-sm font-medium text-gray-700 dark:text-gray-300">
+          <label className="block text-sm font-medium ">
             Username
           </label>
           <input
             {...register('username')}
             type="text"
-            className="mt-1 block w-full rounded-lg border border-gray-300 bg-white px-3 py-2 text-gray-900 placeholder-gray-400 focus:border-teal-500 focus:outline-none focus:ring-2 focus:ring-teal-500 dark:border-gray-600 dark:bg-gray-700 dark:text-white dark:placeholder-gray-500"
+            className="mt-1 block w-full rounded-lg border  px-3 py-2  focus:border-teal-500 focus:outline-none focus:ring-2 focus:ring-teal-500 "
             placeholder="Enter username"
           />
           {errors.username && (
-            <p className="mt-1 text-sm text-red-600 dark:text-red-400">
+            <p className="mt-1 text-sm ">
               {errors.username.message}
             </p>
           )}
         </div>
         {success && (
-          <p className="text-sm text-green-600 dark:text-green-400">Settings updated successfully!</p>
+          <p className="text-sm ">Settings updated successfully!</p>
         )}
         <button
           type="submit"
           disabled={loading}
-          className="rounded-lg bg-teal-600 px-4 py-2 text-white transition-colors hover:bg-teal-700 disabled:opacity-50 dark:bg-teal-500 dark:hover:bg-teal-600"
+          className="rounded-lg  px-4 py-2  transition-colors hover:bg-teal-700 disabled:opacity-50 "
         >
           {loading ? 'Saving...' : 'Save Changes'}
         </button>

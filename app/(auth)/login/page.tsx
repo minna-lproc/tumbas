@@ -83,17 +83,17 @@ export default function LoginPage() {
   };
 
   return (
-    <div className="flex min-h-screen items-center justify-center bg-gray-50 px-4 py-12 dark:bg-gray-900 sm:px-6 lg:px-8">
+    <div className="flex min-h-screen items-center justify-center  px-4 py-12  sm:px-6 lg:px-8">
       <div className="w-full max-w-md space-y-8">
         <div>
-          <h2 className="mt-6 text-center text-3xl font-bold tracking-tight text-gray-900 dark:text-white">
+          <h2 className="mt-6 text-center text-3xl font-bold tracking-tight ">
             Sign in to your account
           </h2>
-          <p className="mt-2 text-center text-sm text-gray-600 dark:text-gray-400">
+          <p className="mt-2 text-center text-sm ">
             Or{' '}
             <Link
               href="/signup"
-              className="font-medium text-teal-600 hover:text-teal-500 dark:text-teal-400"
+              className="font-medium "
             >
               create a new account
             </Link>
@@ -101,8 +101,8 @@ export default function LoginPage() {
         </div>
         <form className="mt-8 space-y-6" onSubmit={handleSubmit(onSubmit)}>
           {error && (
-            <div className="rounded-md bg-red-50 p-4 dark:bg-red-900/20">
-              <p className="text-sm text-red-800 dark:text-red-200">{error}</p>
+            <div className="rounded-md ">
+              <p className="text-sm ">{error}</p>
             </div>
           )}
 
@@ -116,11 +116,11 @@ export default function LoginPage() {
                 type="email"
                 autoComplete="email"
                 required
-                className="relative block w-full rounded-lg border border-gray-300 bg-white px-3 py-3 text-gray-900 placeholder-gray-500 focus:z-10 focus:border-teal-500 focus:outline-none focus:ring-teal-500 dark:border-gray-600 dark:bg-gray-800 dark:text-white dark:placeholder-gray-400 dark:focus:border-teal-400 dark:focus:ring-teal-400 sm:text-sm"
+                className="relative block w-full rounded-lg border  focus:z-10 focus:border-teal-500 focus:outline-none focus:ring-teal-500  dark:placeholder-gray-400 dark:focus:border-teal-400 dark:focus:ring-teal-400 sm:text-sm"
                 placeholder="Email address"
               />
               {errors.email && (
-                <p className="mt-1 text-sm text-red-600 dark:text-red-400">
+                <p className="mt-1 text-sm ">
                   {errors.email.message}
                 </p>
               )}
@@ -134,11 +134,11 @@ export default function LoginPage() {
                 type="password"
                 autoComplete="current-password"
                 required
-                className="relative block w-full rounded-lg border border-gray-300 bg-white px-3 py-3 text-gray-900 placeholder-gray-500 focus:z-10 focus:border-teal-500 focus:outline-none focus:ring-teal-500 dark:border-gray-600 dark:bg-gray-800 dark:text-white dark:placeholder-gray-400 dark:focus:border-teal-400 dark:focus:ring-teal-400 sm:text-sm"
+                className="relative block w-full rounded-lg border  px-3 py-3  focus:z-10 focus:border-teal-500 focus:outline-none focus:ring-teal-500   dark:focus:border-teal-400 dark:focus:ring-teal-400 sm:text-sm"
                 placeholder="Password"
               />
               {errors.password && (
-                <p className="mt-1 text-sm text-red-600 dark:text-red-400">
+                <p className="mt-1 text-sm ">
                   {errors.password.message}
                 </p>
               )}
@@ -149,7 +149,7 @@ export default function LoginPage() {
             <button
               type="submit"
               disabled={loading}
-              className="group relative flex w-full justify-center rounded-lg border border-transparent bg-teal-600 px-4 py-3 text-sm font-medium text-white hover:bg-teal-700 focus:outline-none focus:ring-2 focus:ring-teal-500 focus:ring-offset-2 disabled:opacity-50 disabled:cursor-not-allowed dark:bg-teal-500 dark:hover:bg-teal-600"
+              className="group relative flex w-full justify-center rounded-lg border border-transparent px-4 py-3 text-sm font-medium  hover:bg-teal-700 focus:outline-none focus:ring-2 focus:ring-teal-500 focus:ring-offset-2 disabled:opacity-50 disabled:cursor-not-allowed dark:bg-teal-500 dark:hover:bg-teal-600"
             >
               {loading ? 'Signing in...' : 'Sign in'}
             </button>
@@ -160,7 +160,7 @@ export default function LoginPage() {
               <div className="w-full border-t border-gray-300 dark:border-gray-600" />
             </div>
             <div className="relative flex justify-center text-sm">
-              <span className="bg-gray-50 px-2 text-gray-500 dark:bg-gray-900 dark:text-gray-400">
+              <span className=" px-2 ">
                 Or continue with
               </span>
             </div>
@@ -171,7 +171,7 @@ export default function LoginPage() {
               type="button"
               onClick={() => handleSocialLogin('google')}
               disabled={loading}
-              className="inline-flex w-full items-center justify-center rounded-lg border border-gray-300 bg-white px-4 py-3 text-sm font-medium text-gray-700 hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-teal-500 focus:ring-offset-2 disabled:opacity-50 disabled:cursor-not-allowed dark:border-gray-600 dark:bg-gray-800 dark:text-white dark:hover:bg-gray-700"
+              className="inline-flex w-full items-center justify-center rounded-lg border   px-4 py-3 text-sm font-medium   focus:outline-none focus:ring-2 focus:ring-teal-500 focus:ring-offset-2 disabled:opacity-50 disabled:cursor-not-allowed dark:border-gray-600 "
             >
               <svg className="h-5 w-5" viewBox="0 0 24 24">
                 <path
@@ -197,7 +197,7 @@ export default function LoginPage() {
               type="button"
               onClick={() => handleSocialLogin('github')}
               disabled={loading}
-              className="inline-flex w-full items-center justify-center rounded-lg border border-gray-300 bg-white px-4 py-3 text-sm font-medium text-gray-700 hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-teal-500 focus:ring-offset-2 disabled:opacity-50 disabled:cursor-not-allowed dark:border-gray-600 dark:bg-gray-800 dark:text-white dark:hover:bg-gray-700"
+              className="inline-flex w-full items-center justify-center rounded-lg border   px-4 py-3 text-sm font-medium  focus:outline-none focus:ring-2 focus:ring-teal-500 focus:ring-offset-2 disabled:opacity-50 disabled:cursor-not-allowed "
             >
               <svg className="h-5 w-5" fill="currentColor" viewBox="0 0 24 24">
                 <path
