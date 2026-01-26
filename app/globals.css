@@ -35,10 +35,9 @@
   --color-btn-active: var(--btn-active-background);
   --color-btn-focus: var(--btn-background);
   --color-btn-text: var(--btn-text);
+
   
-
   --color-border: var(--gray);
-
   --color-secondary-text: var(--gray);
 
   /* main color */
