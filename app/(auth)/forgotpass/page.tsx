@@ -1,14 +1,57 @@
 'use client';
 
+import { zodResolver } from '@hookform/resolvers/zod';
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
 import { useState, useEffect } from 'react';
+import { useForm } from 'react-hook-form';
+import { z } from 'zod';
+
+const forgotPassSchema = z.object({
+    email: z.email('Invalid email address'),
+});
+
+type forgotPassData = z.infer<typeof forgotPassSchema>;
 
 export default function ForgotPassPage() {
     const router = useRouter();
     const [error, setError] = useState<string | null>(null);
     const [loading, setLoading] = useState(false);
     const [success, setSuccess] = useState(false);
+
+    const {
+        handleSubmit,
+        formState: { errors },
+    } = useForm<forgotPassData>({
+        resolver: zodResolver(forgotPassSchema),
+    });
+
+    const onSubmit = async (data: forgotPassData) => {
+        setLoading(true);
+        setError(null);
+
+        try {
+            setSuccess(!success);
+            await new Promise((resolve) => setTimeout(resolve, 500));
+
+
+            /* COMMENTED OUT - Supabase authentication
+            const { error: signInError } = await supabase.auth.signInWithPassword({
+              email: data.email,
+              password: data.password,
+            });
+      
+            if (signInError) throw signInError;
+      
+            router.push('/translate');
+            router.refresh();
+            */
+        } catch (err) {
+            setError(err instanceof Error ? err.message : 'An error occurred');
+        } finally {
+            setLoading(false);
+        }
+    };
 
     return (
         <div className="flex min-h-screen items-center justify-center px-4 py-12 sm:px-6 lg:px-8 bg-background 
@@ -62,7 +105,7 @@ export default function ForgotPassPage() {
                         </p>
                     </div>
 
-                    <form className="mt-8 space-y-6">
+                    <form className="mt-8 space-y-6" onSubmit={handleSubmit(onSubmit)}>
 
                         <div>
                             <label htmlFor="email" className="sr-only">
@@ -72,17 +115,22 @@ export default function ForgotPassPage() {
                                 type="email"
                                 autoComplete="email"
                                 required
-                                className="relative block w-full rounded-lg border border-border px-3 py-3 focus:z-10 
+                                className={`relative block w-full rounded-lg border border-border px-3 py-3 focus:z-10 
                 focus:border-btn-active focus:outline-none focus:ring--btn-active  
-                sm:text-sm placeholder:text-secondary-text"
+                sm:text-sm placeholder:text-gray
+                ${errors.email ? 'border-red-500 focus:border-red-500' : 'border-border'}`}
                                 placeholder="Email address"
                             />
+                            {errors.email && (
+                                <p className="mt-1 text-xs font-base text-red-500">
+                                    {errors.email.message}
+                                </p>
+                            )}
                         </div>
 
                         <div>
                             <button
                                 type="submit"
-                                onClick={() => { setSuccess(!success) }}
                                 disabled={loading}
                                 className="group relative flex w-full justify-center rounded-lg border 
               border-transparent px-4 py-3 bg-btn text-btn-text  hover:bg-btn-hover

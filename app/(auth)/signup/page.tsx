@@ -10,9 +10,11 @@ import Link from 'next/link';
 import { Eye, EyeClosed } from 'lucide-react';
 
 const signupSchema = z.object({
-  email: z.string().email('Invalid email address'),
-  password: z.string().min(6, 'Password must be at least 6 characters'),
+  firstName: z.string(),
+  lastName: z.string(),
   username: z.string().min(3, 'Username must be at least 3 characters').optional(),
+  email: z.email('Invalid email address'),
+  password: z.string().min(8, 'Password must be at least 8 characters'),
 });
 
 type SignupFormData = z.infer<typeof signupSchema>;
@@ -199,26 +201,29 @@ export default function SignupPage() {
                   type="email"
                   autoComplete="email"
                   required
-                  className="relative block w-full rounded-lg border border-border px-3 py-3 focus:z-10 
+                  className={`relative block w-full rounded-lg border border-border px-3 py-3 focus:z-10 
                 focus:border-btn-active focus:outline-none focus:ring--btn-active  
-                sm:text-sm placeholder:text-secondary-text"
+                sm:text-sm placeholder:text-gray
+                ${errors.email ? 'border-red-500 focus:border-red-500' : 'border-border'}`}
                   placeholder="Email address"
                 />
                 {errors.email && (
-                  <p className="mt-1 text-sm ">
-                    {errors.email.message}
-                  </p>
-                )}
+                <p className="mt-1 text-xs font-base text-red-500">
+                  {errors.email.message}
+                </p>
+              )}
               </div>
+              
 
               <div className="relative">
                 <input
                   type={showPassword ? 'text' : 'password'}
                   autoComplete="current-password"
                   required
-                  className="relative block w-full rounded-lg border border-border px-3 py-3 focus:z-10 
+                  className={`relative block w-full rounded-lg border border-border px-3 py-3 focus:z-10 
                 focus:border-btn-active focus:outline-none focus:ring--btn-active  
-                sm:text-sm placeholder:text-secondary-text"
+                sm:text-sm placeholder:text-gray
+                ${errors.password ? 'border-red-500 focus:border-red-500' : 'border-border'}`}
                   placeholder="Password"
                 />
                 <button
@@ -236,6 +241,11 @@ export default function SignupPage() {
                     </span>
                   )}
                 </button>
+                {errors.password && (
+                <p className="mt-1 text-xs font-base text-red-500">
+                  {errors.password.message}
+                </p>
+              )}
               </div>
 
               <div className="relative">
