@@ -93,27 +93,27 @@ export default function DashboardPage() {
   }
 
   return (
-    <div className="min-h-screen px-4 py-8 sm:px-6 lg:px-8 font-medium">
+    <div className="min-h-screen px-4 py-8 sm:px-6 lg:px-8">
       <div className="mx-auto max-w-7xl">
 
         <div className="space-y-6">
 
           {/* DASHBOARD HEADER */}
-          <div className='w-full h-24 lg:h-36 rounded-xl p-6 space-y-2
+          <div className='w-full h-36 rounded-xl p-6 space-y-2
           border border-gray/75
           text-btn-text text-shadow-gray/25 text-shadow-lg
           bg-linear-to-bl from-btn via-teal-400 to-orange-200'>
-            <h1 className='font-bold text-4xl'>
+            <h1 className='font-semibold text-4xl'>
               Welcome user! {/* Will be dynamic based on role and name*/}
             </h1>
-            <p>
+            <p className='font-medium'>
               Track and manage all your completed translations right here. {/* Will be dynamic based on role*/}
             </p>
           </div>
 
           <div className="grid grid-cols-1 gap-4 grid-rows-2 lg:grid-cols-2">
 
-            <div className="rounded-xl p-6 shadow-md border border-gray">
+            <div className="rounded-xl p-6 shadow-md border border-gray-400">
               <p className="text-sm font-medium ">
                 Total Translations
               </p>
@@ -122,7 +122,7 @@ export default function DashboardPage() {
               </p>
             </div>
 
-            <div className="rounded-xl p-6 shadow-md border border-gray">
+            <div className="rounded-xl p-6 shadow-md border border-gray-400">
               <p className="text-sm font-medium ">
                 Translations Today
               </p>

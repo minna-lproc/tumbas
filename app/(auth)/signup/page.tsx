@@ -17,6 +17,12 @@ const signupSchema = z.object({
   password: z.string().min(8, 'Password must be at least 8 characters'),
 });
 
+const nameSchema = signupSchema.pick({
+  firstName: true,
+  lastName: true,
+  username: true
+})
+
 type SignupFormData = z.infer<typeof signupSchema>;
 
 export default function SignupPage() {
@@ -29,7 +35,15 @@ export default function SignupPage() {
   const [showConfirmedPassword, setShowConfirmedPassword] = useState(false);
 
   const nextStep = () => {
-    setStep(step => step + 1)
+
+    try {
+
+      setStep(step => step + 1)
+    }
+    catch (error) {
+
+    }
+
   }
 
   const prevStep = () => {
@@ -126,28 +140,42 @@ export default function SignupPage() {
                   First name
                 </label>
                 <input
+                  {...register('firstName')}
                   type="text"
                   required
-                  className="relative block w-full rounded-lg border border-gray px-3 py-3 focus:z-10 
-                focus:border-btn-active focus:outline-none focus:ring--btn-active  
-                sm:text-sm placeholder:text-gray"
+                  className={`relative block w-full rounded-lg px-3 py-3 focus:z-10 
+                border border-gray-400 focus:border-btn-active 
+                focus:outline-none focus:ring--btn-active  
+                sm:text-sm placeholder:text-gray
+                ${errors.firstName ? 'error-border' : 'border-gray-400'}`}
                   placeholder="First name"
                 />
-
+                {errors.firstName && (
+                  <p className="mt-1 error-text">
+                    {errors.firstName.message}
+                  </p>
+                )}
               </div>
               <div>
                 <label htmlFor="lastName" className="sr-only">
                   Last name
                 </label>
                 <input
+                  {...register('lastName')}
                   type="text"
                   required
-                  className="relative block w-full rounded-lg border border-gray px-3 py-3 focus:z-10 
-                focus:border-btn-active focus:outline-none focus:ring--btn-active  
-                sm:text-sm placeholder:text-gray"
+                  className={`relative block w-full rounded-lg px-3 py-3 focus:z-10 
+                border border-gray-400 focus:border-btn-active 
+                focus:outline-none focus:ring--btn-active  
+                sm:text-sm placeholder:text-gray
+                ${errors.lastName ? 'error-border' : 'border-gray-400'}`}
                   placeholder="Last name"
                 />
-
+                {errors.lastName && (
+                  <p className="mt-1 error-text">
+                    {errors.lastName.message}
+                  </p>
+                )}
               </div>
               <div>
                 <label htmlFor="username" className="sr-only">
@@ -157,13 +185,15 @@ export default function SignupPage() {
                   {...register('username')}
                   type="text"
                   autoComplete="username"
-                  className="relative block w-full rounded-lg border border-gray px-3 py-3 focus:z-10 
-                focus:border-btn-active focus:outline-none focus:ring--btn-active  
-                sm:text-sm placeholder:text-gray"
+                  className={`relative block w-full rounded-lg px-3 py-3 focus:z-10 
+                border border-gray-400 focus:border-btn-active 
+                focus:outline-none focus:ring--btn-active  
+                sm:text-sm placeholder:text-gray
+                ${errors.username ? 'error-border' : 'border-gray-400'}`}
                   placeholder="Username (optional)"
                 />
                 {errors.username && (
-                  <p className="mt-1 text-sm ">
+                  <p className="mt-1 error-text">
                     {errors.username.message}
                   </p>
                 )}
@@ -201,51 +231,53 @@ export default function SignupPage() {
                   type="email"
                   autoComplete="email"
                   required
-                  className={`relative block w-full rounded-lg border border-gray px-3 py-3 focus:z-10 
-                focus:border-btn-active focus:outline-none focus:ring--btn-active  
+                  className={`relative block w-full rounded-lg px-3 py-3 focus:z-10 
+                border border-gray-400 focus:border-btn-active 
+                focus:outline-none focus:ring--btn-active  
                 sm:text-sm placeholder:text-gray
-                ${errors.email ? 'border-red-500 focus:border-red-500' : 'border-gray'}`}
+                ${errors.email ? 'error-border' : 'border-gray-400'}`}
                   placeholder="Email address"
                 />
                 {errors.email && (
-                <p className="mt-1 text-xs font-base text-red-500">
-                  {errors.email.message}
-                </p>
-              )}
+                  <p className="mt-1 error-text">
+                    {errors.email.message}
+                  </p>
+                )}
               </div>
-              
+
 
               <div className="relative">
                 <input
                   type={showPassword ? 'text' : 'password'}
                   autoComplete="current-password"
                   required
-                  className={`relative block w-full rounded-lg border border-gray px-3 py-3 focus:z-10 
-                focus:border-btn-active focus:outline-none focus:ring--btn-active  
+                  className={`relative block w-full rounded-lg px-3 py-3 focus:z-10 
+                border border-gray-400 focus:border-btn-active 
+                focus:outline-none focus:ring--btn-active  
                 sm:text-sm placeholder:text-gray
-                ${errors.password ? 'border-red-500 focus:border-red-500' : 'border-gray'}`}
+                ${errors.password ? 'error-border' : 'border-gray-400'}`}
                   placeholder="Password"
                 />
                 <button
-                  className='absolute inset-y-0 right-0 flex items-center pr-3 cursor-pointer text-gray hover:text-btn-hover'
+                  className='absolute inset-y-0 right-0 flex items-center pr-3 cursor-pointer text-gray-400 hover:text-btn-hover'
                   type="button"
                   onClick={() => setShowPassword(!showPassword)}
                 >
                   {showPassword ? (
                     <span>
-                      <Eye className="icon" />
+                      <EyeClosed className="icon" />
                     </span>
                   ) : (
                     <span>
-                      <EyeClosed className="icon" />
+                      <Eye className="icon" />
                     </span>
                   )}
                 </button>
                 {errors.password && (
-                <p className="mt-1 text-xs font-base text-red-500">
-                  {errors.password.message}
-                </p>
-              )}
+                  <p className="mt-1 error-text">
+                    {errors.password.message}
+                  </p>
+                )}
               </div>
 
               <div className="relative">
@@ -253,33 +285,33 @@ export default function SignupPage() {
                   type={showConfirmedPassword ? 'text' : 'password'}
                   autoComplete="current-password"
                   required
-                  className="relative block w-full rounded-lg border border-gray px-3 py-3 focus:z-10 
+                  className="relative block w-full rounded-lg border border-gray-400 px-3 py-3 focus:z-10 
                 focus:border-btn-active focus:outline-none focus:ring--btn-active  
-                sm:text-sm placeholder:text-gray"
+                sm:text-sm placeholder:text-gray-400"
                   placeholder="Confirmed password"
                 />
                 <button
-                  className='absolute inset-y-0 right-0 flex items-center pr-3 cursor-pointer text-gray hover:text-btn-hover'
+                  className='absolute inset-y-0 right-0 flex items-center pr-3 cursor-pointer text-gray-400 hover:text-btn-hover'
                   type="button"
                   onClick={() => setShowConfirmedPassword(!showConfirmedPassword)}
                 >
                   {showConfirmedPassword ? (
                     <span>
-                      <Eye className="icon" />
+                      <EyeClosed className="icon" />
                     </span>
                   ) : (
                     <span>
-                      <EyeClosed className="icon" />
+                      <Eye className="icon" />
                     </span>
                   )}
                 </button>
               </div>
             </div>
-            
+
             <div className='flex items-start w-full gap-2'>
-              
-              <input type="checkbox" id='termsOfService' className='accent-background'/>
-              <label htmlFor="termsOfService" className="text-xs text-center text-gray whitespace-nowrap">
+
+              <input type="checkbox" id='termsOfService' className='accent-background' />
+              <label htmlFor="termsOfService" className="text-xs text-center text-gray-400 whitespace-nowrap">
                 I agree to the{' '}
                 <button type='button' className='underline text-btn'>
                   Terms of Service
@@ -292,10 +324,11 @@ export default function SignupPage() {
                 type="button"
                 disabled={loading}
                 onClick={prevStep}
-                className="group relative flex w-full justify-center rounded-lg border border-gray px-4 py-3 
-              bg-background text-foreground hover:border-btn-hover hover:bg-teal-50 dark:hover:bg-teal-900
+                className="group relative flex w-full justify-center rounded-lg border border-gray-400 px-4 py-3 
+              bg-secondary-btn hover:bg-secondary-btn-hover
               text-sm font-medium  
-              focus:outline-none focus:ring-2 focus:ring-btn-focus focus:ring-offset-2 disabled:opacity-50 disabled:cursor-not-allowed "
+              focus:outline-none focus:ring-2 focus:ring-btn-focus focus:ring-offset-2 
+              disabled:opacity-50 disabled:cursor-not-allowed "
               >
                 {loading ? 'Backing up...' : 'Back'}
               </button>
@@ -306,7 +339,8 @@ export default function SignupPage() {
                 className="group relative flex w-full justify-center rounded-lg border 
               border-transparent px-4 py-3 bg-btn text-btn-text hover:bg-btn-hover
               text-sm font-medium  
-              focus:outline-none focus:ring-2 focus:ring-btn-focus focus:ring-offset-2 disabled:opacity-50 disabled:cursor-not-allowed "
+              focus:outline-none focus:ring-2 focus:ring-btn-focus focus:ring-offset-2 
+              disabled:opacity-50 disabled:cursor-not-allowed "
               >
                 {loading ? 'Signing up...' : 'Sign up'}
               </button>
@@ -319,8 +353,7 @@ export default function SignupPage() {
 
   return (
     <div className='flex min-h-screen items-center justify-center px-4 py-12 sm:px-6 lg:px-8 
-    bg-background text-foreground
-    font-medium'>
+    bg-background text-foreground'>
       {
         success ?
 
@@ -330,7 +363,7 @@ export default function SignupPage() {
               <h2 className="mt-6 text-center text-3xl font-semibold tracking-tight ">
                 Registration successful!
               </h2>
-              <p className='text-gray text-center text-xs'>
+              <p className='text-gray-400 text-center text-xs'>
                 You have successfully changed your password.
               </p>
             </div>
@@ -376,10 +409,10 @@ export default function SignupPage() {
 
               <div className="relative">
                 <div className="absolute inset-0 flex items-center">
-                  <div className="w-full border-t border-gray" />
+                  <div className="w-full border-t border-gray-400" />
                 </div>
                 <div className="relative flex justify-center text-xs">
-                  <span className=" text-gray px-2 bg-background">
+                  <span className=" text-gray-400 px-2 bg-background">
                     Or continue with
                   </span>
                 </div>
@@ -391,7 +424,8 @@ export default function SignupPage() {
                   onClick={() => handleSocialLogin('google')}
                   disabled={loading}
                   className="inline-flex w-full items-center justify-center rounded-lg 
-              border border-gray px-4 py-3 text-sm font-medium 
+              border border-gray-400 px-4 py-3 
+              bg-secondary-btn hover:bg-secondary-btn-hover text-sm font-medium 
               focus:outline-none focus:ring-2 
               focus:ring-btn-focus focus:ring-offset-2 disabled:opacity-50 disabled:cursor-not-allowed "
                 >

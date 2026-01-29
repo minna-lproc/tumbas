@@ -17,11 +17,11 @@ export const ThemeToggle = () => {
             {
                 isDarkMode ? (
                     <div className="flex items-center gap-2 ">
-                    <Sun className="icon text-gray"/>
+                    <Sun className="icon text-gray-400"/>
                     </div>
                 ) : (
                     <div className="flex items-center gap-2 ">
-                    <Moon className="icon text-gray"/>
+                    <Moon className="icon text-gray-400"/>
                     </div>
                 )
             

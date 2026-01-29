@@ -90,7 +90,7 @@ export default function LoginPage() {
   return (
     <div className="flex min-h-screen items-center justify-center 
     px-4 py-12  sm:px-6 lg:px-8
-    bg-background text-foreground font-medium ">
+    bg-background text-foreground ">
 
       <div className="w-full max-w-md space-y-6">
 
@@ -197,7 +197,7 @@ export default function LoginPage() {
                 className="group relative flex w-full justify-center rounded-lg px-4 py-3 
                 border border-transparent 
                 bg-btn hover:bg-btn-hover
-                text-btn-text text-sm
+                text-btn-text text-sm font-medium
                 focus:outline-none focus:ring-2 focus:ring-btn-focus focus:ring-offset-1
                 disabled:opacity-50 disabled:cursor-not-allowed "
               >
@@ -228,7 +228,7 @@ export default function LoginPage() {
               focus:outline-none focus:ring-2  focus:ring-btn-focus focus:ring-offset-2 
               disabled:opacity-50 disabled:cursor-not-allowed "
               >
-                <svg className="h-5 w-5" viewBox="0 0 24 24">
+                <svg className="h-4 w-4" viewBox="0 0 24 24">
                   <path
                     fill="currentColor"
                     d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z"

@@ -21,6 +21,7 @@ export default function ForgotPassPage() {
 
     const {
         handleSubmit,
+        register,
         formState: { errors },
     } = useForm<forgotPassData>({
         resolver: zodResolver(forgotPassSchema),
@@ -34,18 +35,6 @@ export default function ForgotPassPage() {
             setSuccess(!success);
             await new Promise((resolve) => setTimeout(resolve, 500));
 
-
-            /* COMMENTED OUT - Supabase authentication
-            const { error: signInError } = await supabase.auth.signInWithPassword({
-              email: data.email,
-              password: data.password,
-            });
-      
-            if (signInError) throw signInError;
-      
-            router.push('/translate');
-            router.refresh();
-            */
         } catch (err) {
             setError(err instanceof Error ? err.message : 'An error occurred');
         } finally {
@@ -55,7 +44,7 @@ export default function ForgotPassPage() {
 
     return (
         <div className="flex min-h-screen items-center justify-center px-4 py-12 sm:px-6 lg:px-8 bg-background 
-        font-medium text-foreground">
+        text-foreground">
 
             {success ?
 
@@ -65,13 +54,13 @@ export default function ForgotPassPage() {
                         <h2 className="mt-6 text-center text-3xl font-semibold tracking-tight ">
                             Reset link sent!
                         </h2>
-                        <p className='text-gray text-center text-xs'>
+                        <p className='text-gray-400 text-center text-xs'>
                             Please check your inbox to reset your password. If you do not see the link, check your spam folder. The link will expire in one hour.
                         </p>
                     </div>
 
                     <div>
-                        <p className="mt-2 text-gray text-center text-xs ">
+                        <p className="mt-2 text-gray-400 text-center text-xs ">
                             Remember your password?{' '}
                             <button className='text-btn hover:text-btn-hover'>
                                 Resend
@@ -100,7 +89,7 @@ export default function ForgotPassPage() {
                         <h2 className="mt-6 text-center text-3xl font-semibold tracking-tight ">
                             Reset your password
                         </h2>
-                        <p className='text-gray text-center text-xs'>
+                        <p className='text-gray-400 text-center text-xs'>
                             Enter your email address, and we will send you a link to reset your password.
                         </p>
                     </div>
@@ -112,17 +101,19 @@ export default function ForgotPassPage() {
                                 Email address
                             </label>
                             <input
+                                {...register('email')}
                                 type="email"
                                 autoComplete="email"
                                 required
-                                className={`relative block w-full rounded-lg border border-gray px-3 py-3 focus:z-10 
-                focus:border-btn-active focus:outline-none focus:ring--btn-active  
+                                className={`relative block w-full rounded-lg px-3 py-3 focus:z-10 
+                border border-gray-400 focus:border-btn-active 
+                focus:outline-none focus:ring--btn-active  
                 sm:text-sm placeholder:text-gray
-                ${errors.email ? 'border-red-500 focus:border-red-500' : 'border-gray'}`}
+                ${errors.email ? 'error-border' : 'border-gray-400'}`}
                                 placeholder="Email address"
                             />
                             {errors.email && (
-                                <p className="mt-1 text-xs font-base text-red-500">
+                                <p className="mt-1 error-text">
                                     {errors.email.message}
                                 </p>
                             )}
@@ -135,13 +126,14 @@ export default function ForgotPassPage() {
                                 className="group relative flex w-full justify-center rounded-lg border 
               border-transparent px-4 py-3 bg-btn text-btn-text  hover:bg-btn-hover
               text-sm font-medium  
-              focus:outline-none focus:ring-2 focus:ring-btn-focus focus:ring-offset-2 disabled:opacity-50 disabled:cursor-not-allowed "
+              focus:outline-none focus:ring-2 focus:ring-btn-focus focus:ring-offset-2 
+              disabled:opacity-50 disabled:cursor-not-allowed "
                             >
                                 {loading ? 'Sending link...' : 'Send link'}
                             </button>
                         </div>
 
-                        <p className="mt-2 text-center text-xs text-gray">
+                        <p className="mt-2 text-center text-xs text-gray-400">
                             Remember your password?{' '}
                             <Link
                                 href="/login"

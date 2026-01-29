@@ -71,7 +71,7 @@ export const ReviewCard = ({
             loading={loading}
           />
         </div>
-        <p className="text-center text-xs text-gray">
+        <p className="text-center text-xs text-gray-400">
           Swipe right to skip • Tap to review
         </p>
       </div>

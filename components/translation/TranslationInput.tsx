@@ -40,7 +40,7 @@ export const TranslationInput = ({
       <div
         className={`relative rounded-xl border transition-colors  ${isFocused
             ? 'border-btn-focus shadow-lg'
-            : 'border-gray'
+            : 'border-gray-400'
           }`}
       >
         <textarea
@@ -53,7 +53,7 @@ export const TranslationInput = ({
           rows={6}
           className="w-full resize-none rounded-xl border-0 focus:outline-none
           bg-transparent px-4 py-4 
-          text-sm lg:text-base placeholder:text-gray"
+          text-sm lg:text-base placeholder:text-gray-400"
         />
 
           <div className="absolute bottom-2 left-4">
@@ -65,7 +65,7 @@ export const TranslationInput = ({
             />
           </div>
 
-          <div className="absolute bottom-2 right-4 text-xs text-gray">
+          <div className="absolute bottom-2 right-4 text-xs text-gray-400">
             <span className={remainingChars < 50 ? 'text-orange-600' : ''}>
               {characterCount}/{maxLength}
             </span>

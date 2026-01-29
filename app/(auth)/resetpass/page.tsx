@@ -18,6 +18,7 @@ export default function ResetPassPage() {
 
     const {
         handleSubmit,
+        register,
         formState: { errors },
     } = useForm<resetPassData>({
         resolver: zodResolver(resetPassSchema),
@@ -31,18 +32,6 @@ export default function ResetPassPage() {
             setSuccess(!success);
             await new Promise((resolve) => setTimeout(resolve, 500));
 
-
-            /* COMMENTED OUT - Supabase authentication
-            const { error: signInError } = await supabase.auth.signInWithPassword({
-              email: data.email,
-              password: data.password,
-            });
-      
-            if (signInError) throw signInError;
-      
-            router.push('/translate');
-            router.refresh();
-            */
         } catch (err) {
             setError(err instanceof Error ? err.message : 'An error occurred');
         } finally {
@@ -60,7 +49,7 @@ export default function ResetPassPage() {
 
     return (
         <div className="flex min-h-screen items-center justify-center px-4 py-12 sm:px-6 lg:px-8 bg-background 
-           font-medium text-foreground">
+           text-foreground">
 
             {success ?
 
@@ -70,7 +59,7 @@ export default function ResetPassPage() {
                         <h2 className="mt-6 text-center text-3xl font-semibold tracking-tight ">
                             Password reset successfully!
                         </h2>
-                        <p className='text-gray text-center text-xs'>
+                        <p className='text-gray-400 text-center text-xs'>
                             You have successfully changed your password.
                         </p>
                     </div>
@@ -96,7 +85,7 @@ export default function ResetPassPage() {
                         <h2 className="mt-6 text-center text-3xl font-semibold tracking-tight ">
                             Reset your password
                         </h2>
-                        <p className="mt-2 text-center text-xs text-gray">
+                        <p className="mt-2 text-center text-xs text-gray-400">
                             Or {' '}
                             <Link
                                 href="/login"
@@ -116,34 +105,35 @@ export default function ResetPassPage() {
                             </label>
                             <div className="relative">
                                 <input
+                                    {...register('password')}
                                     type={showPassword ? 'text' : 'password'}
                                     autoComplete="current-password"
                                     required
-                                    className={`relative block w-full rounded-lg border border-gray px-3 py-3 focus:z-10 
+                                    className={`relative block w-full rounded-lg border border-gray-400 px-3 py-3 focus:z-10 
                 focus:border-btn-active focus:outline-none focus:ring--btn-active  
                 sm:text-sm placeholder:text-gray
-                ${errors.password ? 'border-red-500 focus:border-red-500' : 'border-gray'}`}
+                ${errors.password ? 'error-border' : 'border-gray-400'}`}
                                     placeholder="Password"
                                 />
                                 <button
-                                    className='absolute inset-y-0 right-0 flex items-center pr-3 cursor-pointer text-gray hover:text-btn-hover'
+                                    className='absolute inset-y-0 right-0 flex items-center pr-3 cursor-pointer text-gray-400 hover:text-btn-hover'
                                     type="button"
                                     onClick={() => setShowPassword(!showPassword)}
                                 >
                                     {showPassword ? (
                                         <span>
-                                            <Eye className="icon" />
+                                            <EyeClosed className="icon" />
                                         </span>
                                     ) : (
                                         <span>
-                                            <EyeClosed className="icon" />
+                                            <Eye className="icon" />
                                         </span>
                                     )}
                                 </button>
 
                             </div>
                             {errors.password && (
-                                <p className="mt-1 text-xs font-base text-red-500">
+                                <p className="mt-1 error-text">
                                     {errors.password.message}
                                 </p>
                             )}
@@ -155,23 +145,23 @@ export default function ResetPassPage() {
                                     type={showConfirmedPassword ? 'text' : 'password'}
                                     autoComplete="current-password"
                                     required
-                                    className="relative block w-full rounded-lg border border-gray px-3 py-3 focus:z-10 
+                                    className="relative block w-full rounded-lg border border-gray-400 px-3 py-3 focus:z-10 
                 focus:border-btn-active focus:outline-none focus:ring--btn-active  
-                sm:text-sm placeholder:text-gray"
+                sm:text-sm placeholder:text-gray-400"
                                     placeholder="Confirmed password"
                                 />
                                 <button
-                                    className='absolute inset-y-0 right-0 flex items-center pr-3 cursor-pointer text-gray hover:text-btn-hover'
+                                    className='absolute inset-y-0 right-0 flex items-center pr-3 cursor-pointer text-gray-400 hover:text-btn-hover'
                                     type="button"
                                     onClick={() => setShowConfirmedPassword(!showConfirmedPassword)}
                                 >
                                     {showConfirmedPassword ? (
                                         <span>
-                                            <Eye className="icon" />
+                                            <EyeClosed className="icon" />
                                         </span>
                                     ) : (
                                         <span>
-                                            <EyeClosed className="icon" />
+                                            <Eye className="icon" />
                                         </span>
                                     )}
                                 </button>
