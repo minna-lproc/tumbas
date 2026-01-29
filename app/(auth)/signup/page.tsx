@@ -144,10 +144,10 @@ export default function SignupPage() {
                   type="text"
                   required
                   className={`relative block w-full rounded-lg px-3 py-3 focus:z-10 
-                border border-gray-400 focus:border-btn-active 
+                border border-border-gray focus:border-btn-active 
                 focus:outline-none focus:ring--btn-active  
                 sm:text-sm placeholder:text-gray
-                ${errors.firstName ? 'error-border' : 'border-gray-400'}`}
+                ${errors.firstName ? 'error-border' : 'border-border-gray'}`}
                   placeholder="First name"
                 />
                 {errors.firstName && (
@@ -165,10 +165,10 @@ export default function SignupPage() {
                   type="text"
                   required
                   className={`relative block w-full rounded-lg px-3 py-3 focus:z-10 
-                border border-gray-400 focus:border-btn-active 
+                border border-border-gray focus:border-btn-active 
                 focus:outline-none focus:ring--btn-active  
                 sm:text-sm placeholder:text-gray
-                ${errors.lastName ? 'error-border' : 'border-gray-400'}`}
+                ${errors.lastName ? 'error-border' : 'border-border-gray'}`}
                   placeholder="Last name"
                 />
                 {errors.lastName && (
@@ -186,10 +186,10 @@ export default function SignupPage() {
                   type="text"
                   autoComplete="username"
                   className={`relative block w-full rounded-lg px-3 py-3 focus:z-10 
-                border border-gray-400 focus:border-btn-active 
+                border border-border-gray focus:border-btn-active 
                 focus:outline-none focus:ring--btn-active  
                 sm:text-sm placeholder:text-gray
-                ${errors.username ? 'error-border' : 'border-gray-400'}`}
+                ${errors.username ? 'error-border' : 'border-border-gray'}`}
                   placeholder="Username (optional)"
                 />
                 {errors.username && (
@@ -232,10 +232,10 @@ export default function SignupPage() {
                   autoComplete="email"
                   required
                   className={`relative block w-full rounded-lg px-3 py-3 focus:z-10 
-                border border-gray-400 focus:border-btn-active 
+                border border-border-gray focus:border-btn-active 
                 focus:outline-none focus:ring--btn-active  
                 sm:text-sm placeholder:text-gray
-                ${errors.email ? 'error-border' : 'border-gray-400'}`}
+                ${errors.email ? 'error-border' : 'border-border-gray'}`}
                   placeholder="Email address"
                 />
                 {errors.email && (
@@ -252,14 +252,14 @@ export default function SignupPage() {
                   autoComplete="current-password"
                   required
                   className={`relative block w-full rounded-lg px-3 py-3 focus:z-10 
-                border border-gray-400 focus:border-btn-active 
+                border border-border-gray focus:border-btn-active 
                 focus:outline-none focus:ring--btn-active  
                 sm:text-sm placeholder:text-gray
-                ${errors.password ? 'error-border' : 'border-gray-400'}`}
+                ${errors.password ? 'error-border' : 'border-border-gray'}`}
                   placeholder="Password"
                 />
                 <button
-                  className='absolute inset-y-0 right-0 flex items-center pr-3 cursor-pointer text-gray-400 hover:text-btn-hover'
+                  className='absolute inset-y-0 right-0 flex items-center pr-3 cursor-pointer text-text-grey hover:text-btn-hover'
                   type="button"
                   onClick={() => setShowPassword(!showPassword)}
                 >
@@ -285,13 +285,13 @@ export default function SignupPage() {
                   type={showConfirmedPassword ? 'text' : 'password'}
                   autoComplete="current-password"
                   required
-                  className="relative block w-full rounded-lg border border-gray-400 px-3 py-3 focus:z-10 
+                  className="relative block w-full rounded-lg border border-border-gray px-3 py-3 focus:z-10 
                 focus:border-btn-active focus:outline-none focus:ring--btn-active  
-                sm:text-sm placeholder:text-gray-400"
+                sm:text-sm placeholder:text-text-grey"
                   placeholder="Confirmed password"
                 />
                 <button
-                  className='absolute inset-y-0 right-0 flex items-center pr-3 cursor-pointer text-gray-400 hover:text-btn-hover'
+                  className='absolute inset-y-0 right-0 flex items-center pr-3 cursor-pointer text-text-grey hover:text-btn-hover'
                   type="button"
                   onClick={() => setShowConfirmedPassword(!showConfirmedPassword)}
                 >
@@ -311,7 +311,7 @@ export default function SignupPage() {
             <div className='flex items-start w-full gap-2'>
 
               <input type="checkbox" id='termsOfService' className='accent-background' />
-              <label htmlFor="termsOfService" className="text-xs text-center text-gray-400 whitespace-nowrap">
+              <label htmlFor="termsOfService" className="text-xs text-center text-text-grey whitespace-nowrap">
                 I agree to the{' '}
                 <button type='button' className='underline text-btn'>
                   Terms of Service
@@ -324,7 +324,7 @@ export default function SignupPage() {
                 type="button"
                 disabled={loading}
                 onClick={prevStep}
-                className="group relative flex w-full justify-center rounded-lg border border-gray-400 px-4 py-3 
+                className="group relative flex w-full justify-center rounded-lg border border-border-gray px-4 py-3 
               bg-secondary-btn hover:bg-secondary-btn-hover
               text-sm font-medium  
               focus:outline-none focus:ring-2 focus:ring-btn-focus focus:ring-offset-2 
@@ -363,7 +363,7 @@ export default function SignupPage() {
               <h2 className="mt-6 text-center text-3xl font-semibold tracking-tight ">
                 Registration successful!
               </h2>
-              <p className='text-gray-400 text-center text-xs'>
+              <p className='text-text-grey text-center text-xs'>
                 You have successfully changed your password.
               </p>
             </div>
@@ -409,10 +409,10 @@ export default function SignupPage() {
 
               <div className="relative">
                 <div className="absolute inset-0 flex items-center">
-                  <div className="w-full border-t border-gray-400" />
+                  <div className="w-full border-t border-border-gray" />
                 </div>
                 <div className="relative flex justify-center text-xs">
-                  <span className=" text-gray-400 px-2 bg-background">
+                  <span className=" text-text-grey px-2 bg-background">
                     Or continue with
                   </span>
                 </div>
@@ -424,7 +424,7 @@ export default function SignupPage() {
                   onClick={() => handleSocialLogin('google')}
                   disabled={loading}
                   className="inline-flex w-full items-center justify-center rounded-lg 
-              border border-gray-400 px-4 py-3 
+              border border-border-gray px-4 py-3 
               bg-secondary-btn hover:bg-secondary-btn-hover text-sm font-medium 
               focus:outline-none focus:ring-2 
               focus:ring-btn-focus focus:ring-offset-2 disabled:opacity-50 disabled:cursor-not-allowed "

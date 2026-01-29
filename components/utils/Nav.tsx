@@ -25,7 +25,7 @@ export default function Nav(device?: { mobile?: boolean }) {
                     className={`transition-colors flex flex-row gap-2 font-medium items-center
                        ${isActive
                             ? "text-btn-active"
-                            : "text-gray-400 hover:text-btn-hover"
+                            : "text-text-grey hover:text-btn-hover"
                         }`}
                 >
                     <Icon className="w-6 h-6" />
@@ -43,7 +43,7 @@ export default function Nav(device?: { mobile?: boolean }) {
                     className={`transition-colors flex flex-row gap-2 font-medium items-center text-xs
                        ${isActive
                             ? "text-btn-active"
-                            : "text-gray-400 hover:text-btn-hover"
+                            : "text-text-grey hover:text-btn-hover"
                         }`}
                 >
                     <Icon className="icon" />

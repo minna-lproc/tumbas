@@ -27,19 +27,19 @@ export const RecentTranslations = ({ translations }: RecentTranslationsProps) =>
   }
 
   return (
-    <div className="rounded-xl p-6 shadow-md 
-    border border-gray-400">
+    <div className="rounded-xl px-6 shadow-md bg-box-bg
+    border border-border-gray">
       <h3 className="mb-4 text-lg font-semibold ">
         Recent Translations
       </h3>
       <div className="space-y-4">
         {translations.map((translation, index) => (
-          <div key={index} className="border-b pb-4 last:border-0 ">
+          <div key={index} className="border-b border-border-gray py-4 last:border-0 ">
             <p className="text-sm font-normal">
               {translation.source_texts?.text_content || 'Source text'}
             </p>
             <p className="mt-1 font-medium">{translation.translation_text}</p>
-            <p className="mt-2 text-xs font-normal text-gray-400">
+            <p className="mt-2 text-xs font-normal text-text-grey">
               {formatDistanceToNow(new Date(translation.created_at), { addSuffix: true })}
             </p>
           </div>

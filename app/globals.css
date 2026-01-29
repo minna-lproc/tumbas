@@ -72,14 +72,33 @@
   --btn-secondary-active-background: var(--color-gray-400);
   --btn-secondary-text: var(--foreground);
 
+  --header-gradient-from: var(--color-teal-500);
+  --header-gradient-via: var(--color-teal-400);
+  --header-gradient-to: var(--color-orange-200);
+
+  /* gray colors */
+  --border-gray: var(--color-gray-400);
+  --text-grey: var(--color-gray-400);
+
+  --box-background: var(--background);
+
 }
 
 .dark {
   --background: #04121d;
   --foreground: #fafdfb;
 
-  --btn-secondary-hover-background: #082229;
-  --btn-secondary-active-background: #082229;
+  --btn-secondary-hover-background: #08222950;
+  --btn-secondary-active-background: #08222950;
+
+  --header-gradient-from: var(--color-teal-700);
+  --header-gradient-via: var(--color-teal-800);
+  --header-gradient-to: var(--color-blue-950);
+
+  --border-gray: #425e68;
+  --text-grey: #5e7d87;
+
+  --box-background: #08222950;
 }
 
 @theme inline {
@@ -87,6 +106,11 @@
   --color-foreground: var(--foreground);
   --font-sans: var(--font-montserrat);
   --font-mono: var(--font-montserrat);
+
+  --color-border-gray: var(--border-gray);
+  --color-text-grey: var(--text-grey);
+
+  --color-box-bg: var(--box-background);
 
   /* button colors */
   --color-btn: var(--btn-background);
@@ -102,6 +126,9 @@
   --color-secondary-btn-focus: var(--background);
   --color-secondary-btn-text: var(--foreground);
 
+  --color-header-gradient-from: var(--header-gradient-from);
+  --color-header-gradient-via: var(--header-gradient-via);
+  --color-header-gradient-to: var(--header-gradient-to);
 }
 
 @layer base {
@@ -128,4 +155,5 @@
   .error-border {
     border-color: var(--color-red-500);
   }
+
 }

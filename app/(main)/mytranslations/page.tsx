@@ -43,26 +43,26 @@ export default function MyTranslationsPage() {
                     </p>
 
                     <div className=' flex gap-4 h-10 items-center
-                    border border-gray-400 rounded-lg
+                    border border-border-gray rounded-lg
                     px-4'>
-                        <Search className='icon text-gray-400' />
+                        <Search className='icon text-text-grey' />
 
                         <input type="text"
-                            className='w-full flex placeholder:text-gray-400'
+                            className='w-full flex placeholder:text-text-grey'
                             placeholder='Search' />
 
-                        <ListFilterPlus className='icon text-gray-400' />
+                        <ListFilterPlus className='icon text-text-grey' />
                     </div>
 
-                    <div className='rounded-xl p-6 border border-gray-400 w-full'>
+                    <div className='rounded-xl px-6 border border-border-gray w-full'>
 
                         {stats?.recent_translations.map((translation, index) => (
-                            <div key={index} className="border-b py-4 last:border-0 ">
+                            <div key={index} className="border-b border-border-gray py-6 last:border-0 ">
                                 <p className="text-sm font-normal">
                                     {translation.source_texts?.text_content || 'Source text'}
                                 </p>
                                 <p className="mt-1 font-medium">{translation.translation_text}</p>
-                                <p className="mt-2 text-xs font-normal text-gray-400">
+                                <p className="mt-2 text-xs font-normal text-text-grey">
                                     {formatDistanceToNow(new Date(translation.created_at), { addSuffix: true })}
                                 </p>
                             </div>

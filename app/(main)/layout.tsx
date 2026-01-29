@@ -18,7 +18,7 @@ export default async function MainLayout({
   return (
     <div className="h-screen overflow-hidden">
       {/* Desktop Navbar */}
-      <nav className="hidden lg:block border-b mb-4 bg-background text-foreground border-gray-400">
+      <nav className="hidden lg:block border-b mb-4 bg-background text-foreground border-border-gray">
         <div className="mx-auto max-w-7xl px-8">
           <div className="flex h-14 items-center justify-between">
 
@@ -39,7 +39,7 @@ export default async function MainLayout({
       </nav>
 
       {/* Mobile Topbar */}
-      <div className="lg:hidden fixed top-0 left-0 right-0 z-50 bg-background text-foreground border-b border-gray-400">
+      <div className="lg:hidden fixed top-0 left-0 right-0 z-50 bg-background text-foreground border-b border-border-gray">
         <div className="flex h-14 items-center justify-between px-4">
           <Link href="/translate" className="h-20 w-20 flex items-center justify-center">
             <Image src={tumbas} alt='Tumbas' />
@@ -56,7 +56,7 @@ export default async function MainLayout({
       </main>
 
       {/* Mobile Bottom Navbar */}
-      <nav className="lg:hidden fixed bottom-0 left-0 right-0 z-50 bg-background text-foreground border-t border-gray-400">
+      <nav className="lg:hidden fixed bottom-0 left-0 right-0 z-50 bg-background text-foreground border-t border-border-gray">
         <div className="h-14">
           <Nav mobile={true} />
         </div>

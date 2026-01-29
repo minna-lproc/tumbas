@@ -15,8 +15,7 @@ export interface User {
   source_language?: Language;
   target_language?: Language;
   is_active: boolean;
-  is_admin: boolean;
-  is_evaluator: boolean;
+  role: 'user' | 'evaluator' | 'admin';
   date_joined: string;
   total_translations?: number; //should be removed
 }
@@ -27,8 +26,7 @@ export interface RegisterData {
   password: string;
   first_name: string;
   last_name: string;
-  is_admin: boolean;
-  is_evaluator: boolean;
+  role: 'user' | 'evaluator' | 'admin';
   source_language?: Language;
   target_language?: Language;
 }

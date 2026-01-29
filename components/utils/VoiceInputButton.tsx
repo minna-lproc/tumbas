@@ -34,7 +34,7 @@ export const VoiceInputButton = ({ onTranscript, onStart, onStop, disabled = fal
         className={`flex items-center justify-center rounded-full ${
           isListening
             ? 'text-red-500 hover:text-red-600'
-            : 'text-gray-400 hover:text-btn-hover'
+            : 'text-text-grey hover:text-btn-hover'
         }  shadow-lg transition-colors disabled:cursor-not-allowed disabled:opacity-50`}
         aria-label={isListening ? 'Stop recording' : 'Start voice input'}
       >
@@ -51,7 +51,7 @@ export const VoiceInputButton = ({ onTranscript, onStart, onStop, disabled = fal
         <p className="text-xs text-red-600 dark:text-red-400">{error}</p>
       )}
       {isListening &&  (
-        <p className="text-xs text-gray-400">Listening...</p>
+        <p className="text-xs text-text-grey">Listening...</p>
       )}
     </div>
   );

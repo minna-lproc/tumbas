@@ -15,7 +15,7 @@ export const useAuth = () => {
       ({
         id: mockUserData.id,
         email: mockUserData.email,
-        role: mockUserData.is_admin ? 'admin' : mockUserData.is_evaluator ? 'evaluator' : 'user',
+        role: mockUserData.role ? 'admin' : mockUserData.role ? 'evaluator' : 'user',
       }) as User & { role: string },
     []
   );

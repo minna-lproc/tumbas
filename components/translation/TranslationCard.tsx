@@ -61,7 +61,7 @@ export const TranslationCard = ({
             whileHover={{ scale: 1.02 }}
             whileTap={{ scale: 0.98 }}
             onClick={onSkip}
-            className="flex h-14 min-w-[48px] flex-1 items-center justify-center rounded-xl border-2 border-gray-300 bg-white px-6 text-base font-semibold text-gray-700 transition-colors hover:border-gray-400 hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-gray-500 focus:ring-offset-2 dark:border-gray-600 dark:bg-gray-800 dark:text-gray-300 dark:hover:border-gray-500 dark:hover:bg-gray-700"
+            className="flex h-14 min-w-[48px] flex-1 items-center justify-center rounded-xl border-2 border-gray-300 bg-white px-6 text-base font-semibold text-gray-700 transition-colors hover:border-border-gray hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-gray-500 focus:ring-offset-2 dark:border-gray-600 dark:bg-gray-800 dark:text-gray-300 dark:hover:border-gray-500 dark:hover:bg-gray-700"
           >
             Skip
           </motion.button> */}
@@ -71,7 +71,7 @@ export const TranslationCard = ({
             loading={loading}
           />
         </div>
-        <p className="text-center text-xs text-gray-400">
+        <p className="text-center text-xs text-text-grey">
           Swipe right to skip • Tap to translate
         </p>
       </div>

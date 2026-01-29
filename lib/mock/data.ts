@@ -40,8 +40,7 @@ export const mockUser: User[] = [
     first_name: 'Translator',
     last_name: 'User',
     is_active: true,
-    is_admin: false,
-    is_evaluator: false,
+    role: 'user',
     date_joined: '',
     source_language: mockLanguage[0],
     target_language: mockLanguage[4]
@@ -54,8 +53,7 @@ export const mockUser: User[] = [
     first_name: 'Translator 2',
     last_name: 'User',
     is_active: true,
-    is_admin: false,
-    is_evaluator: false,
+    role: 'user',
     date_joined: '',
     source_language: mockLanguage[1],
     target_language: mockLanguage[4]
@@ -68,8 +66,7 @@ export const mockUser: User[] = [
     first_name: 'Evaluator',
     last_name: 'User',
     is_active: true,
-    is_admin: false,
-    is_evaluator: true,
+    role: 'evaluator',
     date_joined: '',
     source_language: mockLanguage[0],
     target_language: mockLanguage[4]
@@ -82,8 +79,7 @@ export const mockUser: User[] = [
     first_name: 'Evaluator 2',
     last_name: 'User',
     is_active: true,
-    is_admin: false,
-    is_evaluator: true,
+    role: 'evaluator',
     date_joined: '',
     source_language: mockLanguage[2],
     target_language: mockLanguage[4]
@@ -96,8 +92,7 @@ export const mockUser: User[] = [
     first_name: 'Admin',
     last_name: 'User',
     is_active: true,
-    is_admin: true,
-    is_evaluator: true,
+    role: 'admin',
     date_joined: '',
     source_language: undefined,
     target_language: undefined

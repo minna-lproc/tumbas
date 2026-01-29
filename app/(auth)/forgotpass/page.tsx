@@ -54,13 +54,13 @@ export default function ForgotPassPage() {
                         <h2 className="mt-6 text-center text-3xl font-semibold tracking-tight ">
                             Reset link sent!
                         </h2>
-                        <p className='text-gray-400 text-center text-xs'>
+                        <p className='text-text-grey text-center text-xs'>
                             Please check your inbox to reset your password. If you do not see the link, check your spam folder. The link will expire in one hour.
                         </p>
                     </div>
 
                     <div>
-                        <p className="mt-2 text-gray-400 text-center text-xs ">
+                        <p className="mt-2 text-text-grey text-center text-xs ">
                             Remember your password?{' '}
                             <button className='text-btn hover:text-btn-hover'>
                                 Resend
@@ -89,7 +89,7 @@ export default function ForgotPassPage() {
                         <h2 className="mt-6 text-center text-3xl font-semibold tracking-tight ">
                             Reset your password
                         </h2>
-                        <p className='text-gray-400 text-center text-xs'>
+                        <p className='text-text-grey text-center text-xs'>
                             Enter your email address, and we will send you a link to reset your password.
                         </p>
                     </div>
@@ -106,10 +106,10 @@ export default function ForgotPassPage() {
                                 autoComplete="email"
                                 required
                                 className={`relative block w-full rounded-lg px-3 py-3 focus:z-10 
-                border border-gray-400 focus:border-btn-active 
+                border border-border-gray focus:border-btn-active 
                 focus:outline-none focus:ring--btn-active  
                 sm:text-sm placeholder:text-gray
-                ${errors.email ? 'error-border' : 'border-gray-400'}`}
+                ${errors.email ? 'error-border' : 'border-border-gray'}`}
                                 placeholder="Email address"
                             />
                             {errors.email && (
@@ -133,7 +133,7 @@ export default function ForgotPassPage() {
                             </button>
                         </div>
 
-                        <p className="mt-2 text-center text-xs text-gray-400">
+                        <p className="mt-2 text-center text-xs text-text-grey">
                             Remember your password?{' '}
                             <Link
                                 href="/login"

@@ -119,8 +119,8 @@ export default function LoginPage() {
                 className={`relative block w-full rounded-lg px-3 py-3 focus:z-10 
                 border border-gray-500 focus:border-btn-active 
                 focus:outline-none focus:ring--btn-active  
-                sm:text-sm placeholder:text-gray-400
-                ${errors.email ? 'error-border' : 'border-gray-400'}`}
+                sm:text-sm placeholder:text-text-grey
+                ${errors.email ? 'error-border' : 'border-border-gray'}`}
                 placeholder="Email address"
               />
               {errors.email && (
@@ -143,14 +143,14 @@ export default function LoginPage() {
                   className={`relative block w-full rounded-lg px-3 py-3 focus:z-10 
                 border border-gray-500 focus:border-btn-active 
                 focus:outline-none focus:ring--btn-active  
-                sm:text-sm placeholder:text-gray-400
-                ${errors.password ? 'error-border' : 'border-gray-400'}`}
+                sm:text-sm placeholder:text-text-grey
+                ${errors.password ? 'error-border' : 'border-border-gray'}`}
                   placeholder="Password"
                 />
 
                 <button
                   className='absolute inset-y-0 right-0 flex items-center pr-3 cursor-pointer 
-                  text-gray-400 hover:text-btn-hover'
+                  text-text-grey hover:text-btn-hover'
                   type="button"
                   onClick={() => setShowPassword(!showPassword)}
                 >
@@ -176,7 +176,7 @@ export default function LoginPage() {
 
             <div>
 
-              <p className="text-right text-xs text-gray-400 hover:text-btn-hover">
+              <p className="text-right text-xs text-text-grey hover:text-btn-hover">
                 <Link
                   href="/forgotpass"
                 >
@@ -207,9 +207,9 @@ export default function LoginPage() {
 
             <div className="relative">
               <div className="absolute inset-0 flex items-center">
-                <div className="w-full border-t border-gray-400" />
+                <div className="w-full border-t border-border-gray" />
               </div>
-              <div className="relative flex justify-center text-xs text-gray-400">
+              <div className="relative flex justify-center text-xs text-text-grey">
                 <span className=" px-2 bg-background">
                   or continue with
                 </span>
@@ -222,7 +222,7 @@ export default function LoginPage() {
                 onClick={() => handleSocialLogin('google')}
                 disabled={loading}
                 className="inline-flex w-full items-center justify-center rounded-lg px-4 py-3
-                border border-gray-400
+                border border-border-gray
                 bg-secondary-btn hover:bg-secondary-btn-hover
                 text-sm font-medium 
               focus:outline-none focus:ring-2  focus:ring-btn-focus focus:ring-offset-2 
@@ -252,7 +252,7 @@ export default function LoginPage() {
 
           </div>
 
-          <p className="mt-2 text-center text-xs text-gray-400">
+          <p className="mt-2 text-center text-xs text-text-grey">
             Not a user yet?{' '}
             <Link
               href="/signup"
