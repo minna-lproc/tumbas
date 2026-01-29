@@ -27,7 +27,7 @@ export const RecentTranslations = ({ translations }: RecentTranslationsProps) =>
   }
 
   return (
-    <div className="rounded-xl px-6 shadow-md bg-box-bg
+    <div className="rounded-xl px-6 pt-6 shadow-md bg-box-bg
     border border-border-gray">
       <h3 className="mb-4 text-lg font-semibold ">
         Recent Translations
