@@ -71,7 +71,7 @@ export const TranslationCard = ({
             loading={loading}
           />
         </div>
-        <p className="text-center text-xs text-secondary-text">
+        <p className="text-center text-xs text-gray">
           Swipe right to skip • Tap to translate
         </p>
       </div>

@@ -100,9 +100,9 @@ export default function DashboardPage() {
 
           {/* DASHBOARD HEADER */}
           <div className='w-full h-24 lg:h-36 rounded-xl p-6 space-y-2
-          border border-border/75
+          border border-gray/75
           text-btn-text text-shadow-gray/25 text-shadow-lg
-          bg-linear-to-bl from-btn via-turquoise-400 to-orange-200'>
+          bg-linear-to-bl from-btn via-teal-400 to-orange-200'>
             <h1 className='font-bold text-4xl'>
               Welcome user! {/* Will be dynamic based on role and name*/}
             </h1>
@@ -113,7 +113,7 @@ export default function DashboardPage() {
 
           <div className="grid grid-cols-1 gap-4 grid-rows-2 lg:grid-cols-2">
 
-            <div className="rounded-xl p-6 shadow-md border border-border">
+            <div className="rounded-xl p-6 shadow-md border border-gray">
               <p className="text-sm font-medium ">
                 Total Translations
               </p>
@@ -122,7 +122,7 @@ export default function DashboardPage() {
               </p>
             </div>
 
-            <div className="rounded-xl p-6 shadow-md border border-border">
+            <div className="rounded-xl p-6 shadow-md border border-gray">
               <p className="text-sm font-medium ">
                 Translations Today
               </p>

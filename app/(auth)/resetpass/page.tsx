@@ -70,7 +70,7 @@ export default function ResetPassPage() {
                         <h2 className="mt-6 text-center text-3xl font-semibold tracking-tight ">
                             Password reset successfully!
                         </h2>
-                        <p className='text-secondary-text text-center text-xs'>
+                        <p className='text-gray text-center text-xs'>
                             You have successfully changed your password.
                         </p>
                     </div>
@@ -96,7 +96,7 @@ export default function ResetPassPage() {
                         <h2 className="mt-6 text-center text-3xl font-semibold tracking-tight ">
                             Reset your password
                         </h2>
-                        <p className="mt-2 text-center text-xs text-secondary-text">
+                        <p className="mt-2 text-center text-xs text-gray">
                             Or {' '}
                             <Link
                                 href="/login"
@@ -119,14 +119,14 @@ export default function ResetPassPage() {
                                     type={showPassword ? 'text' : 'password'}
                                     autoComplete="current-password"
                                     required
-                                    className={`relative block w-full rounded-lg border border-border px-3 py-3 focus:z-10 
+                                    className={`relative block w-full rounded-lg border border-gray px-3 py-3 focus:z-10 
                 focus:border-btn-active focus:outline-none focus:ring--btn-active  
                 sm:text-sm placeholder:text-gray
-                ${errors.password ? 'border-red-500 focus:border-red-500' : 'border-border'}`}
+                ${errors.password ? 'border-red-500 focus:border-red-500' : 'border-gray'}`}
                                     placeholder="Password"
                                 />
                                 <button
-                                    className='absolute inset-y-0 right-0 flex items-center pr-3 cursor-pointer text-secondary-text hover:text-btn-hover'
+                                    className='absolute inset-y-0 right-0 flex items-center pr-3 cursor-pointer text-gray hover:text-btn-hover'
                                     type="button"
                                     onClick={() => setShowPassword(!showPassword)}
                                 >
@@ -155,13 +155,13 @@ export default function ResetPassPage() {
                                     type={showConfirmedPassword ? 'text' : 'password'}
                                     autoComplete="current-password"
                                     required
-                                    className="relative block w-full rounded-lg border border-border px-3 py-3 focus:z-10 
+                                    className="relative block w-full rounded-lg border border-gray px-3 py-3 focus:z-10 
                 focus:border-btn-active focus:outline-none focus:ring--btn-active  
-                sm:text-sm placeholder:text-secondary-text"
+                sm:text-sm placeholder:text-gray"
                                     placeholder="Confirmed password"
                                 />
                                 <button
-                                    className='absolute inset-y-0 right-0 flex items-center pr-3 cursor-pointer text-secondary-text hover:text-btn-hover'
+                                    className='absolute inset-y-0 right-0 flex items-center pr-3 cursor-pointer text-gray hover:text-btn-hover'
                                     type="button"
                                     onClick={() => setShowConfirmedPassword(!showConfirmedPassword)}
                                 >

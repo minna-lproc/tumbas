@@ -1,13 +1,12 @@
 'use client';
 
 import { motion } from 'framer-motion';
-import { useThemeToggle } from "@/hooks/useThemeToggle";
+import { useTheme } from "@/components/utils/ThemeProvider";
 import {Moon, Sun} from "lucide-react";
-import { div } from 'framer-motion/client';
 
 export const ThemeToggle = () => {
 
-    const { isDarkMode, toggleTheme } = useThemeToggle();
+    const { isDarkMode, toggleTheme } = useTheme();
 
     return (
         <motion.button

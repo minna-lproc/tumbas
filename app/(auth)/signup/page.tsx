@@ -128,9 +128,9 @@ export default function SignupPage() {
                 <input
                   type="text"
                   required
-                  className="relative block w-full rounded-lg border border-border px-3 py-3 focus:z-10 
+                  className="relative block w-full rounded-lg border border-gray px-3 py-3 focus:z-10 
                 focus:border-btn-active focus:outline-none focus:ring--btn-active  
-                sm:text-sm placeholder:text-secondary-text"
+                sm:text-sm placeholder:text-gray"
                   placeholder="First name"
                 />
 
@@ -142,9 +142,9 @@ export default function SignupPage() {
                 <input
                   type="text"
                   required
-                  className="relative block w-full rounded-lg border border-border px-3 py-3 focus:z-10 
+                  className="relative block w-full rounded-lg border border-gray px-3 py-3 focus:z-10 
                 focus:border-btn-active focus:outline-none focus:ring--btn-active  
-                sm:text-sm placeholder:text-secondary-text"
+                sm:text-sm placeholder:text-gray"
                   placeholder="Last name"
                 />
 
@@ -157,9 +157,9 @@ export default function SignupPage() {
                   {...register('username')}
                   type="text"
                   autoComplete="username"
-                  className="relative block w-full rounded-lg border border-border px-3 py-3 focus:z-10 
+                  className="relative block w-full rounded-lg border border-gray px-3 py-3 focus:z-10 
                 focus:border-btn-active focus:outline-none focus:ring--btn-active  
-                sm:text-sm placeholder:text-secondary-text"
+                sm:text-sm placeholder:text-gray"
                   placeholder="Username (optional)"
                 />
                 {errors.username && (
@@ -201,10 +201,10 @@ export default function SignupPage() {
                   type="email"
                   autoComplete="email"
                   required
-                  className={`relative block w-full rounded-lg border border-border px-3 py-3 focus:z-10 
+                  className={`relative block w-full rounded-lg border border-gray px-3 py-3 focus:z-10 
                 focus:border-btn-active focus:outline-none focus:ring--btn-active  
                 sm:text-sm placeholder:text-gray
-                ${errors.email ? 'border-red-500 focus:border-red-500' : 'border-border'}`}
+                ${errors.email ? 'border-red-500 focus:border-red-500' : 'border-gray'}`}
                   placeholder="Email address"
                 />
                 {errors.email && (
@@ -220,14 +220,14 @@ export default function SignupPage() {
                   type={showPassword ? 'text' : 'password'}
                   autoComplete="current-password"
                   required
-                  className={`relative block w-full rounded-lg border border-border px-3 py-3 focus:z-10 
+                  className={`relative block w-full rounded-lg border border-gray px-3 py-3 focus:z-10 
                 focus:border-btn-active focus:outline-none focus:ring--btn-active  
                 sm:text-sm placeholder:text-gray
-                ${errors.password ? 'border-red-500 focus:border-red-500' : 'border-border'}`}
+                ${errors.password ? 'border-red-500 focus:border-red-500' : 'border-gray'}`}
                   placeholder="Password"
                 />
                 <button
-                  className='absolute inset-y-0 right-0 flex items-center pr-3 cursor-pointer text-secondary-text hover:text-btn-hover'
+                  className='absolute inset-y-0 right-0 flex items-center pr-3 cursor-pointer text-gray hover:text-btn-hover'
                   type="button"
                   onClick={() => setShowPassword(!showPassword)}
                 >
@@ -253,13 +253,13 @@ export default function SignupPage() {
                   type={showConfirmedPassword ? 'text' : 'password'}
                   autoComplete="current-password"
                   required
-                  className="relative block w-full rounded-lg border border-border px-3 py-3 focus:z-10 
+                  className="relative block w-full rounded-lg border border-gray px-3 py-3 focus:z-10 
                 focus:border-btn-active focus:outline-none focus:ring--btn-active  
-                sm:text-sm placeholder:text-secondary-text"
+                sm:text-sm placeholder:text-gray"
                   placeholder="Confirmed password"
                 />
                 <button
-                  className='absolute inset-y-0 right-0 flex items-center pr-3 cursor-pointer text-secondary-text hover:text-btn-hover'
+                  className='absolute inset-y-0 right-0 flex items-center pr-3 cursor-pointer text-gray hover:text-btn-hover'
                   type="button"
                   onClick={() => setShowConfirmedPassword(!showConfirmedPassword)}
                 >
@@ -279,7 +279,7 @@ export default function SignupPage() {
             <div className='flex items-start w-full gap-2'>
               
               <input type="checkbox" id='termsOfService' className='accent-background'/>
-              <label htmlFor="termsOfService" className="text-xs text-center text-secondary-text whitespace-nowrap">
+              <label htmlFor="termsOfService" className="text-xs text-center text-gray whitespace-nowrap">
                 I agree to the{' '}
                 <button type='button' className='underline text-btn'>
                   Terms of Service
@@ -292,8 +292,8 @@ export default function SignupPage() {
                 type="button"
                 disabled={loading}
                 onClick={prevStep}
-                className="group relative flex w-full justify-center rounded-lg border border-border px-4 py-3 
-              bg-background text-foreground hover:border-btn-hover hover:bg-turquoise-50 dark:hover:bg-turquoise-900
+                className="group relative flex w-full justify-center rounded-lg border border-gray px-4 py-3 
+              bg-background text-foreground hover:border-btn-hover hover:bg-teal-50 dark:hover:bg-teal-900
               text-sm font-medium  
               focus:outline-none focus:ring-2 focus:ring-btn-focus focus:ring-offset-2 disabled:opacity-50 disabled:cursor-not-allowed "
               >
@@ -330,7 +330,7 @@ export default function SignupPage() {
               <h2 className="mt-6 text-center text-3xl font-semibold tracking-tight ">
                 Registration successful!
               </h2>
-              <p className='text-secondary-text text-center text-xs'>
+              <p className='text-gray text-center text-xs'>
                 You have successfully changed your password.
               </p>
             </div>
@@ -376,10 +376,10 @@ export default function SignupPage() {
 
               <div className="relative">
                 <div className="absolute inset-0 flex items-center">
-                  <div className="w-full border-t border-border" />
+                  <div className="w-full border-t border-gray" />
                 </div>
                 <div className="relative flex justify-center text-xs">
-                  <span className=" text-secondary-text px-2 bg-background">
+                  <span className=" text-gray px-2 bg-background">
                     Or continue with
                   </span>
                 </div>
@@ -391,7 +391,7 @@ export default function SignupPage() {
                   onClick={() => handleSocialLogin('google')}
                   disabled={loading}
                   className="inline-flex w-full items-center justify-center rounded-lg 
-              border border-border px-4 py-3 text-sm font-medium 
+              border border-gray px-4 py-3 text-sm font-medium 
               focus:outline-none focus:ring-2 
               focus:ring-btn-focus focus:ring-offset-2 disabled:opacity-50 disabled:cursor-not-allowed "
                 >

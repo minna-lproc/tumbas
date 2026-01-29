@@ -28,7 +28,7 @@ export const RecentTranslations = ({ translations }: RecentTranslationsProps) =>
 
   return (
     <div className="rounded-xl p-6 shadow-md 
-    border border-border">
+    border border-gray">
       <h3 className="mb-4 text-lg font-bold ">
         Recent Translations
       </h3>

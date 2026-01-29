@@ -88,8 +88,11 @@ export default function LoginPage() {
   };
 
   return (
-    <div className="flex min-h-screen items-center justify-center bg-background text-foreground font-medium px-4 py-12  sm:px-6 lg:px-8">
-      <div className="w-full max-w-md space-y-8">
+    <div className="flex min-h-screen items-center justify-center 
+    px-4 py-12  sm:px-6 lg:px-8
+    bg-background text-foreground font-medium ">
+
+      <div className="w-full max-w-md space-y-6">
 
         <div className='flex items-center justify-center'>
           <Image className='h-8 w-auto' src={tumbas} alt='tumbas' />
@@ -103,6 +106,7 @@ export default function LoginPage() {
           )}
 
           <div className="space-y-4 rounded-md">
+
             <div>
               <label htmlFor="email" className="sr-only">
                 Email address
@@ -112,41 +116,41 @@ export default function LoginPage() {
                 type="email"
                 autoComplete="email"
                 required
-                className={`relative block w-full rounded-lg border border-border px-3 py-3 focus:z-10 
-                focus:border-btn-active focus:outline-none focus:ring--btn-active  
-                sm:text-sm placeholder:text-gray
-                ${errors.email ? 'border-red-500 focus:border-red-500' : 'border-border'}`}
+                className={`relative block w-full rounded-lg px-3 py-3 focus:z-10 
+                border border-gray-500 focus:border-btn-active 
+                focus:outline-none focus:ring--btn-active  
+                sm:text-sm placeholder:text-gray-400
+                ${errors.email ? 'error-border' : 'border-gray-400'}`}
                 placeholder="Email address"
               />
               {errors.email && (
-                <p className="mt-1 text-xs font-base text-red-500">
+                <p className="mt-1 error-text">
                   {errors.email.message}
                 </p>
               )}
             </div>
 
-
-
             <div>
               <label htmlFor="password" className="sr-only">
                 Password
               </label>
-
               <div className="relative">
                 <input
                   {...register('password')}
                   type={showPassword ? 'text' : 'password'}
                   autoComplete="current-password"
                   required
-                  className={`relative block w-full rounded-lg border px-3 py-3 focus:z-10 
-                focus:border-btn-active focus:outline-none focus:ring--btn-active  
-                sm:text-sm placeholder:text-gray
-                ${errors.password ? 'border-red-500 focus:border-red-500' : 'border-border'}`}
+                  className={`relative block w-full rounded-lg px-3 py-3 focus:z-10 
+                border border-gray-500 focus:border-btn-active 
+                focus:outline-none focus:ring--btn-active  
+                sm:text-sm placeholder:text-gray-400
+                ${errors.password ? 'error-border' : 'border-gray-400'}`}
                   placeholder="Password"
                 />
 
                 <button
-                  className='absolute inset-y-0 right-0 flex items-center pr-3 cursor-pointer text-secondary-text hover:text-btn-hover'
+                  className='absolute inset-y-0 right-0 flex items-center pr-3 cursor-pointer 
+                  text-gray-400 hover:text-btn-hover'
                   type="button"
                   onClick={() => setShowPassword(!showPassword)}
                 >
@@ -163,7 +167,7 @@ export default function LoginPage() {
 
               </div>
               {errors.password && (
-                <p className="mt-1 text-xs font-base text-red-500">
+                <p className="mt-1 error-text">
                   {errors.password.message}
                 </p>
               )}
@@ -172,10 +176,9 @@ export default function LoginPage() {
 
             <div>
 
-              <p className="text-right text-xs text-secondary-text hover:text-btn-hover">
+              <p className="text-right text-xs text-gray-400 hover:text-btn-hover">
                 <Link
                   href="/forgotpass"
-                  className="font-medium"
                 >
                   Forgot password?
                 </Link>
@@ -191,10 +194,12 @@ export default function LoginPage() {
               <button
                 type="submit"
                 disabled={loading}
-                className="group relative flex w-full justify-center rounded-lg border 
-              border-transparent px-4 py-3 bg-btn text-btn-text  hover:bg-btn-hover
-              text-sm font-medium  
-              focus:outline-none focus:ring-2 focus:ring-btn-focus focus:ring-offset-2 disabled:opacity-50 disabled:cursor-not-allowed "
+                className="group relative flex w-full justify-center rounded-lg px-4 py-3 
+                border border-transparent 
+                bg-btn hover:bg-btn-hover
+                text-btn-text text-sm
+                focus:outline-none focus:ring-2 focus:ring-btn-focus focus:ring-offset-1
+                disabled:opacity-50 disabled:cursor-not-allowed "
               >
                 {loading ? 'Signing in...' : 'Sign in'}
               </button>
@@ -202,9 +207,9 @@ export default function LoginPage() {
 
             <div className="relative">
               <div className="absolute inset-0 flex items-center">
-                <div className="w-full border-t border-border" />
+                <div className="w-full border-t border-gray-400" />
               </div>
-              <div className="relative flex justify-center text-xs text-secondary-text">
+              <div className="relative flex justify-center text-xs text-gray-400">
                 <span className=" px-2 bg-background">
                   or continue with
                 </span>
@@ -216,10 +221,12 @@ export default function LoginPage() {
                 type="button"
                 onClick={() => handleSocialLogin('google')}
                 disabled={loading}
-                className="inline-flex w-full items-center justify-center rounded-lg 
-              border border-border px-4 py-3 text-sm font-medium 
-              focus:outline-none focus:ring-2 
-              focus:ring-btn-focus focus:ring-offset-2 disabled:opacity-50 disabled:cursor-not-allowed "
+                className="inline-flex w-full items-center justify-center rounded-lg px-4 py-3
+                border border-gray-400
+                bg-secondary-btn hover:bg-secondary-btn-hover
+                text-sm font-medium 
+              focus:outline-none focus:ring-2  focus:ring-btn-focus focus:ring-offset-2 
+              disabled:opacity-50 disabled:cursor-not-allowed "
               >
                 <svg className="h-5 w-5" viewBox="0 0 24 24">
                   <path
@@ -245,7 +252,7 @@ export default function LoginPage() {
 
           </div>
 
-          <p className="mt-2 text-center text-xs text-secondary-text">
+          <p className="mt-2 text-center text-xs text-gray-400">
             Not a user yet?{' '}
             <Link
               href="/signup"
