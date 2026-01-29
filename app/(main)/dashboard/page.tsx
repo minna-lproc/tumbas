@@ -69,6 +69,10 @@ export default function DashboardPage() {
   };
   */
 
+  const getHeader = () => {
+    
+  }
+
   if (authLoading || loading) {
     return (
       <div className="flex min-h-screen items-center justify-center ">
@@ -89,20 +93,36 @@ export default function DashboardPage() {
   }
 
   return (
-    <div className="min-h-screen  px-4 py-8  sm:px-6 lg:px-8">
+    <div className="min-h-screen px-4 py-8 sm:px-6 lg:px-8 font-medium">
       <div className="mx-auto max-w-7xl">
-        <h1 className="mb-8 text-3xl font-bold ">Dashboard</h1>
+
         <div className="space-y-6">
-          <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
-            <div className="rounded-xl  p-6 shadow-md ">
+
+          {/* DASHBOARD HEADER */}
+          <div className='w-full h-24 lg:h-36 rounded-xl p-6 space-y-2
+          border border-border/75
+          text-btn-text text-shadow-gray/25 text-shadow-lg
+          bg-linear-to-bl from-btn via-turquoise-400 to-orange-200'>
+            <h1 className='font-bold text-4xl'>
+              Welcome user! {/* Will be dynamic based on role and name*/}
+            </h1>
+            <p>
+              Track and manage all your completed translations right here. {/* Will be dynamic based on role*/}
+            </p>
+          </div>
+
+          <div className="grid grid-cols-1 gap-4 grid-rows-2 lg:grid-cols-2">
+
+            <div className="rounded-xl p-6 shadow-md border border-border">
               <p className="text-sm font-medium ">
                 Total Translations
               </p>
-              <p className="mt-2 text-3xl font-bold ">
+              <p className="mt-2 text-3xl font-bold">
                 {stats.total_translations}
               </p>
             </div>
-            <div className="rounded-xl p-6 shadow-md ">
+
+            <div className="rounded-xl p-6 shadow-md border border-border">
               <p className="text-sm font-medium ">
                 Translations Today
               </p>
@@ -111,6 +131,7 @@ export default function DashboardPage() {
               </p>
             </div>
           </div>
+          
           <RecentTranslations translations={stats.recent_translations} />
         </div>
       </div>
