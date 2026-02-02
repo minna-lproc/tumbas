@@ -1,6 +1,7 @@
 'use client';
 
 import { useState, useRef } from 'react';
+import type { Translation } from '@/lib/types/translation';
 import { VoiceInputButton } from '../utils/VoiceInputButton';
 
 interface TranslationInputProps {
@@ -44,7 +45,7 @@ export const TranslationInput = ({
           }`}
       >
         <textarea
-          value={value}
+          value={value}  // ← Use the value prop directly
           onChange={(e) => onChange(e.target.value)}
           onFocus={() => setIsFocused(true)}
           onBlur={() => setIsFocused(false)}
@@ -55,22 +56,21 @@ export const TranslationInput = ({
           bg-transparent px-4 py-4 
           text-sm lg:text-base placeholder:text-text-grey"
         />
+        <div className="absolute bottom-2 left-4">
+          <VoiceInputButton
+            onTranscript={handleVoiceTranscript}
+            onStart={handleVoiceStart}
+            onStop={handleVoiceStop}
+            disabled={false}
+          />
+        </div>
 
-          <div className="absolute bottom-2 left-4">
-            <VoiceInputButton
-              onTranscript={handleVoiceTranscript}
-              onStart={handleVoiceStart}
-              onStop={handleVoiceStop}
-              disabled={false}
-            />
-          </div>
-
-          <div className="absolute bottom-2 right-4 text-xs text-text-grey">
-            <span className={remainingChars < 50 ? 'text-orange-600' : ''}>
-              {characterCount}/{maxLength}
-            </span>
-          </div>
-
+        <div className="absolute bottom-2 right-4 text-xs text-text-grey">
+          <span className={remainingChars < 50 ? 'text-orange-600' : ''}>
+            {characterCount}/{maxLength}
+          </span>
+        </div>
+        
       </div>
     </div>
   );

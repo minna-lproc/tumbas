@@ -71,10 +71,10 @@ export default function ProfilePage() {
 
   if (authLoading || loading) {
     return (
-      <div className="flex min-h-screen items-center justify-center bg-gray-50 dark:bg-gray-900">
+      <div className="flex min-h-screen items-center justify-center ">
         <div className="text-center">
           <div className="mb-4 inline-block h-12 w-12 animate-spin rounded-full border-4 border-solid border-teal-600 border-r-transparent"></div>
-          <p className="text-gray-600 dark:text-gray-400">Loading profile...</p>
+          <p className="">Loading profile...</p>
         </div>
       </div>
     );
@@ -82,34 +82,34 @@ export default function ProfilePage() {
 
   if (!profile) {
     return (
-      <div className="flex min-h-screen items-center justify-center bg-gray-50 dark:bg-gray-900">
-        <p className="text-gray-600 dark:text-gray-400">Failed to load profile</p>
+      <div className="flex min-h-screen items-center justify-center ">
+        <p className="">Failed to load profile</p>
       </div>
     );
   }
 
   return (
-    <div className="min-h-screen bg-gray-50 px-4 py-8 dark:bg-gray-900 sm:px-6 lg:px-8">
+    <div className="min-h-screen  px-4 py-8  sm:px-6 lg:px-8">
       <div className="mx-auto max-w-7xl">
         <div className="mb-8 flex items-center justify-between">
-          <h1 className="text-3xl font-bold text-gray-900 dark:text-white">Profile</h1>
+          <h1 className="text-3xl font-bold ">Profile</h1>
           <button
             onClick={handleSignOut}
-            className="rounded-lg bg-red-600 px-4 py-2 text-white transition-colors hover:bg-red-700 dark:bg-red-500 dark:hover:bg-red-600"
+            className="rounded-lg  px-4 py-2  transition-colors "
           >
             Sign Out
           </button>
         </div>
-        <div className="rounded-xl bg-white p-6 shadow-md dark:bg-gray-800">
-          <h2 className="mb-2 text-xl font-semibold text-gray-900 dark:text-white">
+        <div className="rounded-xl  p-6 shadow-md ">
+          <h2 className="mb-2 text-xl font-semibold ">
             {profile.username || profile.email.split('@')[0]}
           </h2>
-          <p className="mb-4 text-gray-600 dark:text-gray-400">{profile.email}</p>
-          <div className="rounded-lg bg-gray-50 p-4 dark:bg-gray-700">
-            <p className="text-sm font-medium text-gray-600 dark:text-gray-400">
+          <p className="mb-4 ">{profile.email}</p>
+          <div className="rounded-lg  p-4 ">
+            <p className="text-sm font-medium ">
               Total Translations
             </p>
-            <p className="mt-1 text-2xl font-bold text-gray-900 dark:text-white">
+            <p className="mt-1 text-2xl font-bold ">
               {profile.total_translations}
             </p>
           </div>

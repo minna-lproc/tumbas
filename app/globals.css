@@ -1,26 +1,159 @@
 @import "tailwindcss";
 
+
+@theme inline {
+
+  /*main color*/
+  --color-teal-50: #eafaf9;
+  --color-teal-100: #d6f5f2;
+  --color-teal-200: #adebe6;
+  --color-teal-300: #84e1d9;
+  --color-teal-400: #5bd7cd;
+  --color-teal-500: #37cec1;
+  --color-teal-600: #28a49a;
+  --color-teal-700: #1e7b73;
+  --color-teal-800: #14524d;
+  --color-teal-900: #0a2926;
+  --color-teal-950: #071d1b;
+
+  /*gray*/
+  --color-gray-50: #f1f3f3;
+  --color-gray-100: #e3e7e8;
+  --color-gray-200: #c8ced0;
+  --color-gray-300: #acb6b9;
+  --color-gray-400: #9ba6a9;
+  --color-gray-500: #75858a;
+  --color-gray-600: #5e6b6e;
+  --color-gray-700: #465053;
+  --color-gray-800: #2f3537;
+  --color-gray-900: #171b1c;
+  --color-gray-950: #101313;
+
+  /*green accent*/
+  --color-emerald-50: #ecf8f0;
+  --color-emerald-100: #daf1e0;
+  --color-emerald-200: #b5e3c1;
+  --color-emerald-300: #8fd6a2;
+  --color-emerald-400: #6ac883;
+  --color-emerald-500: #45ba64;
+  --color-emerald-600: #379550;
+  --color-emerald-700: #29703c;
+  --color-emerald-800: #1c4a28;
+  --color-emerald-900: #0e2514;
+  --color-emerald-950: #0a1a0e;
+
+  /*yellow accent*/
+  --color-gold-50: #fbf7ea;
+  --color-gold-100: #f7f0d4;
+  --color-gold-200: #efe1a9;
+  --color-gold-300: #e7d27e;
+  --color-gold-400: #dec354;
+  --color-gold-500: #d6b429;
+  --color-gold-600: #ab9021;
+  --color-gold-700: #816c18;
+  --color-gold-800: #564810;
+  --color-gold-900: #2b2408;
+  --color-gold-950: #1e1906;
+}
+
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
+  --background: #fafdfb;
+  --foreground: #072128;
+
+  /* button colors */
+  --btn-background: var(--color-teal-600);
+  --btn-hover-background: var(--color-teal-700);
+  --btn-active-background: var(--color-teal-600);
+  --btn-text: #fafdfb;
+
+  /* secondary button colors */
+  --btn-secondary-background: var(--background);
+  --btn-secondary-hover-background: var(--color-gray-200);
+  --btn-secondary-active-background: var(--color-gray-400);
+  --btn-secondary-text: var(--foreground);
+
+  --header-gradient-from: var(--color-teal-500);
+  --header-gradient-via: var(--color-teal-400);
+  --header-gradient-to: var(--color-orange-200);
+
+  /* gray colors */
+  --border-gray: var(--color-gray-400);
+  --text-grey: var(--color-gray-400);
+
+  --box-background: var(--background);
+
+}
+
+.dark {
+  --background: #04121d;
+  --foreground: #fafdfb;
+
+  --btn-secondary-hover-background: #08222950;
+  --btn-secondary-active-background: #08222950;
+
+  --header-gradient-from: var(--color-teal-700);
+  --header-gradient-via: var(--color-teal-800);
+  --header-gradient-to: var(--color-blue-950);
+
+  --border-gray: #425e68;
+  --text-grey: #5e7d87;
+
+  --box-background: #08222950;
 }
 
 @theme inline {
   --color-background: var(--background);
   --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
+  --font-sans: var(--font-montserrat);
+  --font-mono: var(--font-montserrat);
+
+  --color-border-gray: var(--border-gray);
+  --color-text-grey: var(--text-grey);
+
+  --color-box-bg: var(--box-background);
+
+  /* button colors */
+  --color-btn: var(--btn-background);
+  --color-btn-hover: var(--btn-hover-background);
+  --color-btn-active: var(--btn-active-background);
+  --color-btn-focus: var(--btn-background);
+  --color-btn-text: var(--btn-text);
+
+  /* secondary button colors */
+  --color-secondary-btn: var(--background);
+  --color-secondary-btn-hover: var(--btn-secondary-hover-background);
+  --color-secondary-btn-active: var(--btn-secondary-active-background);
+  --color-secondary-btn-focus: var(--background);
+  --color-secondary-btn-text: var(--foreground);
+
+  --color-header-gradient-from: var(--header-gradient-from);
+  --color-header-gradient-via: var(--header-gradient-via);
+  --color-header-gradient-to: var(--header-gradient-to);
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
+@layer base {
+  body {
+    background: var(--background);
+    color: var(--foreground);
+    font-family: var(--font-sans);
   }
 }
 
-body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+@layer utilities {
+
+  .icon {
+    width: 1rem;
+    height: 1rem;
+  }
+
+  .error-text {
+    color: var(--color-red-500);
+    font-weight: var(--font-weight-normal);
+    font-size: var(--text-xs);
+  }
+
+  .error-border {
+    border-color: var(--color-red-500);
+  }
+
 }

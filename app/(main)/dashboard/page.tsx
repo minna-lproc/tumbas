@@ -34,7 +34,7 @@ export default function DashboardPage() {
   useEffect(() => {
     // Use mock data instead of API call
     const mockStats: DashboardStats = {
-      total_translations: mockUser.total_translations,
+      total_translations: 20,
       translations_today: 3,
       recent_translations: getRecentTranslations(),
     };
@@ -69,12 +69,16 @@ export default function DashboardPage() {
   };
   */
 
+  const getHeader = () => {
+    
+  }
+
   if (authLoading || loading) {
     return (
-      <div className="flex min-h-screen items-center justify-center bg-gray-50 dark:bg-gray-900">
+      <div className="flex min-h-screen items-center justify-center bg-background text-foreground">
         <div className="text-center">
           <div className="mb-4 inline-block h-12 w-12 animate-spin rounded-full border-4 border-solid border-teal-600 border-r-transparent"></div>
-          <p className="text-gray-600 dark:text-gray-400">Loading...</p>
+          <p className="">Loading...</p>
         </div>
       </div>
     );
@@ -82,35 +86,52 @@ export default function DashboardPage() {
 
   if (!stats) {
     return (
-      <div className="flex min-h-screen items-center justify-center bg-gray-50 dark:bg-gray-900">
-        <p className="text-gray-600 dark:text-gray-400">Failed to load statistics</p>
+      <div className="flex min-h-screen items-center justify-center ">
+        <p className="">Failed to load statistics</p>
       </div>
     );
   }
 
   return (
-    <div className="min-h-screen bg-gray-50 px-4 py-8 dark:bg-gray-900 sm:px-6 lg:px-8">
+    <div className="min-h-screen px-4 py-8 sm:px-6 lg:px-8">
       <div className="mx-auto max-w-7xl">
-        <h1 className="mb-8 text-3xl font-bold text-gray-900 dark:text-white">Dashboard</h1>
+
         <div className="space-y-6">
-          <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
-            <div className="rounded-xl bg-white p-6 shadow-md dark:bg-gray-800">
-              <p className="text-sm font-medium text-gray-600 dark:text-gray-400">
+
+          {/* DASHBOARD HEADER */}
+          <div className='flex flex-col justify-center w-full h-36 rounded-xl p-6 space-y-2 shadow-lg
+          text-btn-text text-shadow-lg text-shadow-teal-700/25
+          border border-background/25
+          bg-linear-to-bl from-header-gradient-from via-header-gradient-via to-header-gradient-to'>
+            <h1 className='font-bold text-3xl tracking-tight'>
+              Welcome to tumbas! {/* Will be dynamic based on role and name*/}
+            </h1>
+            <p className='font-medium text-sm'>
+              Track and manage all your completed translations right here. {/* Will be dynamic based on role*/}
+            </p>
+          </div>
+
+          <div className="grid gap-4 grid-rows-1 lg:grid-cols-2">
+
+            <div className="rounded-xl p-6 shadow-md border border-border-gray bg-box-bg">
+              <p className="text-sm font-medium ">
                 Total Translations
               </p>
-              <p className="mt-2 text-3xl font-bold text-gray-900 dark:text-white">
+              <p className="mt-2 text-3xl font-bold">
                 {stats.total_translations}
               </p>
             </div>
-            <div className="rounded-xl bg-white p-6 shadow-md dark:bg-gray-800">
-              <p className="text-sm font-medium text-gray-600 dark:text-gray-400">
+
+            <div className="rounded-xl p-6 shadow-md border border-border-gray bg-box-bg">
+              <p className="text-sm font-medium ">
                 Translations Today
               </p>
-              <p className="mt-2 text-3xl font-bold text-gray-900 dark:text-white">
+              <p className="mt-2 text-3xl font-bold ">
                 {stats.translations_today}
               </p>
             </div>
           </div>
+          
           <RecentTranslations translations={stats.recent_translations} />
         </div>
       </div>

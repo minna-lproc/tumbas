@@ -1,11 +1,11 @@
 {
-  "name": "Siargaonon Translation App",
+  "name": "Tumbas",
   "short_name": "Tumbas",
-  "description": "Crowdsourced translation data collection for Siargaonon dialect",
+  "description": "Crowdsourced Translation Data Collection for Philippine Languages",
   "start_url": "/",
   "display": "standalone",
-  "background_color": "#ffffff",
-  "theme_color": "#14b8a6",
+  "background_color": "#fafdfb",
+  "theme_color": "#37cec1",
   "orientation": "portrait-primary",
   "icons": [
     {

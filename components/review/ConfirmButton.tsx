@@ -1,21 +1,21 @@
 'use client';
 
 import { motion } from 'framer-motion';
-import {Circle} from "lucide-react";
+import { Circle } from 'lucide-react';
 
-interface SubmitButtonProps {
+interface ConfirmButtonProps {
   onClick: () => void;
   disabled?: boolean;
   loading?: boolean;
   label?: string;
 }
 
-export const SubmitButton = ({
+export const ConfirmButton = ({
   onClick,
   disabled = false,
   loading = false,
-  label = 'Submit Translation',
-}: SubmitButtonProps) => {
+  label = 'Confirm Translation',
+}: ConfirmButtonProps) => {
   return (
     <motion.button
       whileHover={{ scale: disabled ? 1 : 1.02 }}
@@ -27,7 +27,7 @@ export const SubmitButton = ({
       text-btn-text text-sm lg:text-base font-semibold 
       shadow-sm transition-colors 
       focus:outline-none focus:ring-2 focus:ring-btn-focus focus:ring-offset-2 
-      disabled:cursor-not-allowed disabled:opacity-50 "
+      disabled:cursor-not-allowed disabled:opacity-50"
     >
       {loading ? (
         <span className="flex items-center gap-2">

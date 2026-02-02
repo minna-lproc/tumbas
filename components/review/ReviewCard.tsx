@@ -3,11 +3,11 @@
 import { motion, PanInfo } from 'framer-motion';
 import { SourceTextCard } from '../utils/SourceTextCard';
 import { TranslationInput } from './TranslationInput';
-import { SubmitButton } from './SubmitButton';
+import { ConfirmButton } from './ConfirmButton';
 import { VoiceInputButton } from '../utils/VoiceInputButton';
 import type { SourceText } from '@/lib/types/translation';
 
-interface TranslationCardProps {
+interface ReviewCardProps {
   sourceText: SourceText;
   translation: string;
   onTranslationChange: (value: string) => void;
@@ -18,14 +18,14 @@ interface TranslationCardProps {
 
 const SWIPE_THRESHOLD = 50;
 
-export const TranslationCard = ({
+export const ReviewCard = ({
   sourceText,
   translation,
   onTranslationChange,
   onSubmit,
   onSkip,
   loading = false,
-}: TranslationCardProps) => {
+}: ReviewCardProps) => {
   const handleDragEnd = (_event: MouseEvent | TouchEvent | PointerEvent, info: PanInfo) => {
     if (info.offset.x > SWIPE_THRESHOLD) {
       onSkip();
@@ -38,12 +38,12 @@ export const TranslationCard = ({
       dragConstraints={{ left: 0, right: 0 }}
       dragElastic={0.2}
       onDragEnd={handleDragEnd}
-      className="w-full mt-12"
+      className="w-full"
     >
       <div className="space-y-4">
 
         <p className='text-xl font-semibold my-4'>
-          Translate
+          Review
         </p>
 
         <SourceTextCard sourceText={sourceText} />
@@ -65,14 +65,14 @@ export const TranslationCard = ({
           >
             Skip
           </motion.button> */}
-          <SubmitButton
+          <ConfirmButton
             onClick={onSubmit}
             disabled={!translation.trim()}
             loading={loading}
           />
         </div>
         <p className="text-center text-xs text-text-grey">
-          Swipe right to skip • Tap to translate
+          Swipe right to skip • Tap to review
         </p>
       </div>
     </motion.div>

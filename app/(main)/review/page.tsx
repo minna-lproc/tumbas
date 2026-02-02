@@ -4,10 +4,11 @@ import { useState, useEffect } from 'react';
 import { useRouter } from 'next/navigation';
 import { useAuth } from '@/hooks/useAuth';
 import { useTranslation } from '@/hooks/useTranslation';
-import { TranslationCard } from '@/components/translation/TranslationCard';
+import { ReviewCard } from '@/components/review/ReviewCard';
 import type { SourceText } from '@/lib/types/translation';
 
-export default function TranslatePage() {
+
+export default function ReviewPage() {
   const router = useRouter();
   const { user, loading: authLoading } = useAuth();
   const { submitTranslation, fetchNextSourceText, loading: translationLoading, error } =
@@ -57,7 +58,7 @@ export default function TranslatePage() {
     return (
       <div className="flex min-h-screen items-center justify-center px-4">
         <div className="text-center">
-          <div className="mb-4 inline-block h-12 w-12 animate-spin rounded-full border-4 border-solid border-r-transparent"></div>
+          <div className="mb-4 inline-block h-12 w-12 animate-spin rounded-full border-4 border-solid border-btn-focus border-r-transparent"></div>
           <p className="">Loading...</p>
         </div>
       </div>
@@ -66,7 +67,7 @@ export default function TranslatePage() {
 
   if (!currentSourceText) {
     return (
-      <div className="flex min-h-screen items-center justify-center px-4 ">
+      <div className="flex min-h-screen items-center justify-center px-4">
         <div className="text-center">
           <h2 className="mb-4 text-2xl font-bold">
             All caught up!
@@ -83,11 +84,11 @@ export default function TranslatePage() {
     <div className="min-h-screen px-4 sm:px-6 lg:px-8">
       <div className="mx-auto max-w-2xl">
         {error && (
-          <div className="mb-6 rounded-lg">
+          <div className="mb-6 rounded-lg p-4 ">
             <p className="text-sm">{error}</p>
           </div>
         )}
-        <TranslationCard
+        <ReviewCard
           sourceText={currentSourceText}
           translation={translation}
           onTranslationChange={setTranslation}

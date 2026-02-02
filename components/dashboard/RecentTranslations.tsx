@@ -17,28 +17,29 @@ interface RecentTranslationsProps {
 export const RecentTranslations = ({ translations }: RecentTranslationsProps) => {
   if (translations.length === 0) {
     return (
-      <div className="rounded-xl bg-white p-6 shadow-md dark:bg-gray-800">
-        <h3 className="mb-4 text-lg font-semibold text-gray-900 dark:text-white">
+      <div className="rounded-xl  p-6 shadow-md ">
+        <h3 className="mb-4 text-lg font-semibold ">
           Recent Translations
         </h3>
-        <p className="text-gray-500 dark:text-gray-400">No translations yet. Start translating!</p>
+        <p className="">No translations yet. Start translating!</p>
       </div>
     );
   }
 
   return (
-    <div className="rounded-xl bg-white p-6 shadow-md dark:bg-gray-800">
-      <h3 className="mb-4 text-lg font-semibold text-gray-900 dark:text-white">
+    <div className="rounded-xl px-6 pt-6 shadow-md bg-box-bg
+    border border-border-gray">
+      <h3 className="mb-4 text-lg font-semibold ">
         Recent Translations
       </h3>
       <div className="space-y-4">
         {translations.map((translation, index) => (
-          <div key={index} className="border-b border-gray-200 pb-4 last:border-0 dark:border-gray-700">
-            <p className="text-sm text-gray-600 dark:text-gray-400">
+          <div key={index} className="border-b border-border-gray py-4 last:border-0 ">
+            <p className="text-sm font-normal">
               {translation.source_texts?.text_content || 'Source text'}
             </p>
-            <p className="mt-1 text-gray-900 dark:text-white">{translation.translation_text}</p>
-            <p className="mt-2 text-xs text-gray-500 dark:text-gray-500">
+            <p className="mt-1 font-medium">{translation.translation_text}</p>
+            <p className="mt-2 text-xs font-normal text-text-grey">
               {formatDistanceToNow(new Date(translation.created_at), { addSuffix: true })}
             </p>
           </div>
