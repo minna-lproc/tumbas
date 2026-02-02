@@ -24,7 +24,7 @@ export default function LoginPage() {
   const [loading, setLoading] = useState(false);
   const [showPassword, setShowPassword] = useState(false);
 
-  // const supabase = createClient();
+  const supabase = createClient();
   const {
     register,
     handleSubmit,
@@ -39,11 +39,12 @@ export default function LoginPage() {
 
     try {
       // Mock login - always succeeds for UI development
-      await new Promise((resolve) => setTimeout(resolve, 500));
+      /*await new Promise((resolve) => setTimeout(resolve, 500));
       router.push('/translate');
-      router.refresh();
+      router.refresh();*/
 
-      /* COMMENTED OUT - Supabase authentication
+      /* COMMENTED OUT - Supabase authentication */
+
       const { error: signInError } = await supabase.auth.signInWithPassword({
         email: data.email,
         password: data.password,
@@ -53,7 +54,7 @@ export default function LoginPage() {
 
       router.push('/translate');
       router.refresh();
-      */
+      
     } catch (err) {
       setError(err instanceof Error ? err.message : 'An error occurred');
     } finally {
@@ -67,11 +68,12 @@ export default function LoginPage() {
 
     try {
       // Mock social login - always succeeds for UI development
-      await new Promise((resolve) => setTimeout(resolve, 500));
+      /*await new Promise((resolve) => setTimeout(resolve, 500));
       router.push('/translate');
-      router.refresh();
+      router.refresh(); */
 
-      /* COMMENTED OUT - Supabase OAuth
+      /* COMMENTED OUT - Supabase OAuth*/
+      // TODO: Complete Google Auth
       const { error: socialError } = await supabase.auth.signInWithOAuth({
         provider,
         options: {
@@ -80,7 +82,7 @@ export default function LoginPage() {
       });
 
       if (socialError) throw socialError;
-      */
+      
     } catch (err) {
       setError(err instanceof Error ? err.message : 'An error occurred');
       setLoading(false);
