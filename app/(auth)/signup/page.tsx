@@ -2,7 +2,7 @@
 
 import { useState } from 'react';
 import { useRouter } from 'next/navigation';
-// import { supabase } from '@/lib/supabase/client';
+import { createClient } from '@/lib/supabase/client';
 import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { z } from 'zod';
@@ -10,18 +10,15 @@ import Link from 'next/link';
 import { Eye, EyeClosed } from 'lucide-react';
 
 const signupSchema = z.object({
-  firstName: z.string(),
-  lastName: z.string(),
-  username: z.string().min(3, 'Username must be at least 3 characters').optional(),
+  firstName: z.string().min(1, 'First name must be at least 1 character'),
+  lastName: z.string().min(1, 'Last name must be at least 1 character'),
+  username: z.string().min(3, 'Username must be at least 3 characters').optional().or(z.literal('')),
   email: z.email('Invalid email address'),
   password: z.string().min(8, 'Password must be at least 8 characters'),
+  confirmedPassword: z.string().min(8, 'Confirmed password must be at least 8 characters'),
+}).refine((data) => data.password === data.confirmedPassword, {
+  message: "Passwords don't match",
 });
-
-const nameSchema = signupSchema.pick({
-  firstName: true,
-  lastName: true,
-  username: true
-})
 
 type SignupFormData = z.infer<typeof signupSchema>;
 
@@ -34,21 +31,7 @@ export default function SignupPage() {
   const [showPassword, setShowPassword] = useState(false);
   const [showConfirmedPassword, setShowConfirmedPassword] = useState(false);
 
-  const nextStep = () => {
-
-    try {
-
-      setStep(step => step + 1)
-    }
-    catch (error) {
-
-    }
-
-  }
-
-  const prevStep = () => {
-    setStep(step => step - 1)
-  }
+  const supabase = createClient();
 
   const {
     register,
@@ -58,25 +41,29 @@ export default function SignupPage() {
     resolver: zodResolver(signupSchema),
   });
 
+  const nextStep = () => {
+    setStep(step => step + 1)
+  }
+
+  const prevStep = () => {
+    setStep(step => step - 1)
+  }
+
   const onSubmit = async (data: SignupFormData) => {
     setLoading(true);
     setError(null);
 
     try {
-      // Mock signup - always succeeds for UI development
+      /* Mock signup - always succeeds for UI development
       await new Promise((resolve) => setTimeout(resolve, 500));
       router.push('/translate');
       router.refresh();
+      */
 
-      /* COMMENTED OUT - Supabase authentication
+      /*Supabase authentication*/
       const { data: authData, error: signUpError } = await supabase.auth.signUp({
         email: data.email,
         password: data.password,
-        options: {
-          data: {
-            username: data.username || null,
-          },
-        },
       });
 
       if (signUpError) throw signUpError;
@@ -86,6 +73,8 @@ export default function SignupPage() {
         const { error: profileError } = await supabase.from('users').insert({
           id: authData.user.id,
           email: data.email,
+          first_name: data.firstName,
+          last_name: data.lastName,
           username: data.username || null,
         });
 
@@ -94,7 +83,7 @@ export default function SignupPage() {
         router.push('/translate');
         router.refresh();
       }
-      */
+      
     } catch (err) {
       setError(err instanceof Error ? err.message : 'An error occurred');
     } finally {
@@ -248,6 +237,7 @@ export default function SignupPage() {
 
               <div className="relative">
                 <input
+                {...register('password')}
                   type={showPassword ? 'text' : 'password'}
                   autoComplete="current-password"
                   required
@@ -282,6 +272,7 @@ export default function SignupPage() {
 
               <div className="relative">
                 <input
+                {...register('confirmedPassword')}
                   type={showConfirmedPassword ? 'text' : 'password'}
                   autoComplete="current-password"
                   required
