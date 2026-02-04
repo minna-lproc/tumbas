@@ -7,14 +7,29 @@ import { useState, useEffect } from 'react';
 import { useForm } from 'react-hook-form';
 import { z } from 'zod';
 import { zodResolver } from '@hookform/resolvers/zod';
+import { createClient } from '@/lib/supabase/client';
+
+
+const resetPassSchema = z.object({
+    password: z.string().min(8, 'Password must be at least 8 characters'),
+    confirmedPassword: z.string().min(8, 'Confirmed password must be at least 8 characters'),
+}).refine((data) => data.password === data.confirmedPassword, {
+    message: 'Passwords do not match',
+});
+
+type resetPassData = z.infer<typeof resetPassSchema>;
 
 export default function ResetPassPage() {
 
-    const resetPassSchema = z.object({
-        password: z.string().min(8, 'Password must be at least 8 characters'),
-    });
+    const router = useRouter();
+    const [error, setError] = useState<string | null>(null);
+    const [loading, setLoading] = useState(false);
+    const [success, setSuccess] = useState(false);
 
-    type resetPassData = z.infer<typeof resetPassSchema>;
+    const [showPassword, setShowPassword] = useState(false);
+    const [showConfirmedPassword, setShowConfirmedPassword] = useState(false);
+
+    const supabase = createClient();
 
     const {
         handleSubmit,
@@ -25,6 +40,13 @@ export default function ResetPassPage() {
     });
 
     const onSubmit = async (data: resetPassData) => {
+
+        const {error: resetError} = await supabase.auth.updateUser({
+            password: data.password,
+        });
+
+        if (resetError) throw resetError;
+
         setLoading(true);
         setError(null);
 
@@ -39,13 +61,7 @@ export default function ResetPassPage() {
         }
     };
 
-    const router = useRouter();
-    const [error, setError] = useState<string | null>(null);
-    const [loading, setLoading] = useState(false);
-    const [success, setSuccess] = useState(false);
 
-    const [showPassword, setShowPassword] = useState(false);
-    const [showConfirmedPassword, setShowConfirmedPassword] = useState(false);
 
     return (
         <div className="flex min-h-screen items-center justify-center px-4 py-12 sm:px-6 lg:px-8 bg-background 
@@ -142,12 +158,14 @@ export default function ResetPassPage() {
                         <div>
                             <div className="relative">
                                 <input
+                                {...register('confirmedPassword')}
                                     type={showConfirmedPassword ? 'text' : 'password'}
                                     autoComplete="current-password"
                                     required
-                                    className="relative block w-full rounded-lg border border-border-gray px-3 py-3 focus:z-10 
+                                    className={`relative block w-full rounded-lg border border-border-gray px-3 py-3 focus:z-10 
                 focus:border-btn-active focus:outline-none focus:ring--btn-active  
-                sm:text-sm placeholder:text-text-grey"
+                sm:text-sm placeholder:text-gray
+                ${errors.confirmedPassword ? 'error-border' : 'border-border-gray'}`}
                                     placeholder="Confirmed password"
                                 />
                                 <button
@@ -166,6 +184,11 @@ export default function ResetPassPage() {
                                     )}
                                 </button>
                             </div>
+                            {errors.confirmedPassword && (
+                                <p className="mt-1 error-text">
+                                    {errors.confirmedPassword.message}
+                                </p>
+                            )}
                         </div>
 
                         <div>
