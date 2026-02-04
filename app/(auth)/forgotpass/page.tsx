@@ -3,9 +3,11 @@
 import { zodResolver } from '@hookform/resolvers/zod';
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import { useForm } from 'react-hook-form';
-import { z } from 'zod';
+import { success, z } from 'zod';
+import { createClient } from '@/lib/supabase/client';
+import { time } from 'console';
 
 const forgotPassSchema = z.object({
     email: z.email('Invalid email address'),
@@ -19,6 +21,64 @@ export default function ForgotPassPage() {
     const [loading, setLoading] = useState(false);
     const [success, setSuccess] = useState(false);
 
+    // for resend email
+    const [timer, setTimer] = useState(60);
+    const [isRunning, setIsRunning] = useState(false);
+    const [emailSentTo, setEmailSentTo] = useState<string | null>(null);
+    const intervalRef = useRef<NodeJS.Timeout | null>(null);
+
+    const supabase = createClient();
+
+    // start/stop timer via effect so it reacts to `isRunning`
+    useEffect(() => {
+        if (!isRunning) return;
+
+        intervalRef.current = setInterval(() => {
+            setTimer((prev) => {
+                if (prev <= 1) {
+                    if (intervalRef.current) clearInterval(intervalRef.current);
+                    intervalRef.current = null;
+                    setIsRunning(false);
+                    return 0;
+                }
+                return prev - 1;
+            });
+        }, 1000);
+
+        return () => {
+            if (intervalRef.current) {
+                clearInterval(intervalRef.current);
+                intervalRef.current = null;
+            }
+        };
+    }, [isRunning]);
+
+    const startTimer = (seconds = 60) => {
+        setTimer(seconds);
+        setIsRunning(true);
+    };
+
+    const handleResend = async () => {
+        if (!emailSentTo) return;
+        setLoading(true);
+        setError(null);
+        try {
+            const { error: resetError } = await supabase.auth.resetPasswordForEmail(
+                emailSentTo,
+                {
+                    redirectTo: `${window.location.origin}/resetpass`,
+                }
+            );
+            if (resetError) throw resetError;
+            // restart timer
+            startTimer(60);
+        } catch (err) {
+            setError(err instanceof Error ? err.message : 'An error occurred');
+        } finally {
+            setLoading(false);
+        }
+    };
+
     const {
         handleSubmit,
         register,
@@ -28,11 +88,24 @@ export default function ForgotPassPage() {
     });
 
     const onSubmit = async (data: forgotPassData) => {
+
         setLoading(true);
         setError(null);
 
         try {
-            setSuccess(!success);
+            const { error: resetError } = await supabase.auth.resetPasswordForEmail(
+                data.email,
+                {
+                    /* for local development */
+                    redirectTo: `${window.location.origin}/resetpass`,
+                }
+            );
+
+            if (resetError) throw resetError;
+
+            setSuccess(true);
+            setEmailSentTo(data.email);
+            startTimer(60);
             await new Promise((resolve) => setTimeout(resolve, 500));
 
         } catch (err) {
@@ -62,8 +135,12 @@ export default function ForgotPassPage() {
                     <div>
                         <p className="mt-2 text-text-grey text-center text-xs ">
                             Remember your password?{' '}
-                            <button className='text-btn hover:text-btn-hover'>
-                                Resend
+                            <button
+                                onClick={handleResend}
+                                disabled={isRunning || loading}
+                                className="text-btn hover:text-btn-hover disabled:opacity-50 disabled:cursor-not-allowed"
+                            >
+                                {isRunning ? `Resend (${timer}s)` : 'Resend'}
                             </button>
                         </p>
                     </div>
