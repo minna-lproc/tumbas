@@ -7,12 +7,12 @@ import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { z } from 'zod';
 import Link from 'next/link';
-import tumbas from '../../assets/tumbas.png';
+import tumbas from '@/public/tumbas.png';
 import Image from 'next/image';
-import { Eye, EyeClosed, EyeIcon } from 'lucide-react';
+import { Eye, EyeClosed} from 'lucide-react';
 
 const loginSchema = z.object({
-  email: z.email('Invalid email address'),
+  email: z.email('Invalid email address').min(1, 'Email is required'),
   password: z.string().min(8, 'Password must be at least 8 characters'),
 });
 
@@ -43,8 +43,6 @@ export default function LoginPage() {
       router.push('/translate');
       router.refresh();*/
 
-      /* COMMENTED OUT - Supabase authentication */
-
       const { error: signInError } = await supabase.auth.signInWithPassword({
         email: data.email,
         password: data.password,
@@ -52,7 +50,7 @@ export default function LoginPage() {
 
       if (signInError) throw signInError;
 
-      router.push('/translate');
+      router.push('/dashboard');
       router.refresh();
       
     } catch (err) {
@@ -72,12 +70,10 @@ export default function LoginPage() {
       router.push('/translate');
       router.refresh(); */
 
-      /* COMMENTED OUT - Supabase OAuth*/
-      // TODO: Complete Google Auth
       const { error: socialError } = await supabase.auth.signInWithOAuth({
         provider,
         options: {
-          redirectTo: `${window.location.origin}/translate`,
+          redirectTo: `${window.location.origin}/dashboard`,
         },
       });
 
@@ -90,19 +86,20 @@ export default function LoginPage() {
   };
 
   return (
-    <div className="flex min-h-screen items-center justify-center 
-    px-4 py-12  sm:px-6 lg:px-8
+
+    <div className="flex min-h-screen items-center justify-center py-12 px-8
     bg-background text-foreground ">
 
-      <div className="w-full max-w-md space-y-6">
+      <div className="w-full max-w-md space-y-12">
 
         <div className='flex items-center justify-center'>
           <Image className='h-8 w-auto' src={tumbas} alt='tumbas' />
         </div>
 
-        <form className="mt-10 space-y-6" onSubmit={handleSubmit(onSubmit)}>
+        <form className="mt-12 space-y-8" onSubmit={handleSubmit(onSubmit)}>
+
           {error && (
-            <div className="rounded-md ">
+            <div className="rounded-md error-text">
               <p className="text-sm ">{error}</p>
             </div>
           )}
@@ -110,43 +107,56 @@ export default function LoginPage() {
           <div className="space-y-4 rounded-md">
 
             <div>
+
               <label htmlFor="email" className="sr-only">
                 Email address
               </label>
+
               <input
                 {...register('email')}
                 type="email"
                 autoComplete="email"
-                required
-                className={`relative block w-full rounded-lg px-3 py-3 focus:z-10 
-                border border-gray-500 focus:border-btn-active 
-                focus:outline-none focus:ring--btn-active  
-                sm:text-sm placeholder:text-text-grey
-                ${errors.email ? 'error-border' : 'border-border-gray'}`}
+                className={`relative block w-full rounded-lg p-3 focus:z-10 
+                border focus:outline-none   
+                text-sm 
+                placeholder:text-text-grey
+                ${
+                  errors.email ? 
+                  'error-border focus:border-red-500 focus:ring-red-500'
+                  :'border-border-gray focus:border-btn-active focus:ring-btn-active'}
+                `}
                 placeholder="Email address"
               />
+
               {errors.email && (
                 <p className="mt-1 error-text">
                   {errors.email.message}
                 </p>
               )}
+
             </div>
 
             <div>
+
               <label htmlFor="password" className="sr-only">
                 Password
               </label>
+
               <div className="relative">
+
                 <input
                   {...register('password')}
                   type={showPassword ? 'text' : 'password'}
                   autoComplete="current-password"
-                  required
-                  className={`relative block w-full rounded-lg px-3 py-3 focus:z-10 
-                border border-gray-500 focus:border-btn-active 
-                focus:outline-none focus:ring--btn-active  
-                sm:text-sm placeholder:text-text-grey
-                ${errors.password ? 'error-border' : 'border-border-gray'}`}
+                  className={`relative block w-full rounded-lg p-3 focus:z-10 
+                border focus:outline-none   
+                text-sm 
+                placeholder:text-text-grey
+                ${
+                  errors.password ? 
+                  'error-border focus:border-red-500 focus:ring-red-500'
+                  :'border-border-gray focus:border-btn-active focus:ring-btn-active'}
+                `}
                   placeholder="Password"
                 />
 
@@ -168,6 +178,7 @@ export default function LoginPage() {
                 </button>
 
               </div>
+
               {errors.password && (
                 <p className="mt-1 error-text">
                   {errors.password.message}
@@ -196,7 +207,7 @@ export default function LoginPage() {
               <button
                 type="submit"
                 disabled={loading}
-                className="group relative flex w-full justify-center rounded-lg px-4 py-3 
+                className="group relative flex w-full justify-center rounded-lg p-3 
                 border border-transparent 
                 bg-btn hover:bg-btn-hover
                 text-btn-text text-sm font-medium
@@ -223,7 +234,7 @@ export default function LoginPage() {
                 type="button"
                 onClick={() => handleSocialLogin('google')}
                 disabled={loading}
-                className="inline-flex w-full items-center justify-center rounded-lg px-4 py-3
+                className="inline-flex w-full items-center justify-center rounded-lg p-3
                 border border-border-gray
                 bg-secondary-btn hover:bg-secondary-btn-hover
                 text-sm font-medium 

@@ -2,7 +2,7 @@ import Link from 'next/link';
 import Image from 'next/image';
 import { createServerSupabaseClient } from '@/lib/supabase/server';
 import { ThemeToggle } from '@/components/utils/ThemeToggle';
-import tumbas from '../assets/tumbas.png';
+import tumbas from '@/public/tumbas.png';
 import Nav from '@/components/utils/Nav';
 
 export default async function MainLayout({
@@ -14,6 +14,7 @@ export default async function MainLayout({
   const {
     data: { user },
   } = await supabase.auth.getUser();
+  
 
   return (
     <div className="h-screen overflow-hidden">
