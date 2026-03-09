@@ -182,7 +182,7 @@ export default function LoginPage() {
                 bg-btn hover:bg-btn-hover
                 text-btn-text
                 focus:outline-none focus:ring-2 focus:ring-btn-focus focus:ring-offset-1
-                disabled:opacity-50 disabled:cursor-not-allowed "
+                disabled:opacity-50 disabled:cursor-not-allowed"
               >
                 {loading ? 'Signing in...' : 'Sign in'}
               </button>
