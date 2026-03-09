@@ -3,7 +3,20 @@
 import { useState, useEffect } from 'react';
 // import { useRouter } from 'next/navigation';
 import { useAuth } from '@/hooks/useAuth';
-import { RecentTranslations } from '@/components/dashboard/RecentTranslations';
+import { RecentTranslations } from '@/components/dashboard/user/RecentTranslations';
+import {TotalTranslations} from '@/components/dashboard/user/TotalTranslations';
+import {TranslationsToday} from '@/components/dashboard/user/TranslationsToday';
+
+import {RecentReviews} from '@/components/dashboard/evaluator/RecentReviews';
+import {ReviewsToday} from '@/components/dashboard/evaluator/ReviewsToday';
+import {TotalReviews} from '@/components/dashboard/evaluator/TotalReviews';
+
+import {TotalUsers} from '@/components/dashboard/admin/TotalUsers';
+import {TotalSentences} from '@/components/dashboard/admin/TotalSentences';
+import { TotalTranslationsAdmin } from '@/components/dashboard/admin/TotalTranslationsAdmin';
+import {QuickActions} from '@/components/dashboard/admin/QuickActions';
+
+
 import { mockUser, getRecentTranslations } from '@/lib/mock/data';
 
 interface DashboardStats {
@@ -113,23 +126,10 @@ export default function DashboardPage() {
 
           <div className="grid gap-4 grid-rows-1 lg:grid-cols-2">
 
-            <div className="rounded-xl p-6 shadow-md border border-border-gray bg-box-bg">
-              <p className="text-sm font-medium ">
-                Total Translations
-              </p>
-              <p className="mt-2 text-3xl font-bold">
-                {stats.total_translations}
-              </p>
-            </div>
+            <TotalTranslations/>
 
-            <div className="rounded-xl p-6 shadow-md border border-border-gray bg-box-bg">
-              <p className="text-sm font-medium ">
-                Translations Today
-              </p>
-              <p className="mt-2 text-3xl font-bold ">
-                {stats.translations_today}
-              </p>
-            </div>
+            <TranslationsToday/>
+
           </div>
           
           <RecentTranslations translations={stats.recent_translations} />

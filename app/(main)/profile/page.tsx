@@ -5,6 +5,8 @@ import { useState, useEffect } from 'react';
 import { useAuth } from '@/hooks/useAuth';
 // import { supabase } from '@/lib/supabase/client';
 import { mockUser } from '@/lib/mock/data';
+import { LogOut } from 'lucide-react';
+import { LanguageProficiency } from '@/components/profile/LanguageProficiency';
 
 interface UserProfile {
   id: string;
@@ -89,32 +91,70 @@ export default function ProfilePage() {
   }
 
   return (
-    <div className="min-h-screen  px-4 py-8  sm:px-6 lg:px-8">
+    <div className="min-h-screen px-4 py-8 sm:px-6 lg:px-8">
+
       <div className="mx-auto max-w-7xl">
-        <div className="mb-8 flex items-center justify-between">
-          <h1 className="text-3xl font-bold ">Profile</h1>
-          <button
-            onClick={handleSignOut}
-            className="rounded-lg  px-4 py-2  transition-colors "
-          >
-            Sign Out
-          </button>
-        </div>
-        <div className="rounded-xl  p-6 shadow-md ">
-          <h2 className="mb-2 text-xl font-semibold ">
-            {profile.username || profile.email.split('@')[0]}
-          </h2>
-          <p className="mb-4 ">{profile.email}</p>
-          <div className="rounded-lg  p-4 ">
-            <p className="text-sm font-medium ">
-              Total Translations
-            </p>
-            <p className="mt-1 text-2xl font-bold ">
-              {profile.total_translations}
-            </p>
+
+        <div className="rounded-xl  p-6 shadow-md mb-8 space-y-6
+        flex flex-col items-center justify-between w-[50%]
+        border border-border-gray">
+
+          <div className='flex flex-row w-full items-center justify-between'>
+
+            <h1 className="text-lg font-semibold">My Profile</h1>
+
+            <button
+              onClick={handleSignOut}
+              className="rounded-lg flex flex-row mr-0 px-4 py-2 items text-xs transition-colors gap-2 
+              text-text-grey hover:text-btn-hover font-medium"
+            >
+              <LogOut className="icon" />
+              Sign Out
+            </button>
+
           </div>
+
+          <div className='flex flex-row items-center  gap-2 w-full m-auto'>
+            <div>
+              <label htmlFor="firstName" className="sr-only">
+                First name
+              </label>
+              <input
+                type="text"
+                required
+                className={`relative block w-full rounded-lg px-3 py-3 focus:z-10 
+                border border-border-gray focus:border-btn-active 
+                focus:outline-none focus:ring--btn-active  
+                sm:text-sm placeholder:text-gray`}
+                placeholder="First name"
+              />
+            </div>
+
+            <div>
+              <label htmlFor="lastName" className="sr-only">
+                Last name
+              </label>
+              <input
+                type="text"
+                required
+                className={`relative block w-full rounded-lg px-3 py-3 focus:z-10 
+                border border-border-gray focus:border-btn-active 
+                focus:outline-none focus:ring--btn-active  
+                sm:text-sm placeholder:text-gray`}
+                placeholder="Last name"
+              />
+            </div>
+
+          </div>
+
+          <LanguageProficiency />
+
+          <p className="mb-4 ">{profile.email}</p>
         </div>
+
+
       </div>
+
     </div>
   );
 }

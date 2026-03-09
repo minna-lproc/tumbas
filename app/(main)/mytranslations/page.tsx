@@ -3,7 +3,7 @@
 import { useState, useEffect } from 'react';
 import { Search, ListFilterPlus } from 'lucide-react';
 import { formatDistanceToNow } from 'date-fns';
-import { RecentTranslations } from '@/components/dashboard/RecentTranslations';
+import { RecentTranslations } from '@/components/dashboard/user/RecentTranslations';
 import { mockUser, getRecentTranslations } from '@/lib/mock/data';
 
 interface DashboardStats {
