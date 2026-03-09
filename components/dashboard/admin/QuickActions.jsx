@@ -5,16 +5,16 @@ import Link from 'next/link';
 export const QuickActions = () => {
 
     return (
-        <div className="rounded-xl px-6 pt-6 shadow-md bg-box-bg
-    border border-border-gray">
-            <h3 className="mb-4 text-lg font-semibold ">
+        <div className="rounded-xl p-4 shadow-md bg-box-bg
+    border border-border-gray space-y-4">
+            <h3 className="text-lg font-semibold ">
                 Quick Actions
             </h3>
-            <div className="space-y-4">
+            <div className="space-y-4 py-1 flex flex-col lg:flex-row gap lg:gap-4">
                 <Link
                     href='/users'
                 >
-                    <div className="flex flex-row rounded-xl p-6 shadow-md border border-border-gray bg-box-bg">
+                    <div className="flex flex-row rounded-xl gap-2 p-3 shadow-md border border-border-gray bg-box-bg">
 
                         <Users className='icon text-teal-500' />
 
@@ -28,7 +28,7 @@ export const QuickActions = () => {
                 <Link
                     href='/sentences'
                 >
-                    <div className="flex flex-row rounded-xl p-6 shadow-md border border-border-gray bg-box-bg">
+                    <div className="flex flex-row rounded-xl gap-2 p-3 shadow-md border border-border-gray bg-box-bg">
 
                         <NotebookText className='icon text-green-500' />
 
@@ -42,7 +42,7 @@ export const QuickActions = () => {
                 <Link
                     href='/overview'
                 >
-                    <div className="flex flex-row rounded-xl p-6 shadow-md border border-border-gray bg-box-bg">
+                    <div className="flex flex-row rounded-xl gap-2 p-3 shadow-md border border-border-gray bg-box-bg">
 
                         <ChartColumn className='icon text-yellow-500' />
 
@@ -52,8 +52,6 @@ export const QuickActions = () => {
 
                     </div>
                 </Link>
-
-
             </div>
         </div>
     );

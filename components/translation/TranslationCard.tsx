@@ -3,9 +3,8 @@
 import { motion, PanInfo } from 'framer-motion';
 import { SourceTextCard } from '../utils/SourceTextCard';
 import { TranslationInput } from './TranslationInput';
-import { SubmitButton } from './SubmitButton';
-import { VoiceInputButton } from '../utils/VoiceInputButton';
 import type { SourceText } from '@/lib/types/translation';
+import { Circle, CircleQuestionMark } from "lucide-react";
 
 interface TranslationCardProps {
   sourceText: SourceText;
@@ -38,38 +37,55 @@ export const TranslationCard = ({
       dragConstraints={{ left: 0, right: 0 }}
       dragElastic={0.2}
       onDragEnd={handleDragEnd}
-      className="w-full mt-12"
+      className="w-full mt-12 px-8"
     >
       <div className="space-y-4">
 
-        <p className='text-xl font-semibold my-4'>
+        <div className='flex gap-2 items-center justify-between'>
+          <p className='text-xl font-semibold my-4'>
           Translate
         </p>
+
+        <CircleQuestionMark className='h-4 w-auto text-text-grey cursor-pointer'/>
+        </div>
+        
 
         <SourceTextCard sourceText={sourceText} />
         <div className="space-y-4">
           <TranslationInput value={translation} onChange={onTranslationChange} />
-          {/*<div className="flex justify-center">
-            <VoiceInputButton
-              onTranscript={(text) => onTranslationChange(translation + ' ' + text)}
-              disabled={loading}
-            />
-          </div>*/}
         </div>
-        <div className="flex gap-4">
-          {/*<motion.button
+        <div className="flex gap-2">
+          {<motion.button
             whileHover={{ scale: 1.02 }}
             whileTap={{ scale: 0.98 }}
             onClick={onSkip}
-            className="flex h-14 min-w-[48px] flex-1 items-center justify-center rounded-xl border-2 border-gray-300 bg-white px-6 text-base font-semibold text-gray-700 transition-colors hover:border-border-gray hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-gray-500 focus:ring-offset-2 dark:border-gray-600 dark:bg-gray-800 dark:text-gray-300 dark:hover:border-gray-500 dark:hover:bg-gray-700"
+            className="flex flex-1 items-center justify-center rounded-xl border border-border-gray
+            p-3 text-sm font-medium bg-secondary-btn hover:bg-secondary-btn-hover
+              focus:outline-none focus:ring-2  focus:ring-btn-focus focus:ring-offset-2"
           >
             Skip
-          </motion.button> */}
-          <SubmitButton
+          </motion.button>}
+          <motion.button
+            whileHover={{ scale: !translation.trim() ? 1 : 1.02 }}
+            whileTap={{ scale: !translation.trim() ? 1 : 0.98 }}
             onClick={onSubmit}
-            disabled={!translation.trim()}
-            loading={loading}
-          />
+            disabled={!translation.trim() || loading}
+            className="flex w-full min-w-12 items-center justify-center rounded-xl px-6 
+      bg-btn hover:bg-btn-hover active:text-btn-active
+      text-btn-text text-sm font-medium
+      shadow-sm transition-colors 
+      focus:outline-none focus:ring-2 focus:ring-btn-focus focus:ring-offset-2 
+      disabled:cursor-not-allowed disabled:opacity-50 "
+          >
+            {loading ? (
+              <span className="flex items-center gap-2">
+                <Circle className='icon animate-spin' />
+                Submitting...
+              </span>
+            ) : (
+              'Submit Translation'
+            )}
+          </motion.button>
         </div>
         <p className="text-center text-xs text-text-grey">
           Swipe right to skip • Tap to translate

@@ -10,13 +10,13 @@ export const LanguageProficiency = () => {
     ]
 
     return (
-        <div className="rounded-xl p-6 w-full shadow-md border border-border-gray bg-box-bg">
+        <div className="rounded-xl p-6 w-full shadow-md border mt-4 border-border-gray bg-box-bg">
 
             <div className="mb-4 gap-4 flex flex-col">
 
                 <p className="font-semibold text-base">Source Language</p>
 
-                <div className="flex flex-row gap-2">
+                <div className="flex flex-row flex-wrap gap-2">
 
                     {languages.filter((language) => language.type === 'source').map((language) => (
                         <div key={language.id}>
@@ -24,7 +24,7 @@ export const LanguageProficiency = () => {
                                 type="button"
                                 onClick={() => handleLanguageToggle(language.id)}
                                 className={`
-                          w-fit px-3 py-2 rounded-lg text-sm font-medium border text-teal-400 duration-200
+                          w-fit p-2 rounded-lg text-sm font-medium border text-teal-400 duration-200
                         `}
                             >
                                 {language.name}
@@ -38,7 +38,7 @@ export const LanguageProficiency = () => {
 
                 <p className="font-semibold text-base">Target Language</p>
 
-                <div className="flex flex-row gap-2">
+                <div className="flex flex-row flex-wrap gap-2">
 
                     {languages.filter((language) => language.type === 'target').map((language) => (
                         <div key={language.id}>
@@ -46,7 +46,7 @@ export const LanguageProficiency = () => {
                                 type="button"
                                 onClick={() => handleLanguageToggle(language.id)}
                                 className={`
-                          w-fit px-3 py-2 rounded-lg text-sm font-medium border transition-colors duration-200
+                          w-fit p-2 rounded-lg text-sm font-medium border text-teal-400 duration-200
                         `}
                             >
                                 {language.name}

@@ -16,7 +16,7 @@ export default async function MainLayout({
   } = await supabase.auth.getUser();
 
   return (
-    <div className="h-screen overflow-hidden">
+    <div className="h-screen">
       {/* Desktop Navbar */}
       <nav className="hidden lg:block border-b mb-4 bg-background text-foreground border-border-gray">
         <div className="mx-auto max-w-7xl px-8">

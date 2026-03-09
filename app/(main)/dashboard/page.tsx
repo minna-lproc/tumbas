@@ -4,17 +4,17 @@ import { useState, useEffect } from 'react';
 // import { useRouter } from 'next/navigation';
 import { useAuth } from '@/hooks/useAuth';
 import { RecentTranslations } from '@/components/dashboard/user/RecentTranslations';
-import {TotalTranslations} from '@/components/dashboard/user/TotalTranslations';
-import {TranslationsToday} from '@/components/dashboard/user/TranslationsToday';
+import { TotalTranslations } from '@/components/dashboard/user/TotalTranslations';
+import { TranslationsToday } from '@/components/dashboard/user/TranslationsToday';
 
-import {RecentReviews} from '@/components/dashboard/evaluator/RecentReviews';
-import {ReviewsToday} from '@/components/dashboard/evaluator/ReviewsToday';
-import {TotalReviews} from '@/components/dashboard/evaluator/TotalReviews';
+import { RecentReviews } from '@/components/dashboard/evaluator/RecentReviews';
+import { ReviewsToday } from '@/components/dashboard/evaluator/ReviewsToday';
+import { TotalReviews } from '@/components/dashboard/evaluator/TotalReviews';
 
-import {TotalUsers} from '@/components/dashboard/admin/TotalUsers';
-import {TotalSentences} from '@/components/dashboard/admin/TotalSentences';
+import { TotalUsers } from '@/components/dashboard/admin/TotalUsers';
+import { TotalSentences } from '@/components/dashboard/admin/TotalSentences';
 import { TotalTranslationsAdmin } from '@/components/dashboard/admin/TotalTranslationsAdmin';
-import {QuickActions} from '@/components/dashboard/admin/QuickActions';
+import { QuickActions } from '@/components/dashboard/admin/QuickActions';
 
 
 import { mockUser, getRecentTranslations } from '@/lib/mock/data';
@@ -82,8 +82,48 @@ export default function DashboardPage() {
   };
   */
 
-  const getHeader = () => {
-    
+  const getHeader = (userRole = 'user') => {
+    if (userRole === 'admin') return 'Track and manage users, datasets, and languages—all in one place.'
+    if (userRole === 'evaluator') return 'Track and manage all your completed reviews right here.'
+    return 'Track and manage all your completed translations right here.'
+  }
+
+  const getStats = (userRole = 'admin') => {
+    if (userRole === 'admin') {
+      return (<div className='flex flex-col gap-4'>
+        <div className="grid gap-4 grid-rows-1 lg:grid-cols-3">
+
+        <TotalUsers />
+        <TotalSentences />
+        <TotalTranslationsAdmin />
+
+      </div>
+      <QuickActions />
+
+      </div>);
+    }
+
+    if (userRole === 'user') {
+      return (<div className='flex flex-col gap-4'>
+      <div className="grid gap-4 grid-rows-1 lg:grid-cols-2">
+
+        <TotalReviews />
+        <ReviewsToday />
+
+      </div>
+      <RecentReviews />
+    </div>)
+    }
+
+    return (<div className='flex flex-col gap-4'>
+      <div className="grid gap-4 grid-rows-1 lg:grid-cols-2">
+
+        <TotalTranslations />
+        <TranslationsToday />
+
+      </div>
+      <RecentTranslations translations={stats?.recent_translations} />
+    </div>)
   }
 
   if (authLoading || loading) {
@@ -111,28 +151,21 @@ export default function DashboardPage() {
 
         <div className="space-y-6">
 
-          {/* DASHBOARD HEADER */}
           <div className='flex flex-col justify-center w-full h-36 rounded-xl p-6 space-y-2 shadow-lg
           text-btn-text text-shadow-lg text-shadow-teal-700/25
           border border-background/25
           bg-linear-to-bl from-header-gradient-from via-header-gradient-via to-header-gradient-to'>
             <h1 className='font-bold text-3xl tracking-tight'>
-              Welcome to tumbas! {/* Will be dynamic based on role and name*/}
+              Welcome to tumbas!
             </h1>
             <p className='font-medium text-sm'>
-              Track and manage all your completed translations right here. {/* Will be dynamic based on role*/}
+              {getHeader()}
             </p>
           </div>
 
-          <div className="grid gap-4 grid-rows-1 lg:grid-cols-2">
-
-            <TotalTranslations/>
-
-            <TranslationsToday/>
-
+          <div>
+            {getStats()}
           </div>
-          
-          <RecentTranslations translations={stats.recent_translations} />
         </div>
       </div>
     </div>

@@ -91,12 +91,13 @@ export default function ProfilePage() {
   }
 
   return (
-    <div className="min-h-screen px-4 py-8 sm:px-6 lg:px-8">
+    <div className="flex min-h-screen w-full
+    py-12 px-8 bg-background text-foreground text-sm font-medium">
 
-      <div className="mx-auto max-w-7xl">
+      <div className="mx-auto w-full">
 
-        <div className="rounded-xl  p-6 shadow-md mb-8 space-y-6
-        flex flex-col items-center justify-between w-[50%]
+        <div className="rounded-xl p-6 shadow-md mb-8 space-y-8
+        flex flex-col items-center justify-between
         border border-border-gray">
 
           <div className='flex flex-row w-full items-center justify-between'>
@@ -114,7 +115,7 @@ export default function ProfilePage() {
 
           </div>
 
-          <div className='flex flex-row items-center  gap-2 w-full m-auto'>
+          <div className='flex flex-row items-center gap-2 w-full m-auto'>
             <div>
               <label htmlFor="firstName" className="sr-only">
                 First name
@@ -146,10 +147,9 @@ export default function ProfilePage() {
             </div>
 
           </div>
-
+          
           <LanguageProficiency />
 
-          <p className="mb-4 ">{profile.email}</p>
         </div>
 
 
