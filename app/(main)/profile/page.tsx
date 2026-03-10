@@ -1,77 +1,35 @@
 'use client';
 
 import { useState, useEffect } from 'react';
-// import { useRouter } from 'next/navigation';
+import { useRouter } from 'next/navigation';
 import { useAuth } from '@/hooks/useAuth';
-// import { supabase } from '@/lib/supabase/client';
-import { mockUser } from '@/lib/mock/data';
+import { createClient } from '@/lib/supabase/client';
 import { LogOut } from 'lucide-react';
 import { LanguageProficiency } from '@/components/profile/LanguageProficiency';
 
-interface UserProfile {
-  id: string;
-  username: string | null;
-  email: string;
-  total_translations: number;
-}
 
 export default function ProfilePage() {
-  // const router = useRouter();
-  const { user, loading: authLoading } = useAuth();
-  const [profile, setProfile] = useState<UserProfile | null>(null);
-  const [loading, setLoading] = useState(true);
 
-  // Auth check commented out for UI development
-  // useEffect(() => {
-  //   if (!authLoading && !user) {
-  //     router.push('/login');
-  //   }
-  // }, [user, authLoading, router]);
+  const supabase = createClient();
+
+  const router = useRouter();
+  const {userData, loading: authLoading} = useAuth();
+  const profile = userData?.data;
+  const isLoading = authLoading;
 
   useEffect(() => {
-    // Use mock data instead of API call
-    setProfile({
-      id: mockUser.id,
-      username: mockUser.username,
-      email: mockUser.email,
-      total_translations: mockUser.total_translations,
-    });
-    setLoading(false);
-
-    /* COMMENTED OUT - Supabase API call
-    if (user) {
-      fetchProfile();
+    if (!authLoading && !userData) {
+      router.push('/login');
     }
-    */
-  }, [user]);
+  }, [userData, authLoading, router]);
 
-  /* COMMENTED OUT - Supabase API call
-  const fetchProfile = async () => {
-    try {
-      const { data, error } = await supabase
-        .from('users')
-        .select('id, username, email, total_translations')
-        .eq('id', user?.id)
-        .single();
-
-      if (error) throw error;
-      setProfile(data);
-    } catch (error) {
-      console.error('Error fetching profile:', error);
-    } finally {
-      setLoading(false);
-    }
-  };
-  */
 
   const handleSignOut = async () => {
-    // Mock sign out - just log for now
-    console.log('Sign out clicked (mock)');
-    // await supabase.auth.signOut();
-    // router.push('/login');
+    await supabase.auth.signOut();
+    router.push('/login');
   };
 
-  if (authLoading || loading) {
+  if (isLoading) {
     return (
       <div className="flex min-h-screen items-center justify-center ">
         <div className="text-center">
@@ -122,7 +80,8 @@ export default function ProfilePage() {
               </label>
               <input
                 type="text"
-                required
+                disabled
+                value={userData?.data?.first_name}
                 className={`relative block w-full rounded-lg px-3 py-3 focus:z-10 
                 border border-border-gray focus:border-btn-active 
                 focus:outline-none focus:ring--btn-active  
@@ -137,7 +96,8 @@ export default function ProfilePage() {
               </label>
               <input
                 type="text"
-                required
+                disabled
+                value={userData?.data?.last_name}
                 className={`relative block w-full rounded-lg px-3 py-3 focus:z-10 
                 border border-border-gray focus:border-btn-active 
                 focus:outline-none focus:ring--btn-active  
@@ -147,7 +107,7 @@ export default function ProfilePage() {
             </div>
 
           </div>
-          
+
           <LanguageProficiency />
 
         </div>

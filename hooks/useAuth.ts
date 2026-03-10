@@ -1,52 +1,55 @@
 'use client';
 
-// import { useEffect, useState } from 'react';
-// import { supabase } from '@/lib/supabase/client';
-import { useMemo } from 'react';
+import { useEffect, useState } from 'react';
+import { createClient } from '@/lib/supabase/client';
 import type { User } from '@supabase/supabase-js';
-import { mockUser } from '@/lib/mock/data';
 
-// Supabase commented out - using mock data for UI development
 export const useAuth = () => {
-  // Mock user for UI development - memoized to prevent infinite loops
-  const mockUserData = mockUser[0]; // Assuming first user
-  const user = useMemo(
-    () =>
-      ({
-        id: mockUserData.id,
-        email: mockUserData.email,
-        role: mockUserData.role ? 'admin' : mockUserData.role ? 'evaluator' : 'user',
-      }) as User & { role: string },
-    []
-  );
+  const supabase = createClient();
 
-  return { user, loading: false };
-
-  /* COMMENTED OUT - Supabase authentication
-  const [user, setUser] = useState<User | null>(null);
+  const [userData, setUserData] = useState<{ user: User | null; data: any } | null>(null);
   const [loading, setLoading] = useState(true);
 
+  const fetchUserWithData = async (user: User) => {
+    if (!user) return;
+    try {
+      const { data, error: viewError } = await supabase
+        .from("users_with_data")
+        .select("*")
+        .eq("id", user.id)
+        .single();
+      if (viewError) throw viewError;
+      setUserData({ user, data });
+    } catch (err) {
+      console.error("Error fetching user view:", err);
+      setUserData({ user, data: null });
+    } finally {
+      setLoading(false);
+    }
+  };
+
   useEffect(() => {
-    const getUser = async () => {
-      const {
-        data: { user },
-      } = await supabase.auth.getUser();
-      setUser(user);
-      setLoading(false);
-    };
 
-    getUser();
+    supabase.auth.getUser().then(({ data: { user } }) => {
+      if (user) {
+        fetchUserWithData(user);
+      } else {
+        setUserData(null);
+        setLoading(false);
+      }
+    });
 
-    const {
-      data: { subscription },
-    } = supabase.auth.onAuthStateChange((_event, session) => {
-      setUser(session?.user ?? null);
-      setLoading(false);
+    const { data: { subscription } } = supabase.auth.onAuthStateChange((_event, session) => {
+      if (session?.user) {
+        fetchUserWithData(session.user);
+      } else {
+        setUserData(null);
+        setLoading(false);
+      }
     });
 
     return () => subscription.unsubscribe();
   }, []);
 
-  return { user, loading };
-  */
+  return { userData, loading };
 };

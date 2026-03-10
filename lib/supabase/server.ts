@@ -1,22 +1,3 @@
-// Supabase commented out - using mock data for UI development
-// import { createServerClient } from '@supabase/ssr';
-// import { cookies } from 'next/headers';
-// import type { Database } from './types';
-
-// Mock server client for UI development
-export const createServerSupabaseClient = async () => {
-  // Return a mock client that doesn't do anything
-  return {
-    auth: {
-      getUser: async () => ({ data: { user: null }, error: null }),
-    },
-    from: () => ({
-      select: () => ({ eq: () => ({ single: async () => ({ data: null, error: null }) }) }),
-    }),
-  } as any;
-};
-
-/* COMMENTED OUT - Supabase server client
 import { createServerClient } from '@supabase/ssr';
 import { cookies } from 'next/headers';
 import type { Database } from './types';
@@ -24,9 +5,12 @@ import type { Database } from './types';
 export const createServerSupabaseClient = async () => {
   const cookieStore = await cookies();
 
+  const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL;
+  const supabaseKey = process.env.NEXT_PUBLIC_SUPABASE_PUBLISHABLE_DEFAULT_KEY;
+
   return createServerClient<Database>(
-    process.env.NEXT_PUBLIC_SUPABASE_URL!,
-    process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!,
+    supabaseUrl!,
+    supabaseKey!,
     {
       cookies: {
         getAll() {
@@ -47,4 +31,4 @@ export const createServerSupabaseClient = async () => {
     }
   );
 };
-*/
+

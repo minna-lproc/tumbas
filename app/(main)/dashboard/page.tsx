@@ -16,8 +16,8 @@ import { TotalSentences } from '@/components/dashboard/admin/TotalSentences';
 import { TotalTranslationsAdmin } from '@/components/dashboard/admin/TotalTranslationsAdmin';
 import { QuickActions } from '@/components/dashboard/admin/QuickActions';
 
-
 import { mockUser, getRecentTranslations } from '@/lib/mock/data';
+import { useRouter } from 'next/navigation';
 
 interface DashboardStats {
   total_translations: number;
@@ -32,19 +32,25 @@ interface DashboardStats {
 }
 
 export default function DashboardPage() {
-  // const router = useRouter();
-  const { user, loading: authLoading } = useAuth();
+
+  const router = useRouter();
+  const { userData, loading: authLoading } = useAuth();
   const [stats, setStats] = useState<DashboardStats | null>(null);
   const [loading, setLoading] = useState(true);
 
   // Auth check commented out for UI development
-  // useEffect(() => {
-  //   if (!authLoading && !user) {
-  //     router.push('/login');
-  //   }
-  // }, [user, authLoading, router]);
-
   useEffect(() => {
+    if (!authLoading && !userData) {
+      router.push('/login');
+    }
+
+    getHeader(userData?.data?.role)
+    getStats(userData?.data?.role)
+
+    setLoading(false);
+  }, [userData, authLoading, router]);
+
+  /*useEffect(() => {
     // Use mock data instead of API call
     const mockStats: DashboardStats = {
       total_translations: 20,
@@ -52,15 +58,16 @@ export default function DashboardPage() {
       recent_translations: getRecentTranslations(),
     };
     setStats(mockStats);
-    setLoading(false);
+    
 
     /* COMMENTED OUT - Supabase API call
     if (user) {
       fetchStats();
     }
-    */
+    
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []); // Empty dependency array since we're using mock data
+  */
 
   /* COMMENTED OUT - Supabase API call
   const fetchStats = async () => {
@@ -82,37 +89,37 @@ export default function DashboardPage() {
   };
   */
 
-  const getHeader = (userRole = 'user') => {
+  const getHeader = (userRole: string) => {
     if (userRole === 'admin') return 'Track and manage users, datasets, and languages—all in one place.'
     if (userRole === 'evaluator') return 'Track and manage all your completed reviews right here.'
     return 'Track and manage all your completed translations right here.'
   }
 
-  const getStats = (userRole = 'admin') => {
+  const getStats = (userRole: string) => {
     if (userRole === 'admin') {
       return (<div className='flex flex-col gap-4'>
         <div className="grid gap-4 grid-rows-1 lg:grid-cols-3">
 
-        <TotalUsers />
-        <TotalSentences />
-        <TotalTranslationsAdmin />
+          <TotalUsers />
+          <TotalSentences />
+          <TotalTranslationsAdmin />
 
-      </div>
-      <QuickActions />
+        </div>
+        <QuickActions />
 
       </div>);
     }
 
     if (userRole === 'user') {
       return (<div className='flex flex-col gap-4'>
-      <div className="grid gap-4 grid-rows-1 lg:grid-cols-2">
+        <div className="grid gap-4 grid-rows-1 lg:grid-cols-2">
 
-        <TotalReviews />
-        <ReviewsToday />
+          <TotalReviews />
+          <ReviewsToday />
 
-      </div>
-      <RecentReviews />
-    </div>)
+        </div>
+        <RecentReviews />
+      </div>)
     }
 
     return (<div className='flex flex-col gap-4'>
@@ -122,7 +129,7 @@ export default function DashboardPage() {
         <TranslationsToday />
 
       </div>
-      <RecentTranslations translations={stats?.recent_translations} />
+
     </div>)
   }
 
@@ -137,13 +144,13 @@ export default function DashboardPage() {
     );
   }
 
-  if (!stats) {
+  /*if (!stats) {
     return (
       <div className="flex min-h-screen items-center justify-center ">
         <p className="">Failed to load statistics</p>
       </div>
     );
-  }
+  }*/
 
   return (
     <div className="min-h-screen px-4 py-8 sm:px-6 lg:px-8">

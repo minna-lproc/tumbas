@@ -1,6 +1,9 @@
 'use client'
+import { createClient } from '@/lib/supabase/client';
 
 export const LanguageProficiency = () => {
+
+    const supabase = createClient();
 
     const languages = [
         { id: 1, name: 'English', iso_code: 'en', type: 'source' },
