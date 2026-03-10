@@ -2,10 +2,13 @@ import { createServerSupabaseClient } from '@/lib/supabase/server';
 import { NextResponse } from 'next/server';
 
 export async function GET(request: Request) {
+
   try {
+
     const supabase = await createServerSupabaseClient();
     const { searchParams } = new URL(request.url);
-    const status = searchParams.get('status') || 'pending';
+
+    const language = parseInt(searchParams.get('language') || '0');
     const limit = parseInt(searchParams.get('limit') || '10');
     const offset = parseInt(searchParams.get('offset') || '0');
 
@@ -17,25 +20,26 @@ export async function GET(request: Request) {
       return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
     }
 
-    // Get source texts that user hasn't translated yet
-    const { data: sourceTexts, error: sourceTextsError } = await supabase
-      .from('source_texts')
-      .select('*')
-      .eq('status', status)
-      .order('created_at', { ascending: false })
+
+    const { data: sourceTexts , error: sourceTextsError } = await supabase
+      .from("pending_source_texts" as any)
+      .select("*")
+      .order('created_at', {ascending: false})
       .range(offset, offset + limit - 1);
 
     if (sourceTextsError) throw sourceTextsError;
 
     // Get user's translations to filter out already translated texts
-    const { data: userTranslations } = await supabase
+
+    /*const { data: userTranslations } = await supabase
       .from('translations')
-      .select('source_text_id')
-      .eq('user_id', user.id);
+      .select('source_text')
+      .eq('translator', user.id);
 
-    const translatedIds = new Set(userTranslations?.map((t) => t.source_text_id) || []);
 
-    const availableTexts = sourceTexts?.filter((text) => !translatedIds.has(text.id)) || [];
+    const translatedIds = new Set(userTranslations?.map((t) => t.source_text) || []);*/
+
+    const availableTexts = sourceTexts || [];
 
     return NextResponse.json({ data: availableTexts, error: null });
   } catch (error) {

@@ -49,10 +49,9 @@ export default function ProfilePage() {
   }
 
   return (
-    <div className="flex min-h-screen w-full
-    py-12 px-8 bg-background text-foreground text-sm font-medium">
+    <div className="min-h-screen p-8 bg-background text-foreground text-sm font-medium">
 
-      <div className="mx-auto w-full">
+      <div className="mx-auto max-w-7xl">
 
         <div className="rounded-xl p-6 shadow-md mb-8 space-y-8
         flex flex-col items-center justify-between

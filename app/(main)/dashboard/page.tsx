@@ -1,7 +1,7 @@
 'use client';
 
 import { useState, useEffect } from 'react';
-// import { useRouter } from 'next/navigation';
+import { useRouter } from 'next/navigation';
 import { useAuth } from '@/hooks/useAuth';
 import { RecentTranslations } from '@/components/dashboard/user/RecentTranslations';
 import { TotalTranslations } from '@/components/dashboard/user/TotalTranslations';
@@ -16,8 +16,6 @@ import { TotalSentences } from '@/components/dashboard/admin/TotalSentences';
 import { TotalTranslationsAdmin } from '@/components/dashboard/admin/TotalTranslationsAdmin';
 import { QuickActions } from '@/components/dashboard/admin/QuickActions';
 
-import { mockUser, getRecentTranslations } from '@/lib/mock/data';
-import { useRouter } from 'next/navigation';
 
 interface DashboardStats {
   total_translations: number;
@@ -38,41 +36,27 @@ export default function DashboardPage() {
   const [stats, setStats] = useState<DashboardStats | null>(null);
   const [loading, setLoading] = useState(true);
 
-  // Auth check commented out for UI development
   useEffect(() => {
     if (!authLoading && !userData) {
       router.push('/login');
     }
 
-    getHeader(userData?.data?.role)
-    getStats(userData?.data?.role)
-
     setLoading(false);
   }, [userData, authLoading, router]);
 
-  /*useEffect(() => {
-    // Use mock data instead of API call
-    const mockStats: DashboardStats = {
-      total_translations: 20,
-      translations_today: 3,
-      recent_translations: getRecentTranslations(),
-    };
-    setStats(mockStats);
-    
+  useEffect(() => {
 
-    /* COMMENTED OUT - Supabase API call
-    if (user) {
+    if (userData?.user) {
       fetchStats();
     }
     
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []); // Empty dependency array since we're using mock data
-  */
-
-  /* COMMENTED OUT - Supabase API call
+  }, []); 
+  
   const fetchStats = async () => {
     try {
-      const response = await fetch('/api/stats');
+      
+      const response = await fetch(`/api/stats?role=${userData?.data?.role}&id=${userData?.user?.id}`);
       const data = await response.json();
 
       if (data.error) {
@@ -87,16 +71,15 @@ export default function DashboardPage() {
       setLoading(false);
     }
   };
-  */
 
-  const getHeader = (userRole: string) => {
-    if (userRole === 'admin') return 'Track and manage users, datasets, and languages—all in one place.'
-    if (userRole === 'evaluator') return 'Track and manage all your completed reviews right here.'
+  const getHeader = () => {
+    if (userData?.data?.role === 'admin') return 'Track and manage users, datasets, and languages—all in one place.'
+    if (userData?.data?.role === 'evaluator') return 'Track and manage all your completed reviews right here.'
     return 'Track and manage all your completed translations right here.'
   }
 
-  const getStats = (userRole: string) => {
-    if (userRole === 'admin') {
+  const getStats = () => {
+    if (userData?.data?.role === 'admin') {
       return (<div className='flex flex-col gap-4'>
         <div className="grid gap-4 grid-rows-1 lg:grid-cols-3">
 
@@ -110,7 +93,7 @@ export default function DashboardPage() {
       </div>);
     }
 
-    if (userRole === 'user') {
+    if (userData?.data?.role === 'evaluator') {
       return (<div className='flex flex-col gap-4'>
         <div className="grid gap-4 grid-rows-1 lg:grid-cols-2">
 
@@ -118,7 +101,7 @@ export default function DashboardPage() {
           <ReviewsToday />
 
         </div>
-        <RecentReviews />
+        {/*<RecentReviews />*/}
       </div>)
     }
 
@@ -129,6 +112,8 @@ export default function DashboardPage() {
         <TranslationsToday />
 
       </div>
+
+      {/*<RecentTranslations />*/}
 
     </div>)
   }
@@ -153,7 +138,7 @@ export default function DashboardPage() {
   }*/
 
   return (
-    <div className="min-h-screen px-4 py-8 sm:px-6 lg:px-8">
+    <div className="min-h-screen p-8 bg-background text-foreground text-sm font-medium">
       <div className="mx-auto max-w-7xl">
 
         <div className="space-y-6">

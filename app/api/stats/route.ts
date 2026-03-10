@@ -2,28 +2,20 @@ import { createServerSupabaseClient } from '@/lib/supabase/server';
 import { NextResponse } from 'next/server';
 
 export async function GET(request: Request) {
+
+  const { searchParams } = new URL(request.url);
+  const role = searchParams.get("role");
+  const id = searchParams.get("id");
+
   try {
+
     const supabase = await createServerSupabaseClient();
-    const {
-      data: { user },
-    } = await supabase.auth.getUser();
-
-    if (!user) {
-      return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
-    }
-
-    // Get user profile
-    const { data: userProfile, error: userError } = await supabase
-      .from('users')
-      .select('total_translations')
-      .eq('id', user.id)
-      .single();
-
-    if (userError) throw userError;
-
-    // Get today's translations count
     const today = new Date();
     today.setHours(0, 0, 0, 0);
+
+    if (role === "evaluator"){
+
+    }
 
     const { count: todayCount } = await supabase
       .from('translations')
@@ -31,7 +23,7 @@ export async function GET(request: Request) {
       .eq('user_id', user.id)
       .gte('created_at', today.toISOString());
 
-    // Get recent translations
+
     const { data: recentTranslations } = await supabase
       .from('translations')
       .select('translation_text, created_at, source_texts(text_content)')

@@ -9,8 +9,10 @@ const translationSchema = z.object({
 });
 
 export async function GET(request: Request) {
+
   try {
     const supabase = await createServerSupabaseClient();
+
     const { searchParams } = new URL(request.url);
     const sourceTextId = searchParams.get('source_text_id');
     const userId = searchParams.get('user_id');
@@ -30,11 +32,14 @@ export async function GET(request: Request) {
     if (error) throw error;
 
     return NextResponse.json({ data, error: null });
+
   } catch (error) {
+
     return NextResponse.json(
       { data: null, error: error instanceof Error ? error.message : 'Unknown error' },
       { status: 500 }
     );
+
   }
 }
 

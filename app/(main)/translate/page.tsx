@@ -9,29 +9,27 @@ import type { SourceText } from '@/lib/types/translation';
 
 export default function TranslatePage() {
   const router = useRouter();
-  const { user, loading: authLoading } = useAuth();
+  const { userData, loading: authLoading } = useAuth();
   const { submitTranslation, fetchNextSourceText, loading: translationLoading, error } =
     useTranslation();
   const [currentSourceText, setCurrentSourceText] = useState<SourceText | null>(null);
   const [translation, setTranslation] = useState('');
   const [loading, setLoading] = useState(true);
 
-  // Auth check commented out for UI development
-  // useEffect(() => {
-  //   if (!authLoading && !user) {
-  //     router.push('/login');
-  //   }
-  // }, [user, authLoading, router]);
 
-  useEffect(() => {
-    if (user) {
-      loadNextText();
-    }
-  }, [user]);
+   useEffect(() => {
+     if (!authLoading && !userData) {
+       router.push('/login');
+     }
+
+    loadNextText();
+  }, [userData, authLoading, router]);
+
 
   const loadNextText = async () => {
     setLoading(true);
-    const nextText = await fetchNextSourceText();
+    const nextText = await fetchNextSourceText(userData?.data?.source_language);
+    console.log(nextText)
     setCurrentSourceText(nextText);
     setTranslation('');
     setLoading(false);
