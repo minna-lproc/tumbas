@@ -57,7 +57,6 @@ export default function SignupPage() {
     setLoading(true);
     setError(null);
 
-    console.log(data);
     try {
       const { data: authData, error: signUpError } = await supabase.auth.signUp({
         email: data.email,
@@ -314,10 +313,10 @@ export default function SignupPage() {
       {
         success ?
 
-          <div className='w-full max-w-md space-y-8'>
+          <div className='flex flex-col items-center justify-center space-y-8'>
 
             <div className='space-y-4'>
-              <h2 className="mt-6 text-center text-3xl font-semibold tracking-tight ">
+              <h2 className="text-center text-3xl font-semibold tracking-tight ">
                 Registration successful!
               </h2>
               <p className='text-text-grey text-center text-xs'>
@@ -328,8 +327,7 @@ export default function SignupPage() {
             <Link
               href="/login"
               className="group relative flex w-full justify-center rounded-lg border 
-                             border-transparent px-4 py-3 bg-btn text-btn-text  hover:bg-btn-hover
-                             text-sm font-medium  
+                             border-transparent p-3 bg-btn text-btn-text  hover:bg-btn-hover
                              focus:outline-none focus:ring-2 focus:ring-btn-focus focus:ring-offset-2 disabled:opacity-50 disabled:cursor-not-allowed "
             >
               Sign in
