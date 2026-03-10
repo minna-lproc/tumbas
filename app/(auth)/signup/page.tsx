@@ -356,8 +356,8 @@ export default function SignupPage() {
 
             <form className="space-y-4 mt-4" onSubmit={handleSubmit(onSubmit)}>
               {error && (
-                <div className="rounded-md ">
-                  <p className="text-sm ">{error}</p>
+                <div className="rounded-md text-red-500 text-sm">
+                  <p >{error}</p>
                 </div>
               )}
 
