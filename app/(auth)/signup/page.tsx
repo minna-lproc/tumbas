@@ -1,6 +1,6 @@
 'use client';
 
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { useRouter } from 'next/navigation';
 import { createClient } from '@/lib/supabase/client';
 import { useForm } from 'react-hook-form';
@@ -8,10 +8,13 @@ import { zodResolver } from '@hookform/resolvers/zod';
 import { z } from 'zod';
 import Link from 'next/link';
 import { Eye, EyeClosed } from 'lucide-react';
+import type { Language } from '@/lib/types/translation';
 
 const signupSchema = z.object({
   firstName: z.string().min(1, 'First name must be at least 1 character'),
   lastName: z.string().min(1, 'Last name must be at least 1 character'),
+  sourceLanguage: z.string().min(1, 'Source language must be selected'),
+  targetLanguage: z.string().min(1, 'Target language must be selected'),
   email: z.email('Invalid email address'),
   password: z.string().min(8, 'Password must be at least 8 characters'),
   confirmedPassword: z.string().min(8, 'Confirmed password must be at least 8 characters'),
@@ -27,10 +30,15 @@ export default function SignupPage() {
   const [loading, setLoading] = useState(false);
   const [step, setStep] = useState(1);
   const [success, setSuccess] = useState(false);
+  const [languages, setLanguages] = useState<Language[] | null>(null);
   const [showPassword, setShowPassword] = useState(false);
   const [showConfirmedPassword, setShowConfirmedPassword] = useState(false);
 
   const supabase = createClient();
+
+  useEffect(() => {
+    fetchLanguages()
+  }, [])
 
   const {
     register,
@@ -41,10 +49,36 @@ export default function SignupPage() {
     resolver: zodResolver(signupSchema),
   });
 
-  const nextStep = async () => {
-    const isValid = await trigger(['firstName', 'lastName']);
+  const fetchLanguages = async () => {
+    try {
 
-    if (!isValid) return;
+      const response = await fetch(`/api/languages`);
+      const data = await response.json();
+
+      if (data.error) {
+        console.error('Failed to fetch stats:', data.error);
+        return;
+      }
+
+      setLanguages(data.data);
+    } catch (error) {
+      console.error('Error fetching stats:', error);
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  const nextStep = async () => {
+
+    if (step == 1) {
+      const isValid = await trigger(['firstName', 'lastName']);
+      if (!isValid) return;
+    }
+
+    if (step == 2) {
+      const isValid = await trigger(['sourceLanguage', 'targetLanguage']);
+      if (!isValid) return;
+    }
 
     setStep(step => step + 1)
   };
@@ -70,8 +104,8 @@ export default function SignupPage() {
       });
 
       if (signUpError) throw signUpError;
-        setSuccess(true)
-        
+      setSuccess(true)
+
     } catch (err) {
       setError(err instanceof Error ? err.message : 'An error occurred');
     } finally {
@@ -101,6 +135,7 @@ export default function SignupPage() {
 
   const getForms = () => {
 
+    // Input first and last name
     if (step == 1) {
       return (
         <>
@@ -166,7 +201,91 @@ export default function SignupPage() {
       );
     }
 
+    // Input source and target language
     if (step == 2) {
+      return (
+        <>
+          <div className="rounded-xl p-6 w-full shadow-md border mt-4 border-border-gray bg-box-bg">
+
+            <div className="mb-4 gap-4 flex flex-col">
+
+              <p className="font-semibold text-base">Source Language</p>
+
+              <div className="flex flex-row flex-wrap gap-2">
+
+                {languages?.filter((language) => language.type === 'source').map((language) => (
+                  <div key={language.id}>
+            
+                    <button
+                      type="button"
+                      className={`
+                          w-fit p-2 rounded-lg text-sm font-medium border text-teal-400 duration-200
+                        `}
+                    >
+                      {language.language_name}
+                    </button>
+                  </div>
+                ))}
+              </div>
+            </div>
+
+            <div className="mb-4 gap-4 flex flex-col">
+
+              <p className="font-semibold text-base">Target Language</p>
+
+              <div className="flex flex-row flex-wrap gap-2">
+
+                {languages?.filter((language) => language.type === 'target').map((language) => (
+                  <div key={language.id}>
+                    <button
+                      type="button"
+                      className={`
+                          w-fit p-2 rounded-lg text-sm font-medium border text-teal-400 duration-200
+                        `}
+                    >
+                      {language.language_name}
+                    </button>
+                  </div>
+                ))}
+              </div>
+            </div>
+          </div >
+
+          <div className='mt-8 grid grid-cols-2 gap-2'>
+            <button
+              type="button"
+              disabled={loading}
+              onClick={prevStep}
+              className="group relative flex w-full justify-center rounded-lg 
+              border border-border-gray p-3
+              bg-secondary-btn hover:bg-secondary-btn-hover
+              focus:outline-none focus:ring-2 focus:ring-btn-focus focus:ring-offset-2 
+              disabled:opacity-50 disabled:cursor-not-allowed "
+            >
+              Back
+            </button>
+
+            <button
+              type="button"
+              disabled={loading}
+              onClick={nextStep}
+              className="group relative flex w-full justify-center rounded-lg p-3
+                border border-transparent 
+                bg-btn hover:bg-btn-hover
+                text-btn-text
+                focus:outline-none focus:ring-2 focus:ring-btn-focus focus:ring-offset-1
+                disabled:opacity-50 disabled:cursor-not-allowed"
+            >
+              {loading ? 'Continuing...' : 'Continue'}
+            </button>
+          </div>
+        </>
+
+      );
+    }
+
+    // Input email and password
+    if (step == 3) {
       return (
         <>
           <div className="space-y-4 rounded-md shadow-sm">
@@ -263,7 +382,7 @@ export default function SignupPage() {
             </div>
           </div>
 
-          <div className='flex items-start w-full gap-2'>
+          {/*<div className='flex items-start w-full gap-2'>
 
             <input type="checkbox" id='termsOfService' className='bg-transparent accent-btn cursor-pointer' />
             <label htmlFor="termsOfService" className="text-xs text-center text-text-grey whitespace-nowrap">
@@ -272,7 +391,7 @@ export default function SignupPage() {
                 Terms of Service
               </button>
             </label>
-          </div>
+          </div>*/}
 
           <div className='mt-8 grid grid-cols-2 gap-2'>
             <button

@@ -187,7 +187,7 @@ export default function LoginPage() {
                 {loading ? 'Signing in...' : 'Sign in'}
               </button>
             </div>
-
+            {/** 
             <div className="relative">
               <div className="absolute inset-0 flex items-center">
                 <div className="w-full border-t border-border-gray" />
@@ -231,7 +231,7 @@ export default function LoginPage() {
               <span className="ml-2">Google</span>
             </button>
 
-
+*/}
           </div>
 
           <p className="mt-2 text-center text-xs text-text-grey">

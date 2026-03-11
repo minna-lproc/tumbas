@@ -2,9 +2,10 @@
 // languages
 export interface Language {
   id: string;
-  name: string;
+  language_name: string;
   iso_code: string;
-  is_source: boolean;
+  created_at: string;
+  type: string;
 }
 
 // source text
