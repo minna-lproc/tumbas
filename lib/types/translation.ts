@@ -26,15 +26,18 @@ export interface ParallelSourceText {
 // translation
 export interface Translation {
   id: string;
-  source_text_id: string;
-  user_id: string;
+  source_text: string;
+  translator: string;
   translation_text: string;
-  voice_recording_url?: string;
-  voice_recording_duration?: number;
-  voice_recording_blob?: Blob;
-  language: Language;
+  target_language: Language;
   created_at: string;
-  review_status: 'pending' | 'in progress' | 'approved' | 'modified';
-  evaluator_id?: string;
-  reviewed_at?: string;
 }
+
+export interface Review {
+  id: string;
+  evaluator: string;
+  modified_translation: string;
+  translation: Translation;
+  created_at: string;
+}
+

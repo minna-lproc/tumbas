@@ -3,13 +3,11 @@ import { Language } from "./translation";
 export interface AuthFormData {
   email: string;
   password: string;
-  username?: string;
 }
 
 export interface User {
   id: string;
   email: string;
-  username: string | null;
   first_name: string;
   last_name: string;
   source_language?: Language;
@@ -17,12 +15,10 @@ export interface User {
   is_active: boolean;
   role: 'user' | 'evaluator' | 'admin';
   date_joined: string;
-  total_translations?: number; //should be removed
 }
 
 export interface RegisterData {
   email: string;
-  username: string;
   password: string;
   first_name: string;
   last_name: string;
