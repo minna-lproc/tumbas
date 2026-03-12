@@ -60,6 +60,8 @@
   --background: #fafdfb;
   --foreground: #072128;
 
+  --input-bg: #f6f8f7;
+
   /* button colors */
   --btn-background: var(--color-teal-600);
   --btn-hover-background: var(--color-teal-700);
@@ -86,7 +88,9 @@
 
 .dark {
   --background: #04121d;
-  --foreground: #fafdfb;
+  --foreground: #f6f8f7;
+
+  --input-bg: #030e17;
 
   --btn-secondary-hover-background: #08222950;
   --btn-secondary-active-background: #08222950;
@@ -104,6 +108,9 @@
 @theme inline {
   --color-background: var(--background);
   --color-foreground: var(--foreground);
+
+  --color-input-bg: var(--input-bg);
+  
   --font-sans: var(--font-montserrat);
   --font-mono: var(--font-montserrat);
 
@@ -120,7 +127,7 @@
   --color-btn-text: var(--btn-text);
 
   /* secondary button colors */
-  --color-secondary-btn: var(--background);
+  --color-secondary-btn: var(--input-bg);
   --color-secondary-btn-hover: var(--btn-secondary-hover-background);
   --color-secondary-btn-active: var(--btn-secondary-active-background);
   --color-secondary-btn-focus: var(--background);

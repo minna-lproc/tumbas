@@ -10,7 +10,7 @@ export interface Language {
 
 // source text
 export interface SourceText {
-  id: string;
+  id: number;
   text_content: string;
   language: Language;
   created_at: string;

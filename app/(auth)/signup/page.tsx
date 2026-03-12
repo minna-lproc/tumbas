@@ -13,13 +13,16 @@ import type { Language } from '@/lib/types/translation';
 const signupSchema = z.object({
   firstName: z.string().min(1, 'First name must be at least 1 character'),
   lastName: z.string().min(1, 'Last name must be at least 1 character'),
-  sourceLanguage: z.string().min(1, 'Source language must be selected'),
-  targetLanguage: z.string().min(1, 'Target language must be selected'),
+  sourceLanguage: z.number(),
+  targetLanguage: z.number(),
   email: z.email('Invalid email address'),
   password: z.string().min(8, 'Password must be at least 8 characters'),
   confirmedPassword: z.string().min(8, 'Confirmed password must be at least 8 characters'),
 }).refine((data) => data.password === data.confirmedPassword, {
   message: "Passwords don't match",
+}).refine((data) => data.sourceLanguage !== data.targetLanguage, {
+  message: "Source and target language cannot be the same",
+  path: ["targetLanguage"],
 });
 
 type SignupFormData = z.infer<typeof signupSchema>;
@@ -44,10 +47,20 @@ export default function SignupPage() {
     register,
     handleSubmit,
     trigger,
+    setValue,
+    watch,
     formState: { errors },
   } = useForm<SignupFormData>({
     resolver: zodResolver(signupSchema),
   });
+
+  useEffect(() => {
+    register("sourceLanguage");
+    register("targetLanguage");
+  }, [register]);
+
+  const sourceLanguage = watch("sourceLanguage");
+  const targetLanguage = watch("targetLanguage");
 
   const fetchLanguages = async () => {
     try {
@@ -77,6 +90,9 @@ export default function SignupPage() {
 
     if (step == 2) {
       const isValid = await trigger(['sourceLanguage', 'targetLanguage']);
+      console.log(sourceLanguage)
+      console.log(targetLanguage)
+      console.log(await trigger(['sourceLanguage', 'targetLanguage']))
       if (!isValid) return;
     }
 
@@ -98,12 +114,15 @@ export default function SignupPage() {
         options: {
           data: {
             first_name: data.firstName,
-            last_name: data.lastName
+            last_name: data.lastName,
+            source_language: data.sourceLanguage,
+            target_language: data.targetLanguage
           }
         }
       });
 
       if (signUpError) throw signUpError;
+
       setSuccess(true)
 
     } catch (err) {
@@ -146,7 +165,7 @@ export default function SignupPage() {
               </label>
               <input
                 {...register('firstName')}
-                className={`relative block w-full rounded-lg p-3 focus:z-10 
+                className={`relative block w-full rounded-lg p-3 focus:z-10 bg-input-bg
                 border border-gray-500 focus:border-btn-active 
                 focus:outline-none focus:ring--btn-active  
                 placeholder:text-text-grey
@@ -166,7 +185,7 @@ export default function SignupPage() {
               <input
                 {...register('lastName')}
                 type="text"
-                className={`relative block w-full rounded-lg p-3 focus:z-10 
+                className={`relative block w-full rounded-lg p-3 focus:z-10 bg-input-bg
                 border border-gray-500 focus:border-btn-active 
                 focus:outline-none focus:ring--btn-active  
                 placeholder:text-text-grey
@@ -205,25 +224,34 @@ export default function SignupPage() {
     if (step == 2) {
       return (
         <>
-          <div className="rounded-xl p-6 w-full shadow-md border mt-4 border-border-gray bg-box-bg">
+          <div className="rounded-xl p-6 w-full shadow-md border border-border-gray">
+
 
             <div className="mb-4 gap-4 flex flex-col">
+              <p className='mb-2 text-base'>Select Source and Target Language</p>
 
-              <p className="font-semibold text-base">Source Language</p>
+              <p className="text-xs">Source Language</p>
 
               <div className="flex flex-row flex-wrap gap-2">
 
-                {languages?.filter((language) => language.type === 'source').map((language) => (
-                  <div key={language.id}>
-            
+                {languages?.filter((source_language) => source_language.type === 'source').map((source_language) => (
+                  <div key={source_language.id}>
+
                     <button
+                      key={source_language.id}
                       type="button"
-                      className={`
-                          w-fit p-2 rounded-lg text-sm font-medium border text-teal-400 duration-200
-                        `}
+                      onClick={() => setValue("sourceLanguage", source_language.id, {
+                        shouldValidate: true,
+                      })}
+                      className={`w-fit p-2 rounded-lg text-sm border bg-input-bg duration-200
+                        ${sourceLanguage == source_language.id
+                          ? "bg-secondary-btn-active border-2 border-teal-500"
+                          : " border-border-gray"}
+    `}
                     >
-                      {language.language_name}
+                      {source_language.language_name}
                     </button>
+
                   </div>
                 ))}
               </div>
@@ -231,20 +259,27 @@ export default function SignupPage() {
 
             <div className="mb-4 gap-4 flex flex-col">
 
-              <p className="font-semibold text-base">Target Language</p>
+              <p className="text-xs">Target Language</p>
 
               <div className="flex flex-row flex-wrap gap-2">
 
-                {languages?.filter((language) => language.type === 'target').map((language) => (
-                  <div key={language.id}>
+                {languages?.filter((target_language) => target_language.type === 'target').map((target_language) => (
+                  <div key={target_language.id}>
                     <button
+                      key={target_language.id}
                       type="button"
-                      className={`
-                          w-fit p-2 rounded-lg text-sm font-medium border text-teal-400 duration-200
-                        `}
+                      onClick={() => setValue("targetLanguage", target_language.id, {
+                        shouldValidate: true,
+                      })}
+                      className={`w-fit p-2 rounded-lg text-sm border bg-input-bg duration-200
+                        ${targetLanguage == target_language.id
+                          ? "bg-secondary-btn-active border-2 border-teal-500"
+                          : " border-border-gray"}
+    `}
                     >
-                      {language.language_name}
+                      {target_language.language_name}
                     </button>
+
                   </div>
                 ))}
               </div>
@@ -267,7 +302,7 @@ export default function SignupPage() {
 
             <button
               type="button"
-              disabled={loading}
+              disabled={loading || (!sourceLanguage || !targetLanguage)}
               onClick={nextStep}
               className="group relative flex w-full justify-center rounded-lg p-3
                 border border-transparent 
@@ -432,14 +467,14 @@ export default function SignupPage() {
       {
         success ?
 
-          <div className='flex flex-col items-center justify-center space-y-8'>
+          <div className='flex flex-col items-center justify-center space-y-8 w-80'>
 
             <div className='space-y-4'>
               <h2 className="text-center text-3xl font-semibold tracking-tight ">
                 Registration successful!
               </h2>
               <p className='text-text-grey text-center text-xs'>
-                You have successfully changed your password.
+                Thank you for signing up with us! We’ve sent you a verification email. Please check your inbox and confirm your verification there.
               </p>
             </div>
 
@@ -456,7 +491,7 @@ export default function SignupPage() {
 
           :
 
-          <div className="flex flex-col items-center justify-center space-y-8">
+          <div className="flex flex-col items-center justify-center space-y-4">
             <div>
               <h2 className="text-center text-3xl font-semibold tracking-tight">
                 Create your account
@@ -483,7 +518,7 @@ export default function SignupPage() {
               <div className="space-y-4 rounded-md w-72 md:w-80" key={step}>
                 {getForms()}
 
-
+                {/*
                 <div className="relative">
                   <div className="absolute inset-0 flex items-center">
                     <div className="w-full border-t border-border-gray" />
@@ -501,7 +536,7 @@ export default function SignupPage() {
                     onClick={() => handleSocialLogin('google')}
                     disabled={loading}
                     className="inline-flex w-full items-center justify-center rounded-lg 
-              border border-border-gray px-4 py-3 
+              border border-border-gray px-4 py-3
               bg-secondary-btn hover:bg-secondary-btn-hover text-sm font-medium 
               focus:outline-none focus:ring-2 
               focus:ring-btn-focus focus:ring-offset-2 disabled:opacity-50 disabled:cursor-not-allowed "
@@ -527,7 +562,7 @@ export default function SignupPage() {
                     <span className="ml-2">Google</span>
                   </button>
 
-                </div>
+                </div>*/}
               </div>
             </form>
           </div>
