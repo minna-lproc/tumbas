@@ -1,35 +1,35 @@
 'use client';
 
 import { useState, useCallback } from 'react';
-import type { SourceText, Translation } from '@/lib/types/translation';
+import type { Translation } from '@/lib/types/translation';
 
-export const useTranslation = () => {
+export const useReview = () => {
 
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
 
-  const submitTranslation = useCallback(
-    async (sourceTextId: string, translationText: string, dialect: string) => {
+  const submitReview = useCallback(
+    async (translationId: string, reviewText: string, hasModified: boolean) => {
       setLoading(true);
       setError(null);
 
       try {
-        const response = await fetch('/api/translations', {
+        const response = await fetch('/api/reviews', {
           method: 'POST',
           headers: {
             'Content-Type': 'application/json',
           },
           body: JSON.stringify({
-            source_text: sourceTextId,
-            translation_text: translationText,
-            dialect,
+            translation_id: translationId,
+            review_text: reviewText,
+            has_modified: hasModified
           }),
         });
 
         const data = await response.json();
 
         if (!response.ok) {
-          throw new Error(data.error || 'Failed to submit translation');
+          throw new Error(data.error || 'Failed to submit Review');
         }
 
         return data.data;
@@ -44,13 +44,14 @@ export const useTranslation = () => {
     []
   );
 
-  const fetchNextSourceText = useCallback(async (language: number): Promise<SourceText | null> => {
+  const fetchNextTranslation = useCallback(async (sourceLanguage: number, targetLanguage: number): Promise<Translation | null> => {
+
     try {
-      const response = await fetch(`/api/source-texts?language=${language}`);
+      const response = await fetch(`/api/translations?sourceLanguage=${sourceLanguage}&targetLanguage=${targetLanguage}`);
       const data = await response.json();
 
       if (!response.ok) {
-        throw new Error(data.error || 'Failed to fetch source text');
+        throw new Error(data.error || 'Failed to fetch translation');
       }
 
       return data.data && data.data.length > 0 ? data.data[0] : null;
@@ -61,8 +62,8 @@ export const useTranslation = () => {
   }, []);
 
   return {
-    submitTranslation,
-    fetchNextSourceText,
+    submitReview,
+    fetchNextTranslation,
     loading,
     error,
   };

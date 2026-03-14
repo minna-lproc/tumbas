@@ -90,9 +90,6 @@ export default function SignupPage() {
 
     if (step == 2) {
       const isValid = await trigger(['sourceLanguage', 'targetLanguage']);
-      console.log(sourceLanguage)
-      console.log(targetLanguage)
-      console.log(await trigger(['sourceLanguage', 'targetLanguage']))
       if (!isValid) return;
     }
 

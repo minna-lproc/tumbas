@@ -2,34 +2,26 @@ import { createServerSupabaseClient } from '@/lib/supabase/server';
 import { NextResponse } from 'next/server';
 import { z } from 'zod';
 
-const translationSchema = z.object({
-  source_text_id: z.string().uuid(),
-  translation_text: z.string().min(1, 'Translation text is required'),
-  dialect: z.string().default('siargaonon'),
-});
-
 export async function GET(request: Request) {
 
   try {
     const supabase = await createServerSupabaseClient();
 
     const { searchParams } = new URL(request.url);
-    const sourceTextId = searchParams.get('source_text_id');
-    const userId = searchParams.get('user_id');
+    const sourceLanguage = parseInt(searchParams.get('sourceLanguage') || '0');
+    const targetLanguage = parseInt(searchParams.get('targetLanguage') || '0');
 
-    let query = supabase.from('translations').select('*, source_texts(*), users(username, email)');
+    const query = supabase
+      .from('pending_translations')
+      .select('*')
+      .order('created_at', { ascending: false });
 
-    if (sourceTextId) {
-      query = query.eq('source_text_id', sourceTextId);
-    }
+    if (sourceLanguage != 0) query.eq('source_language', sourceLanguage);
+    if (targetLanguage != 0) query.eq('target_language', targetLanguage);
 
-    if (userId) {
-      query = query.eq('user_id', userId);
-    }
+    const { data, error: translationsError } = await query;
 
-    const { data, error } = await query.order('created_at', { ascending: false });
-
-    if (error) throw error;
+    if (translationsError) throw translationsError;
 
     return NextResponse.json({ data, error: null });
 
@@ -53,37 +45,28 @@ export async function POST(request: Request) {
     if (!user) {
       return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
     }
+    const body = await request.json()
 
-    const body = await request.json();
-    const validatedData = translationSchema.parse(body);
-
-    // Check if user already translated this source text
-    const { data: existing } = await supabase
-      .from('translations')
-      .select('id')
-      .eq('source_text_id', validatedData.source_text_id)
-      .eq('user_id', user.id)
-      .single();
-
-    if (existing) {
-      return NextResponse.json({ error: 'You have already translated this text' }, { status: 400 });
-    }
 
     const { data, error } = await supabase
       .from('translations')
       .insert({
-        ...validatedData,
-        user_id: user.id,
+        source_text: body.source_text,
+        translator: user.id,
+        target_language: body.dialect,
+        translation_text: body.translation_text
+
       })
       .select()
       .single();
 
     if (error) throw error;
 
+
     return NextResponse.json({ data, error: null }, { status: 201 });
   } catch (error) {
     if (error instanceof z.ZodError) {
-      return NextResponse.json({ error: error.errors }, { status: 400 });
+      return NextResponse.json({ error: error }, { status: 400 });
     }
     return NextResponse.json(
       { error: error instanceof Error ? error.message : 'Unknown error' },

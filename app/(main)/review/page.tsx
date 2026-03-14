@@ -3,46 +3,51 @@
 import { useState, useEffect } from 'react';
 import { useRouter } from 'next/navigation';
 import { useAuth } from '@/hooks/useAuth';
-import { useTranslation } from '@/hooks/useTranslation';
+import { useReview } from '@/hooks/useReview'
 import { ReviewCard } from '@/components/review/ReviewCard';
 import type { SourceText } from '@/lib/types/translation';
 
 
 export default function ReviewPage() {
   const router = useRouter();
-  const { user, loading: authLoading } = useAuth();
-  const { submitTranslation, fetchNextSourceText, loading: translationLoading, error } =
-    useTranslation();
-  const [currentSourceText, setCurrentSourceText] = useState<SourceText | null>(null);
+  const { user, userProfile, loading: authLoading } = useAuth();
+  const { submitReview, fetchNextTranslation, loading: reviewLoading, error } =
+    useReview();
+  const [currentSourceText, setCurrentSourceText] = useState<Translation | null>(null);
   const [translation, setTranslation] = useState('');
+  const [currentTranslation, setCurrentTranslation] = useState('');
   const [loading, setLoading] = useState(true);
 
-  // Auth check commented out for UI development
-  // useEffect(() => {
-  //   if (!authLoading && !user) {
-  //     router.push('/login');
-  //   }
-  // }, [user, authLoading, router]);
 
   useEffect(() => {
-    if (user) {
+    if (!authLoading && !user) {
+      router.push('/login');
+    }
+
+  }, [user, userProfile, authLoading, router]);
+
+  useEffect(() => {
+    if (userProfile?.source_language) {
       loadNextText();
     }
-  }, [user]);
+  }, [userProfile?.source_language]);
 
   const loadNextText = async () => {
     setLoading(true);
-    const nextText = await fetchNextSourceText();
+    const nextText = await fetchNextTranslation(userProfile?.source_language, userProfile?.target_language);
     setCurrentSourceText(nextText);
-    setTranslation('');
+    setTranslation(nextText?.translation_text);
+    setCurrentTranslation(nextText?.translation_text);
     setLoading(false);
   };
 
   const handleSubmit = async () => {
     if (!currentSourceText || !translation.trim()) return;
 
+    const hasModified = !(translation.trim() === currentTranslation);
+
     try {
-      await submitTranslation(currentSourceText.id, translation);
+      await submitReview(currentSourceText.id, translation, hasModified);
       // Optimistic update - load next text immediately
       await loadNextText();
     } catch (err) {
@@ -94,7 +99,7 @@ export default function ReviewPage() {
           onTranslationChange={setTranslation}
           onSubmit={handleSubmit}
           onSkip={handleSkip}
-          loading={translationLoading}
+          loading={reviewLoading}
         />
       </div>
     </div>

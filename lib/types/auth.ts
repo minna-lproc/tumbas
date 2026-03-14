@@ -5,13 +5,15 @@ export interface AuthFormData {
   password: string;
 }
 
-export interface User {
+export interface UserProfile {
   id: string;
   email: string;
   first_name: string;
   last_name: string;
-  source_language?: Language;
-  target_language?: Language;
+  source_language: number;
+  source: string;
+  target_language: number;
+  target: string;
   is_active: boolean;
   role: 'user' | 'evaluator' | 'admin';
   date_joined: string;
@@ -28,6 +30,6 @@ export interface RegisterData {
 }
 
 export interface RegisterResult {
-  user: User;
+  user: UserProfile;
   hasVerifiedEmail: boolean;
 }

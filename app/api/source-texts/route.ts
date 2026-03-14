@@ -9,7 +9,7 @@ export async function GET(request: Request) {
     const { searchParams } = new URL(request.url);
 
     const language = parseInt(searchParams.get('language') || '0');
-    const limit = parseInt(searchParams.get('limit') || '10');
+    const limit = parseInt(searchParams.get('limit') || '20');
     const offset = parseInt(searchParams.get('offset') || '0');
 
     const {
@@ -21,27 +21,20 @@ export async function GET(request: Request) {
     }
 
 
-    const { data: sourceTexts , error: sourceTextsError } = await supabase
+    const { data: sourceTexts, error: sourceTextsError } = await supabase
       .from("pending_source_texts" as any)
       .select("*")
-      .order('created_at', {ascending: false})
-      .range(offset, offset + limit - 1);
+      .eq("language", language)
+      .order('created_at', { ascending: false })
+      .limit(limit);
+
 
     if (sourceTextsError) throw sourceTextsError;
 
-    // Get user's translations to filter out already translated texts
-
-    /*const { data: userTranslations } = await supabase
-      .from('translations')
-      .select('source_text')
-      .eq('translator', user.id);
+    const shuffled = sourceTexts.sort(() => Math.random() - 0.5).slice(0, limit);
 
 
-    const translatedIds = new Set(userTranslations?.map((t) => t.source_text) || []);*/
-
-    const availableTexts = sourceTexts || [];
-
-    return NextResponse.json({ data: availableTexts, error: null });
+    return NextResponse.json({ data: shuffled, error: null });
   } catch (error) {
     return NextResponse.json(
       { data: null, error: error instanceof Error ? error.message : 'Unknown error' },

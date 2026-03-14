@@ -9,7 +9,7 @@ import type { SourceText } from '@/lib/types/translation';
 
 export default function TranslatePage() {
   const router = useRouter();
-  const { userData, loading: authLoading } = useAuth();
+  const {user, userProfile, loading: authLoading} = useAuth();
   const { submitTranslation, fetchNextSourceText, loading: translationLoading, error } =
     useTranslation();
   const [currentSourceText, setCurrentSourceText] = useState<SourceText | null>(null);
@@ -18,18 +18,22 @@ export default function TranslatePage() {
 
 
    useEffect(() => {
-     if (!authLoading && !userData) {
+     if (!authLoading && !user) {
        router.push('/login');
      }
 
+  }, [user, userProfile, authLoading, router]);
+
+  useEffect(() => {
+  if (userProfile?.source_language) {
     loadNextText();
-  }, [userData, authLoading, router]);
+  }
+}, [userProfile?.source_language]); 
 
 
   const loadNextText = async () => {
     setLoading(true);
-    const nextText = await fetchNextSourceText(userData?.data?.source_language);
-    console.log(nextText)
+    const nextText = await fetchNextSourceText(userProfile?.source_language);
     setCurrentSourceText(nextText);
     setTranslation('');
     setLoading(false);
@@ -39,7 +43,7 @@ export default function TranslatePage() {
     if (!currentSourceText || !translation.trim()) return;
 
     try {
-      await submitTranslation(currentSourceText.id, translation);
+      await submitTranslation(currentSourceText.id, translation, userProfile?.target_language);
       // Optimistic update - load next text immediately
       await loadNextText();
     } catch (err) {

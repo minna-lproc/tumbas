@@ -3,53 +3,58 @@
 import { useEffect, useState } from 'react';
 import { createClient } from '@/lib/supabase/client';
 import type { User } from '@supabase/supabase-js';
+import type { UserProfile } from '@/lib/types/auth';
 
 export const useAuth = () => {
   const supabase = createClient();
 
-  const [userData, setUserData] = useState<{ user: User | null; data: any } | null>(null);
+  const [user, setUser] = useState<User | null>(null);
+  const [userProfile, setUserProfile] = useState<UserProfile | null>(null);
   const [loading, setLoading] = useState(true);
 
-  const fetchUserWithData = async (user: User) => {
-    if (!user) return;
-    try {
-      const { data, error: viewError } = await supabase
-        .from("users_with_data")
-        .select("*")
-        .eq("id", user.id)
-        .single();
-      if (viewError) throw viewError;
-      setUserData({ user, data });
-    } catch (err) {
-      console.error("Error fetching user view:", err);
-      setUserData({ user, data: null });
-    } finally {
-      setLoading(false);
-    }
-  };
-
   useEffect(() => {
+    const getUser = async () => {
+      const {
+        data: { user },
+      } = await supabase.auth.getUser();
+      setUser(user);
 
-    supabase.auth.getUser().then(({ data: { user } }) => {
       if (user) {
-        fetchUserWithData(user);
-      } else {
-        setUserData(null);
-        setLoading(false);
-      }
-    });
+        const { data } = await supabase
+          .from('users_with_data')
+          .select('*')
+          .eq('id', user.id)
+          .single();
 
-    const { data: { subscription } } = supabase.auth.onAuthStateChange((_event, session) => {
-      if (session?.user) {
-        fetchUserWithData(session.user);
-      } else {
-        setUserData(null);
-        setLoading(false);
+        setUserProfile(data);
       }
+
+      setLoading(false);
+    };
+
+    getUser();
+
+    const {
+      data: { subscription },
+    } = supabase.auth.onAuthStateChange(async (_event, session) => {
+      setUser(session?.user ?? null);
+
+      if (user) {
+        const { data } = await supabase
+          .from('users_with_data')
+          .select('*')
+          .eq('id', user.id)
+          .single();
+
+        setUserProfile(data);
+      }
+
+      setLoading(false);
     });
 
     return () => subscription.unsubscribe();
   }, []);
 
-  return { userData, loading };
+  return { user, userProfile, loading };
+
 };

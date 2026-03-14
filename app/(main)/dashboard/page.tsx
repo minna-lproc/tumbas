@@ -32,21 +32,21 @@ interface DashboardStats {
 export default function DashboardPage() {
 
   const router = useRouter();
-  const { userData, loading: authLoading } = useAuth();
+  const {user, userProfile, loading: authLoading } = useAuth();
   const [stats, setStats] = useState<DashboardStats | null>(null);
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    if (!authLoading && !userData) {
+    if (!authLoading && !user) {
       router.push('/login');
     }
 
     setLoading(false);
-  }, [userData, authLoading, router]);
+  }, [user, userProfile, authLoading, router]);
 
   useEffect(() => {
 
-    if (userData?.user) {
+    if (user) {
       fetchStats();
     }
     
@@ -56,7 +56,7 @@ export default function DashboardPage() {
   const fetchStats = async () => {
     try {
       
-      const response = await fetch(`/api/stats?role=${userData?.data?.role}&id=${userData?.user?.id}`);
+      const response = await fetch(`/api/stats?role=${userProfile?.role}&id=${userProfile?.id}`);
       const data = await response.json();
 
       if (data.error) {
@@ -73,13 +73,13 @@ export default function DashboardPage() {
   };
 
   const getHeader = () => {
-    if (userData?.data?.role === 'admin') return 'Track and manage users, datasets, and languages—all in one place.'
-    if (userData?.data?.role === 'evaluator') return 'Track and manage all your completed reviews right here.'
+    if (userProfile?.role === 'admin') return 'Track and manage users, datasets, and languages—all in one place.'
+    if (userProfile?.role === 'evaluator') return 'Track and manage all your completed reviews right here.'
     return 'Track and manage all your completed translations right here.'
   }
 
   const getStats = () => {
-    if (userData?.data?.role === 'admin') {
+    if (userProfile?.role === 'admin') {
       return (<div className='flex flex-col gap-4'>
         <div className="grid gap-4 grid-rows-1 lg:grid-cols-3">
 
@@ -93,7 +93,7 @@ export default function DashboardPage() {
       </div>);
     }
 
-    if (userData?.data?.role === 'evaluator') {
+    if (userProfile?.role === 'evaluator') {
       return (<div className='flex flex-col gap-4'>
         <div className="grid gap-4 grid-rows-1 lg:grid-cols-2">
 
@@ -148,7 +148,7 @@ export default function DashboardPage() {
           border border-background/25
           bg-linear-to-bl from-header-gradient-from via-header-gradient-via to-header-gradient-to'>
             <h1 className='font-bold text-3xl tracking-tight'>
-              Welcome to tumbas!
+              Welcome {userProfile?.first_name}!
             </h1>
             <p className='font-medium text-sm'>
               {getHeader()}

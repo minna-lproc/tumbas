@@ -13,15 +13,14 @@ export default function ProfilePage() {
   const supabase = createClient();
 
   const router = useRouter();
-  const {userData, loading: authLoading} = useAuth();
-  const profile = userData?.data;
+  const {user, userProfile, loading: authLoading} = useAuth();
   const isLoading = authLoading;
 
   useEffect(() => {
-    if (!authLoading && !userData) {
+    if (!authLoading && !user) {
       router.push('/login');
     }
-  }, [userData, authLoading, router]);
+  }, [user, userProfile, authLoading, router]);
 
 
   const handleSignOut = async () => {
@@ -40,7 +39,7 @@ export default function ProfilePage() {
     );
   }
 
-  if (!profile) {
+  if (!user) {
     return (
       <div className="flex min-h-screen items-center justify-center ">
         <p className="">Failed to load profile</p>
@@ -80,7 +79,7 @@ export default function ProfilePage() {
               <input
                 type="text"
                 disabled
-                value={userData?.data?.first_name}
+                value={userProfile?.first_name}
                 className={`relative block w-full rounded-lg px-3 py-3 focus:z-10 
                 border border-border-gray focus:border-btn-active 
                 focus:outline-none focus:ring--btn-active  
@@ -96,7 +95,7 @@ export default function ProfilePage() {
               <input
                 type="text"
                 disabled
-                value={userData?.data?.last_name}
+                value={userProfile?.last_name}
                 className={`relative block w-full rounded-lg px-3 py-3 focus:z-10 
                 border border-border-gray focus:border-btn-active 
                 focus:outline-none focus:ring--btn-active  

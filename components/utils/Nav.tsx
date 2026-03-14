@@ -7,8 +7,8 @@ import { useAuth } from '@/hooks/useAuth';
 import { useActiveNav } from '@/hooks/useNavbar';
 
 export default function Nav(device?: { mobile?: boolean }) {
-    const { userData } = useAuth();
-    const userRole = userData?.data?.role || 'user';
+    const { userProfile } = useAuth();
+    const userRole = userProfile?.role || 'user';
 
     const filteredNavItems = navItems.filter(item => 
         !item.roles || item.roles.includes(userRole)
