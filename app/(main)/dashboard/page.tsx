@@ -46,18 +46,19 @@ export default function DashboardPage() {
 
   useEffect(() => {
 
+    console.log(user)
     if (user) {
       fetchStats();
     }
-    
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []); 
+  }, [user]); 
   
   const fetchStats = async () => {
     try {
       
-      const response = await fetch(`/api/stats?role=${userProfile?.role}&id=${userProfile?.id}`);
+      const response = await fetch(`/api/stats?role=${userProfile?.role}`);
       const data = await response.json();
+
+      console.log(data)
 
       if (data.error) {
         console.error('Failed to fetch stats:', data.error);

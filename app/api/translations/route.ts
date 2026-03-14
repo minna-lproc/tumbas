@@ -45,8 +45,8 @@ export async function POST(request: Request) {
     if (!user) {
       return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
     }
-    const body = await request.json()
 
+    const body = await request.json()
 
     const { data, error } = await supabase
       .from('translations')
@@ -59,9 +59,8 @@ export async function POST(request: Request) {
       })
       .select()
       .single();
-
+    
     if (error) throw error;
-
 
     return NextResponse.json({ data, error: null }, { status: 201 });
   } catch (error) {
