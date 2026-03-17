@@ -18,47 +18,38 @@ import { QuickActions } from '@/components/dashboard/admin/QuickActions';
 
 
 interface DashboardStats {
-  total_translations: number;
-  translations_today: number;
-  recent_translations: Array<{
-    translation_text: string;
-    created_at: string;
-    source_texts?: {
-      text_content: string;
-    };
+  total_stats: number;
+  stats_today: number;
+  recent_stats: Array<{
   }>;
 }
 
 export default function DashboardPage() {
 
   const router = useRouter();
-  const {user, userProfile, loading: authLoading } = useAuth();
+  const { user, userProfile, loading: authLoading } = useAuth();
   const [stats, setStats] = useState<DashboardStats | null>(null);
   const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(false);
 
   useEffect(() => {
     if (!authLoading && !user) {
       router.push('/login');
     }
-
-    setLoading(false);
   }, [user, userProfile, authLoading, router]);
 
   useEffect(() => {
-
-    console.log(user)
-    if (user) {
+    if (userProfile) {
       fetchStats();
     }
-  }, [user]); 
-  
+  }, [userProfile]);
+
   const fetchStats = async () => {
+    setLoading(true);
+
     try {
-      
       const response = await fetch(`/api/stats?role=${userProfile?.role}`);
       const data = await response.json();
-
-      console.log(data)
 
       if (data.error) {
         console.error('Failed to fetch stats:', data.error);
@@ -67,7 +58,8 @@ export default function DashboardPage() {
 
       setStats(data.data);
     } catch (error) {
-      console.error('Error fetching stats:', error);
+        console.error(error);
+        setError(true);
     } finally {
       setLoading(false);
     }
@@ -98,8 +90,8 @@ export default function DashboardPage() {
       return (<div className='flex flex-col gap-4'>
         <div className="grid gap-4 grid-rows-1 lg:grid-cols-2">
 
-          <TotalReviews />
-          <ReviewsToday />
+          <TotalReviews stats={stats?.total_stats}/>
+          <ReviewsToday stats={stats?.stats_today}/>
 
         </div>
         {/*<RecentReviews />*/}
@@ -109,8 +101,8 @@ export default function DashboardPage() {
     return (<div className='flex flex-col gap-4'>
       <div className="grid gap-4 grid-rows-1 lg:grid-cols-2">
 
-        <TotalTranslations />
-        <TranslationsToday />
+        <TotalTranslations stats={stats?.total_stats} />
+        <TranslationsToday stats={stats?.stats_today}/>
 
       </div>
 
@@ -130,13 +122,13 @@ export default function DashboardPage() {
     );
   }
 
-  /*if (!stats) {
+  if (error) {
     return (
       <div className="flex min-h-screen items-center justify-center ">
         <p className="">Failed to load statistics</p>
       </div>
     );
-  }*/
+  }
 
   return (
     <div className="min-h-screen p-8 bg-background text-foreground text-sm font-medium">

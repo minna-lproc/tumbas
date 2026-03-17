@@ -45,7 +45,7 @@ export default function LoginPage() {
 
       if (signInError) throw signInError;
 
-      router.push('/translate');
+      router.push('/dashboard');
       router.refresh();
 
     } catch (err) {

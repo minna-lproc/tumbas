@@ -6,6 +6,7 @@ export async function GET(request: Request) {
 
   try {
     const supabase = await createServerSupabaseClient();
+    const limit = 10;
 
     const { searchParams } = new URL(request.url);
     const sourceLanguage = parseInt(searchParams.get('sourceLanguage') || '0');
@@ -23,7 +24,9 @@ export async function GET(request: Request) {
 
     if (translationsError) throw translationsError;
 
-    return NextResponse.json({ data, error: null });
+    const shuffled = data.sort(() => Math.random() - 0.5).slice(0, limit);
+
+    return NextResponse.json({ shuffled, error: null });
 
   } catch (error) {
 

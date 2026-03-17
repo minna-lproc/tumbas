@@ -7,7 +7,7 @@ export const TotalTranslations = ({stats}) => {
                 Total Translations
             </p>
             <p className="mt-2 text-3xl font-bold">
-                13 {/* Mock Data*/}
+                {stats}
             </p>
         </div>
     )

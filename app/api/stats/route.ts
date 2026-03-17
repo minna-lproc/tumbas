@@ -21,7 +21,7 @@ export async function GET(request: Request) {
     }
 
     if (role === "evaluator") {
-      const { data: totalCount } = await supabase
+      const { count: totalCount } = await supabase
         .from('reviews')
         .select('*', { count: 'exact', head: true })
         .eq('evaluator', user.id)
@@ -33,29 +33,57 @@ export async function GET(request: Request) {
         .gte('created_at', today.toISOString());
 
 
-      const { data: recentTranslations } = await supabase
+      const { data: recentReviews, error } = await supabase
         .from('reviews')
-        .select('translation_text, created_at, source_texts(text_content)')
+        .select(`
+      id,
+      evaluator,
+      modified_translation,
+      created_at,
+      translation,
+      translations (
+        id,
+        translation_text,
+        source_text,
+        source_texts (
+          text_content,
+          parallel_to,
+          parallel_source_texts (
+            status 
+          )
+        )
+      )
+    `)
         .eq('evaluator', user.id)
         .order('created_at', { ascending: false })
-        .limit(5);
+        .limit(3);
+
+      const formatted = recentReviews?.map(r => ({
+      id: r.id,
+      evaluator: r.evaluator,
+      modified_translation: r.modified_translation,
+      created_at: r.created_at,
+      translation: r.translation,
+      translation_text: r.translations?.translation_text,
+      source_text: r.translations?.source_text,
+      text_content: r.translations?.source_texts?.text_content,
+      status: r.translations?.source_texts?.parallel_source_texts?.status
+      }));
 
       return NextResponse.json({
         data: {
-          total_translations: totalCount || 0,
-          translations_today: todayCount || 0,
-          recent_translations: recentTranslations || [],
+          total_stats: totalCount || 0,
+          stats_today: todayCount || 0,
+          recent_stats: formatted || [],
         },
         error: null,
       });
     }
 
-    const { data: totalCount } = await supabase
+    const { count: totalCount } = await supabase
       .from('translations')
       .select('*', { count: 'exact', head: true })
       .eq('translator', user.id)
-
-    console.log(totalCount)
 
     const { count: todayCount } = await supabase
       .from('translations')
@@ -64,18 +92,18 @@ export async function GET(request: Request) {
       .gte('created_at', today.toISOString());
 
 
-    const { data: recentTranslations } = await supabase
+    const { data: recentTranslations, error } = await supabase
       .from('translations')
-      .select('translation_text, created_at, source_texts(text_content)')
-      .eq('user_id', user.id)
+      .select('*, source_texts(text_content)')
+      .eq('translator', user.id)
       .order('created_at', { ascending: false })
-      .limit(5);
+      .limit(3);
 
     return NextResponse.json({
       data: {
-        total_translations: totalCount || 0,
-        translations_today: todayCount || 0,
-        recent_translations: recentTranslations || [],
+        total_stats: totalCount || 0,
+        stats_today: todayCount || 0,
+        recent_stats: recentTranslations || [],
       },
       error: null,
     });
