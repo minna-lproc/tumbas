@@ -36,6 +36,7 @@ export default function DashboardPage() {
     if (!authLoading && !user) {
       router.push('/login');
     }
+
   }, [user, userProfile, authLoading, router]);
 
   useEffect(() => {
@@ -94,7 +95,7 @@ export default function DashboardPage() {
           <ReviewsToday stats={stats?.stats_today}/>
 
         </div>
-        {/*<RecentReviews />*/}
+        {<RecentReviews reviews={stats?.recent_stats}/>}
       </div>)
     }
 
@@ -106,7 +107,7 @@ export default function DashboardPage() {
 
       </div>
 
-      {/*<RecentTranslations />*/}
+      {<RecentTranslations translations={stats?.recent_stats}/>}
 
     </div>)
   }
@@ -116,7 +117,6 @@ export default function DashboardPage() {
       <div className="flex min-h-screen items-center justify-center bg-background text-foreground">
         <div className="text-center">
           <div className="mb-4 inline-block h-12 w-12 animate-spin rounded-full border-4 border-solid border-teal-600 border-r-transparent"></div>
-          <p className="">Loading...</p>
         </div>
       </div>
     );

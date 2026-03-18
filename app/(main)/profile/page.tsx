@@ -2,11 +2,16 @@
 
 import { useState, useEffect } from 'react';
 import { useRouter } from 'next/navigation';
+import { success, z } from 'zod';
 import { useAuth } from '@/hooks/useAuth';
 import { createClient } from '@/lib/supabase/client';
 import { LogOut } from 'lucide-react';
 import { LanguageProficiency } from '@/components/profile/LanguageProficiency';
 
+export const profileSchema = z.object({
+  first_name: z.string().min(1, 'First name is required'),
+  last_name: z.string().min(1, 'Last name is required'),
+});
 
 export default function ProfilePage() {
 

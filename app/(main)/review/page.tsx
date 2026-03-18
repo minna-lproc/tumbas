@@ -78,7 +78,7 @@ export default function ReviewPage() {
             All caught up!
           </h2>
           <p className="">
-            There are no more texts to translate at the moment.
+            There are no more texts to review at the moment.
           </p>
         </div>
       </div>

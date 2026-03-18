@@ -74,6 +74,7 @@ export async function GET(request: Request) {
       status: r.translations?.source_texts?.parallel_source_texts?.status
       }));
 
+      
       return NextResponse.json({
         data: {
           total_stats: totalCount || 0,

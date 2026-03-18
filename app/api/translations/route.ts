@@ -27,13 +27,10 @@ export async function GET(request: Request) {
             .select('*, source_texts(*)')
             .eq('translator', user.id)
             .order('created_at', { ascending: false });
-        
-      console.log(data)
 
       if (translationsError) throw translationsError;
 
-      return NextResponse.json({ data, error: null });
-            
+      return NextResponse.json({ data, error: null }); 
     }
 
     const query = supabase

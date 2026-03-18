@@ -17,7 +17,8 @@ interface RecentTranslationsProps {
 export const RecentTranslations = ({ translations }: RecentTranslationsProps) => {
   if (translations.length === 0) {
     return (
-      <div className="rounded-xl  p-6 shadow-md ">
+      <div className="rounded-xl  p-6 shadow-md bg-input-bg
+    border border-border-gray">
         <h3 className="mb-4 text-lg font-semibold ">
           Recent Translations
         </h3>
@@ -27,7 +28,7 @@ export const RecentTranslations = ({ translations }: RecentTranslationsProps) =>
   }
 
   return (
-    <div className="rounded-xl px-6 pt-6 shadow-md bg-box-bg
+    <div className="rounded-xl px-6 pt-6 shadow-md bg-input-bg
     border border-border-gray">
       <h3 className="mb-4 text-lg font-semibold ">
         Recent Translations

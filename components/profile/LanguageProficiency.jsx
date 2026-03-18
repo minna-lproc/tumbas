@@ -13,7 +13,7 @@ export const LanguageProficiency = () => {
     ]
 
     return (
-        <div className="rounded-xl p-6 w-full shadow-md border mt-4 border-border-gray bg-box-bg">
+        <div className="rounded-xl p-6 w-full shadow-md border mt-4 border-border-gray bg-input-bg">
 
             <div className="mb-4 gap-4 flex flex-col">
 

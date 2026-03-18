@@ -5,7 +5,7 @@ import Link from 'next/link';
 export const QuickActions = () => {
 
     return (
-        <div className="rounded-xl p-4 shadow-md bg-box-bg
+        <div className="rounded-xl p-4 shadow-md bg-input-bg
     border border-border-gray space-y-4">
             <h3 className="text-lg font-semibold ">
                 Quick Actions
@@ -14,7 +14,7 @@ export const QuickActions = () => {
                 <Link
                     href='/users'
                 >
-                    <div className="flex flex-row rounded-xl gap-2 p-3 shadow-md border border-border-gray bg-box-bg">
+                    <div className="flex flex-row rounded-xl gap-2 p-3 shadow-md border border-border-gray bg-input-bg">
 
                         <Users className='icon text-teal-500' />
 
@@ -28,7 +28,7 @@ export const QuickActions = () => {
                 <Link
                     href='/sentences'
                 >
-                    <div className="flex flex-row rounded-xl gap-2 p-3 shadow-md border border-border-gray bg-box-bg">
+                    <div className="flex flex-row rounded-xl gap-2 p-3 shadow-md border border-border-gray bg-input-bg">
 
                         <NotebookText className='icon text-green-500' />
 
@@ -42,7 +42,7 @@ export const QuickActions = () => {
                 <Link
                     href='/overview'
                 >
-                    <div className="flex flex-row rounded-xl gap-2 p-3 shadow-md border border-border-gray bg-box-bg">
+                    <div className="flex flex-row rounded-xl gap-2 p-3 shadow-md border border-border-gray bg-input-bg">
 
                         <ChartColumn className='icon text-yellow-500' />
 

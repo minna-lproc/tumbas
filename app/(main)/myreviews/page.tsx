@@ -42,7 +42,7 @@ export default function MyReviewsPage() {
                             My Reviews
                         </p>
     
-                        <div className=' flex gap-4 h-10 items-center
+                        {/*<div className=' flex gap-4 h-10 items-center
                         border border-border-gray rounded-lg
                         px-4'>
                             <Search className='icon text-text-grey' />
@@ -52,7 +52,7 @@ export default function MyReviewsPage() {
                                 placeholder='Search' />
     
                             <ListFilterPlus className='icon text-text-grey' />
-                        </div>
+                        </div>*/}
     
                         <div className='rounded-xl px-6 border border-border-gray w-full'>
     

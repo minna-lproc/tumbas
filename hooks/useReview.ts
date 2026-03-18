@@ -54,7 +54,7 @@ export const useReview = () => {
         throw new Error(data.error || 'Failed to fetch translation');
       }
 
-      return data.data && data.data.length > 0 ? data.data[0] : null;
+      return data.shuffled && data.shuffled.length > 0 ? data.shuffled[0] : null;
     } catch (err) {
       setError(err instanceof Error ? err.message : 'An error occurred');
       return null;
