@@ -21,7 +21,6 @@ export default function ForgotPassPage() {
     const [loading, setLoading] = useState(false);
     const [success, setSuccess] = useState(false);
 
-    // for resend email
     const [timer, setTimer] = useState(60);
     const [isRunning, setIsRunning] = useState(false);
     const [emailSentTo, setEmailSentTo] = useState<string | null>(null);
@@ -29,7 +28,6 @@ export default function ForgotPassPage() {
 
     const supabase = createClient();
 
-    // start/stop timer via effect so it reacts to `isRunning`
     useEffect(() => {
         if (!isRunning) return;
 
@@ -96,7 +94,6 @@ export default function ForgotPassPage() {
             const { error: resetError } = await supabase.auth.resetPasswordForEmail(
                 data.email,
                 {
-                    /* for local development */
                     redirectTo: `${window.location.origin}/resetpass`,
                 }
             );
@@ -116,12 +113,12 @@ export default function ForgotPassPage() {
     };
 
     return (
-        <div className="flex min-h-screen items-center justify-center px-4 py-12 sm:px-6 lg:px-8 bg-background 
-        text-foreground">
+        <div className="flex min-h-screen w-full items-center justify-center 
+    py-12 px-8 bg-background text-foreground text-sm font-medium">
 
             {success ?
 
-                <div className='w-full max-w-md space-y-8'>
+                <div className='flex flex-col items-center justify-center space-y-4'>
 
                     <div className='space-y-4'>
                         <h2 className="mt-6 text-center text-3xl font-semibold tracking-tight ">
@@ -160,7 +157,7 @@ export default function ForgotPassPage() {
                 </div>
 
                 :
-                <div className="w-full max-w-md space-y-8">
+                <div className="flex flex-col items-center justify-center space-y-4">
 
                     <div className='space-y-4'>
                         <h2 className="mt-6 text-center text-3xl font-semibold tracking-tight ">
@@ -171,55 +168,57 @@ export default function ForgotPassPage() {
                         </p>
                     </div>
 
-                    <form className="mt-8 space-y-6" onSubmit={handleSubmit(onSubmit)}>
+                    <form className="mt-4 space-y-4" onSubmit={handleSubmit(onSubmit)}>
 
-                        <div>
-                            <label htmlFor="email" className="sr-only">
-                                Email address
-                            </label>
-                            <input
-                                {...register('email')}
-                                type="email"
-                                autoComplete="email"
-                                required
-                                className={`relative block w-full rounded-lg px-3 py-3 focus:z-10 
+                        <div className="space-y-4 rounded-md w-72 md:w-80">
+
+                            <div className='space-y-4 rounded-md w-72 md:w-80'>
+                                <label htmlFor="email" className="sr-only">
+                                    Email address
+                                </label>
+                                <input
+                                    {...register('email')}
+                                    type="email"
+                                    autoComplete="email"
+                                    required
+                                    className={`relative block w-full rounded-lg p-3 focus:z-10 
                 border border-border-gray focus:border-btn-active 
                 focus:outline-none focus:ring--btn-active  
                 sm:text-sm placeholder:text-gray
                 ${errors.email ? 'error-border' : 'border-border-gray'}`}
-                                placeholder="Email address"
-                            />
-                            {errors.email && (
-                                <p className="mt-1 error-text">
-                                    {errors.email.message}
-                                </p>
-                            )}
-                        </div>
+                                    placeholder="Email address"
+                                />
+                                {errors.email && (
+                                    <p className="mt-1 error-text">
+                                        {errors.email.message}
+                                    </p>
+                                )}
+                            </div>
 
-                        <div>
-                            <button
-                                type="submit"
-                                disabled={loading}
-                                className="group relative flex w-full justify-center rounded-lg border 
-              border-transparent px-4 py-3 bg-btn text-btn-text  hover:bg-btn-hover
+                            <div>
+                                <button
+                                    type="submit"
+                                    disabled={loading}
+                                    className="group relative flex w-full justify-center rounded-lg border 
+              border-transparent p-3 bg-btn text-btn-text  hover:bg-btn-hover
               text-sm font-medium  
               focus:outline-none focus:ring-2 focus:ring-btn-focus focus:ring-offset-2 
               disabled:opacity-50 disabled:cursor-not-allowed "
-                            >
-                                {loading ? 'Sending link...' : 'Send link'}
-                            </button>
+                                >
+                                    {loading ? 'Sending link...' : 'Send link'}
+                                </button>
+                            </div>
+
+                            <p className="mt-2 text-center text-xs text-text-grey">
+                                Remember your password?{' '}
+                                <Link
+                                    href="/login"
+                                    className="font-medium text-btn hover:text-btn-hover"
+                                >
+                                    Sign in
+                                </Link>
+                            </p>
                         </div>
-
-                        <p className="mt-2 text-center text-xs text-text-grey">
-                            Remember your password?{' '}
-                            <Link
-                                href="/login"
-                                className="font-medium text-btn hover:text-btn-hover"
-                            >
-                                Sign in
-                            </Link>
-                        </p>
-
                     </form>
                 </div>
             }

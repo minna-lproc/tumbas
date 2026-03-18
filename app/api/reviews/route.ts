@@ -9,17 +9,43 @@ export async function GET(request: Request) {
 
         const { searchParams } = new URL(request.url);
         const sourceTextId = searchParams.get('source_text_id');
-        const userId = searchParams.get('user_id');
+
+        const {
+            data: { user },
+        } = await supabase.auth.getUser();
+
+        if (!user) {
+            return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
+        }
 
         const query = supabase
-            .from('translations')
-            .select('*, source_texts(*), users(username, email)')
+            .from('reviews')
+            .select(`
+      id,
+      evaluator,
+      modified_translation,
+      created_at,
+      translation,
+      translations (
+        id,
+        translation_text,
+        source_text,
+        source_texts (
+          text_content,
+          parallel_to,
+          parallel_source_texts (
+            status 
+          )
+        )
+      )
+    `)
             .order('created_at', { ascending: false });
 
-        if (sourceTextId) query.eq('source_text_id', sourceTextId);
-        if (userId) query.eq('user_id', userId);
+        if (user) query.eq('user_id', user.id);
 
         const { data, error } = await query;
+
+        if (error ) throw error;
 
         return NextResponse.json({ data, error: null });
 

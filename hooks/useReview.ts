@@ -61,8 +61,25 @@ export const useReview = () => {
     }
   }, []);
 
+  const fetchUserReviews = useCallback(async(): Promise<Translation | null> => {
+    try {
+      const response = await fetch(`/api/reviews`);
+      const data = await response.json();
+
+      if (!response.ok) {
+        throw new Error(data.error || 'Failed to fetch translation');
+      }
+
+      return data.data;
+    } catch (err) {
+      setError(err instanceof Error ? err.message : 'An error occurred');
+      return null;
+    }
+  }, []);
+
   return {
     submitReview,
+    fetchUserReviews,
     fetchNextTranslation,
     loading,
     error,

@@ -11,6 +11,30 @@ export async function GET(request: Request) {
     const { searchParams } = new URL(request.url);
     const sourceLanguage = parseInt(searchParams.get('sourceLanguage') || '0');
     const targetLanguage = parseInt(searchParams.get('targetLanguage') || '0');
+    const fetchAll = parseInt(searchParams.get('fetchAll') || '0');
+
+    if (fetchAll == 1) {
+      const {
+        data: { user },
+      } = await supabase.auth.getUser();
+
+      if (!user) {
+        return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
+      }
+
+      const {data, error: translationsError} = await supabase
+            .from('translations')
+            .select('*, source_texts(*)')
+            .eq('translator', user.id)
+            .order('created_at', { ascending: false });
+        
+      console.log(data)
+
+      if (translationsError) throw translationsError;
+
+      return NextResponse.json({ data, error: null });
+            
+    }
 
     const query = supabase
       .from('pending_translations')
@@ -62,7 +86,7 @@ export async function POST(request: Request) {
       })
       .select()
       .single();
-    
+
     if (error) throw error;
 
     return NextResponse.json({ data, error: null }, { status: 201 });

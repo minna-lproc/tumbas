@@ -221,7 +221,7 @@ export default function SignupPage() {
     if (step == 2) {
       return (
         <>
-          <div className="rounded-xl p-6 w-full shadow-md border border-border-gray">
+          <div className="rounded-xl p-6 w-full shadow-md border border-border-gray bg-input-bg">
 
 
             <div className="mb-4 gap-4 flex flex-col">
@@ -330,7 +330,7 @@ export default function SignupPage() {
                 {...register('email')}
                 type="email"
                 autoComplete="email"
-                className={`relative block w-full rounded-lg p-3 focus:z-10 
+                className={`relative block w-full rounded-lg p-3 focus:z-10 bg-input-bg
                 border border-gray-500 focus:border-btn-active 
                 focus:outline-none focus:ring--btn-active  
                 placeholder:text-text-grey
@@ -350,7 +350,7 @@ export default function SignupPage() {
                 {...register('password')}
                 type={showPassword ? 'text' : 'password'}
                 autoComplete="current-password"
-                className={`relative block w-full rounded-lg p-3 focus:z-10 
+                className={`relative block w-full rounded-lg p-3 focus:z-10 bg-input-bg
                 border border-gray-500 focus:border-btn-active 
                 focus:outline-none focus:ring--btn-active  
                 placeholder:text-text-grey
@@ -384,7 +384,7 @@ export default function SignupPage() {
                 {...register('confirmedPassword')}
                 type={showConfirmedPassword ? 'text' : 'password'}
                 autoComplete="current-password"
-                className={`relative block w-full rounded-lg p-3 focus:z-10 
+                className={`relative block w-full rounded-lg p-3 focus:z-10 bg-input-bg
                 border border-gray-500 focus:border-btn-active 
                 focus:outline-none focus:ring--btn-active  
                 placeholder:text-text-grey

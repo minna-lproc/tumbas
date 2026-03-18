@@ -101,7 +101,7 @@ export default function LoginPage() {
                 type="email"
                 autoComplete="email"
                 className={`relative block w-full rounded-lg p-3 focus:z-10 
-                border border-gray-500 focus:border-btn-active 
+                border border-gray-500 focus:border-btn-active bg-input-bg
                 focus:outline-none focus:ring--btn-active  
                 placeholder:text-text-grey
                 ${errors.email ? 'border-red-500' : 'border-border-gray'}`}
@@ -124,7 +124,7 @@ export default function LoginPage() {
                   type={showPassword ? 'text' : 'password'}
                   autoComplete="current-password"
                   className={`relative block w-full rounded-lg p-3 focus:z-10 
-                border border-gray-500 focus:border-btn-active 
+                border border-gray-500 focus:border-btn-active bg-input-bg
                 focus:outline-none focus:ring--btn-active  
                 placeholder:text-text-grey
                 ${errors.password ? 'border-red-500' : 'border-border-gray'}`}
@@ -157,7 +157,7 @@ export default function LoginPage() {
 
             </div>
 
-            <div>
+            {<div>
 
               <p className="text-right text-xs text-text-grey hover:text-btn-hover">
                 <Link
@@ -167,7 +167,7 @@ export default function LoginPage() {
                 </Link>
               </p>
 
-            </div>
+            </div>}
 
           </div>
 

@@ -41,7 +41,7 @@ export default function ResetPassPage() {
 
     const onSubmit = async (data: resetPassData) => {
 
-        const {error: resetError} = await supabase.auth.updateUser({
+        const { error: resetError } = await supabase.auth.updateUser({
             password: data.password,
         });
 
@@ -64,12 +64,12 @@ export default function ResetPassPage() {
 
 
     return (
-        <div className="flex min-h-screen items-center justify-center px-4 py-12 sm:px-6 lg:px-8 bg-background 
-           text-foreground">
+        <div className="flex min-h-screen w-full items-center justify-center 
+    py-12 px-8 bg-background text-foreground text-sm font-medium">
 
             {success ?
 
-                <div className='w-full max-w-md space-y-8'>
+                <div className='flex flex-col items-center justify-center space-y-4'>
 
                     <div className='space-y-4'>
                         <h2 className="mt-6 text-center text-3xl font-semibold tracking-tight ">
@@ -95,7 +95,7 @@ export default function ResetPassPage() {
                 </div>
 
                 :
-                <div className="w-full max-w-md space-y-8">
+                <div className="flex flex-col items-center justify-center space-y-4">
 
                     <div className='space-y-4'>
                         <h2 className="mt-6 text-center text-3xl font-semibold tracking-tight ">
@@ -113,97 +113,99 @@ export default function ResetPassPage() {
 
                     </div>
 
-                    <form className="mt-8 space-y-6" onSubmit={handleSubmit(onSubmit)}>
-
-                        <div>
-                            <label htmlFor="password" className="sr-only">
-                                Password
-                            </label>
-                            <div className="relative">
-                                <input
-                                    {...register('password')}
-                                    type={showPassword ? 'text' : 'password'}
-                                    autoComplete="current-password"
-                                    required
-                                    className={`relative block w-full rounded-lg border border-border-gray px-3 py-3 focus:z-10 
-                focus:border-btn-active focus:outline-none focus:ring--btn-active  
-                sm:text-sm placeholder:text-gray
+                    <form className="mt-4 space-y-6" onSubmit={handleSubmit(onSubmit)}>
+                        <div className="space-y-4 rounded-md w-72 md:w-80">
+                            <div>
+                                <label htmlFor="password" className="sr-only">
+                                    Password
+                                </label>
+                                <div className="relative">
+                                    <input
+                                        {...register('password')}
+                                        type={showPassword ? 'text' : 'password'}
+                                        autoComplete="current-password"
+                                        required
+                                        className={`relative block w-full rounded-lg p-3 focus:z-10 
+                border border-gray-500 focus:border-btn-active bg-input-bg
+                focus:outline-none focus:ring--btn-active  
+                placeholder:text-text-grey
                 ${errors.password ? 'error-border' : 'border-border-gray'}`}
-                                    placeholder="Password"
-                                />
-                                <button
-                                    className='absolute inset-y-0 right-0 flex items-center pr-3 cursor-pointer text-text-grey hover:text-btn-hover'
-                                    type="button"
-                                    onClick={() => setShowPassword(!showPassword)}
-                                >
-                                    {showPassword ? (
-                                        <span>
-                                            <EyeClosed className="icon" />
-                                        </span>
-                                    ) : (
-                                        <span>
-                                            <Eye className="icon" />
-                                        </span>
-                                    )}
-                                </button>
+                                        placeholder="Password"
+                                    />
+                                    <button
+                                        className='absolute inset-y-0 right-0 flex items-center pr-3 cursor-pointer text-text-grey hover:text-btn-hover'
+                                        type="button"
+                                        onClick={() => setShowPassword(!showPassword)}
+                                    >
+                                        {showPassword ? (
+                                            <span>
+                                                <EyeClosed className="icon" />
+                                            </span>
+                                        ) : (
+                                            <span>
+                                                <Eye className="icon" />
+                                            </span>
+                                        )}
+                                    </button>
 
+                                </div>
+                                {errors.password && (
+                                    <p className="mt-1 error-text">
+                                        {errors.password.message}
+                                    </p>
+                                )}
                             </div>
-                            {errors.password && (
-                                <p className="mt-1 error-text">
-                                    {errors.password.message}
-                                </p>
-                            )}
-                        </div>
 
-                        <div>
-                            <div className="relative">
-                                <input
-                                {...register('confirmedPassword')}
-                                    type={showConfirmedPassword ? 'text' : 'password'}
-                                    autoComplete="current-password"
-                                    required
-                                    className={`relative block w-full rounded-lg border border-border-gray px-3 py-3 focus:z-10 
-                focus:border-btn-active focus:outline-none focus:ring--btn-active  
-                sm:text-sm placeholder:text-gray
+                            <div >
+                                <div className="relative">
+                                    <input
+                                        {...register('confirmedPassword')}
+                                        type={showConfirmedPassword ? 'text' : 'password'}
+                                        autoComplete="current-password"
+                                        required
+                                        className={`relative block w-full rounded-lg p-3 focus:z-10 
+                border border-gray-500 focus:border-btn-active bg-input-bg
+                focus:outline-none focus:ring--btn-active  
+                placeholder:text-text-grey
                 ${errors.confirmedPassword ? 'error-border' : 'border-border-gray'}`}
-                                    placeholder="Confirmed password"
-                                />
-                                <button
-                                    className='absolute inset-y-0 right-0 flex items-center pr-3 cursor-pointer text-text-grey hover:text-btn-hover'
-                                    type="button"
-                                    onClick={() => setShowConfirmedPassword(!showConfirmedPassword)}
-                                >
-                                    {showConfirmedPassword ? (
-                                        <span>
-                                            <EyeClosed className="icon" />
-                                        </span>
-                                    ) : (
-                                        <span>
-                                            <Eye className="icon" />
-                                        </span>
-                                    )}
-                                </button>
+                                        placeholder="Confirmed password"
+                                    />
+                                    <button
+                                        className='absolute inset-y-0 right-0 flex items-center pr-3 cursor-pointer text-text-grey hover:text-btn-hover'
+                                        type="button"
+                                        onClick={() => setShowConfirmedPassword(!showConfirmedPassword)}
+                                    >
+                                        {showConfirmedPassword ? (
+                                            <span>
+                                                <EyeClosed className="icon" />
+                                            </span>
+                                        ) : (
+                                            <span>
+                                                <Eye className="icon" />
+                                            </span>
+                                        )}
+                                    </button>
+                                </div>
+                                {errors.confirmedPassword && (
+                                    <p className="mt-1 error-text">
+                                        {errors.confirmedPassword.message}
+                                    </p>
+                                )}
                             </div>
-                            {errors.confirmedPassword && (
-                                <p className="mt-1 error-text">
-                                    {errors.confirmedPassword.message}
-                                </p>
-                            )}
-                        </div>
 
-                        <div>
-                            <button
-                                type="submit"
-                                disabled={loading}
-                                className="group relative flex w-full justify-center rounded-lg border 
+                            <div>
+                                <button
+                                    type="submit"
+                                    disabled={loading}
+                                    className="group relative flex w-full justify-center rounded-lg border 
                  border-transparent px-4 py-3 bg-btn text-btn-text  hover:bg-btn-hover
                  text-sm font-medium  
                  focus:outline-none focus:ring-2 focus:ring-btn-focus focus:ring-offset-2 disabled:opacity-50 disabled:cursor-not-allowed "
-                            >
-                                {loading ? 'Resetting...' : 'Reset'}
-                            </button>
+                                >
+                                    {loading ? 'Resetting...' : 'Reset'}
+                                </button>
+                            </div>
                         </div>
-
                     </form>
                 </div>
             }

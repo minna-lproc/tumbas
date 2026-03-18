@@ -5,6 +5,7 @@ export async function GET(request: Request) {
 
   const { searchParams } = new URL(request.url);
   const role = searchParams.get("role");
+  const limit = parseInt(searchParams.get("limit") || '0');
 
   try {
 
@@ -33,7 +34,7 @@ export async function GET(request: Request) {
         .gte('created_at', today.toISOString());
 
 
-      const { data: recentReviews, error } = await supabase
+      const query = supabase
         .from('reviews')
         .select(`
       id,
@@ -56,7 +57,10 @@ export async function GET(request: Request) {
     `)
         .eq('evaluator', user.id)
         .order('created_at', { ascending: false })
-        .limit(3);
+
+      if (limit != 0) query.limit(limit);
+
+      const { data: recentReviews, error } = await query;
 
       const formatted = recentReviews?.map(r => ({
       id: r.id,
