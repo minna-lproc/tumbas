@@ -21,7 +21,7 @@ export const useAuth = () => {
 
       if (user) {
         const { data } = await supabase
-          .from('users_with_data')
+          .from('user_profiles')
           .select('*')
           .eq('id', user.id)
           .single();

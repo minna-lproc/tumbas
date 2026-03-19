@@ -83,7 +83,7 @@ export default function ResetPassPage() {
 
                     <Link
                         href="/login"
-                        className="group relative flex w-full justify-center rounded-lg border 
+                        className="group relative flex justify-center rounded-lg border w-72 md:w-80
                  border-transparent px-4 py-3 bg-btn text-btn-text  hover:bg-btn-hover
                  text-sm font-medium  
                  focus:outline-none focus:ring-2 focus:ring-btn-focus focus:ring-offset-2 disabled:opacity-50 disabled:cursor-not-allowed "

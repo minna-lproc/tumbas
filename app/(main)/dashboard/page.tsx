@@ -16,19 +16,21 @@ import { TotalSentences } from '@/components/dashboard/admin/TotalSentences';
 import { TotalTranslationsAdmin } from '@/components/dashboard/admin/TotalTranslationsAdmin';
 import { QuickActions } from '@/components/dashboard/admin/QuickActions';
 
+import type { Translation, Review } from '@/lib/types/translation';
+
 
 interface DashboardStats {
   total_stats: number;
   stats_today: number;
-  recent_stats: Array<{
-  }>;
+  recent_tranlations: Translation[];
+  recent_reviews: Review[];
 }
 
 export default function DashboardPage() {
 
   const router = useRouter();
   const { user, userProfile, loading: authLoading } = useAuth();
-  const [stats, setStats] = useState<DashboardStats | null>(null);
+  const [stats, setStats] = useState<DashboardStats>();
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(false);
 
@@ -91,23 +93,23 @@ export default function DashboardPage() {
       return (<div className='flex flex-col gap-4'>
         <div className="grid gap-4 grid-rows-1 lg:grid-cols-2">
 
-          <TotalReviews stats={stats?.total_stats}/>
-          <ReviewsToday stats={stats?.stats_today}/>
+          <TotalReviews total_reviews={stats?.total_stats ?? 0}/>
+          <ReviewsToday reviews_today={stats?.stats_today ?? 0}/>
 
         </div>
-        {<RecentReviews reviews={stats?.recent_stats ?? []}/>}
+        {<RecentReviews reviews={stats?.recent_reviews ?? []}/>}
       </div>)
     }
 
     return (<div className='flex flex-col gap-4'>
       <div className="grid gap-4 grid-rows-1 lg:grid-cols-2">
 
-        <TotalTranslations stats={stats?.total_stats} />
-        <TranslationsToday stats={stats?.stats_today}/>
+        <TotalTranslations total_translations={stats?.total_stats ?? 0} />
+        <TranslationsToday translations_today={stats?.stats_today ?? 0}/>
 
       </div>
 
-      {<RecentTranslations translations={stats?.recent_stats ?? []}/>}
+      {<RecentTranslations translations={stats?.recent_tranlations ?? []}/>}
 
     </div>)
   }

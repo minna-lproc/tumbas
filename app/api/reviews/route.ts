@@ -8,7 +8,6 @@ export async function GET(request: Request) {
         const supabase = await createServerSupabaseClient();
 
         const { searchParams } = new URL(request.url);
-        const sourceTextId = searchParams.get('source_text_id');
 
         const {
             data: { user },
@@ -44,7 +43,7 @@ export async function GET(request: Request) {
         if (user) query.eq('user_id', user.id);
 
         const { data, error } = await query;
-
+            
         if (error ) throw error;
 
         return NextResponse.json({ data, error: null });

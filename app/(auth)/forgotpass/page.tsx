@@ -118,7 +118,7 @@ export default function ForgotPassPage() {
 
             {success ?
 
-                <div className='flex flex-col items-center justify-center space-y-4'>
+                <div className='flex flex-col items-center justify-center space-y-4 rounded-md w-72 md:w-80'>
 
                     <div className='space-y-4'>
                         <h2 className="mt-6 text-center text-3xl font-semibold tracking-tight ">
@@ -157,7 +157,7 @@ export default function ForgotPassPage() {
                 </div>
 
                 :
-                <div className="flex flex-col items-center justify-center space-y-4">
+                <div className="flex flex-col items-center justify-center space-y-4 rounded-md w-72 md:w-80">
 
                     <div className='space-y-4'>
                         <h2 className="mt-6 text-center text-3xl font-semibold tracking-tight ">

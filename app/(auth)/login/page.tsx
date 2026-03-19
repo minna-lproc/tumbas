@@ -44,7 +44,7 @@ export default function LoginPage() {
       });
 
       if (signInError) throw signInError;
-
+      
       router.push('/dashboard');
       router.refresh();
 

@@ -62,8 +62,8 @@ export default function ProfilePage() {
       reset({
         first_name: userProfile.first_name,
         last_name: userProfile.last_name,
-        sourceLanguage: userProfile.source_language,
-        targetLanguage: userProfile.target_language,
+        sourceLanguage: userProfile.source_language_id,
+        targetLanguage: userProfile.target_language_id,
       });
     }
   }, [userProfile, reset]);
@@ -189,11 +189,11 @@ export default function ProfilePage() {
                         key={source_language.id}
                         type="button"
                         disabled={true}
-                        onClick={() => setValue("sourceLanguage", source_language.id, {
+                        onClick={() => setValue("sourceLanguage", Number(source_language.id), {
                           shouldValidate: true,
                         })}
                         className={`w-fit p-2 rounded-lg text-sm border bg-input-bg duration-200
-                        ${sourceLanguage == source_language.id
+                        ${sourceLanguage == Number(source_language.id)
                             ? "bg-secondary-btn-active border-2 border-teal-500"
                             : " border-border-gray"}
     `}
@@ -218,11 +218,11 @@ export default function ProfilePage() {
                         key={target_language.id}
                         disabled={true}
                         type="button"
-                        onClick={() => setValue("targetLanguage", target_language.id, {
+                        onClick={() => setValue("targetLanguage", Number(target_language.id), {
                           shouldValidate: true,
                         })}
                         className={`w-fit p-2 rounded-lg text-sm border bg-input-bg duration-200
-                        ${targetLanguage == target_language.id
+                        ${targetLanguage == Number(target_language.id)
                             ? "bg-secondary-btn-active border-2 border-teal-500"
                             : " border-border-gray"}
     `}

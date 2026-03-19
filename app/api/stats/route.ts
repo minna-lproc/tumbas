@@ -36,50 +36,22 @@ export async function GET(request: Request) {
 
       const query = supabase
         .from('reviews')
-        .select(`
-      id,
-      evaluator,
-      modified_translation,
-      created_at,
-      translation,
-      translations (
-        id,
-        translation_text,
-        source_text,
-        source_texts (
-          text_content,
-          parallel_to,
-          parallel_source_texts (
-            status 
-          )
-        )
-      )
-    `)
+        .select(`*, translations (*, source_texts (*, parallel_source_texts (*)))`)
         .eq('evaluator', user.id)
         .order('created_at', { ascending: false })
 
       if (limit != 0) query.limit(limit);
 
-      const { data: recentReviews, error } = await query;
-
-      const formatted = recentReviews?.map(r => ({
-      id: r.id,
-      evaluator: r.evaluator,
-      modified_translation: r.modified_translation,
-      created_at: r.created_at,
-      translation: r.translation,
-      translation_text: r.translations?.translation_text,
-      source_text: r.translations?.source_text,
-      text_content: r.translations?.source_texts?.text_content,
-      status: r.translations?.source_texts?.parallel_source_texts?.status
-      }));
-
+      const { data: recentReviews, error: recentReviewsError } = await query;
       
+      if (recentReviewsError) throw recentReviewsError;
+
+
       return NextResponse.json({
         data: {
           total_stats: totalCount || 0,
           stats_today: todayCount || 0,
-          recent_stats: formatted || [],
+          recent_reviews: recentReviews || [],
         },
         error: null,
       });
@@ -108,7 +80,7 @@ export async function GET(request: Request) {
       data: {
         total_stats: totalCount || 0,
         stats_today: todayCount || 0,
-        recent_stats: recentTranslations || [],
+        recent_translations: recentTranslations || [],
       },
       error: null,
     });

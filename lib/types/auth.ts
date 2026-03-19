@@ -10,13 +10,14 @@ export interface UserProfile {
   email: string;
   first_name: string;
   last_name: string;
-  source_language: number;
-  source: string;
-  target_language: number;
-  target: string;
+  source_language_id: number;
+  source_language: string;
+  target_language_id: number;
+  target_language: string;
   is_active: boolean;
+  has_read_guidelines: boolean;
   role: 'user' | 'evaluator' | 'admin';
-  date_joined: string;
+  created_at: string;
 }
 
 export interface RegisterData {

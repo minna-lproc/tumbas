@@ -1,20 +1,13 @@
 'use client';
 
 import { formatDistanceToNow } from 'date-fns';
-
-interface RecentTranslation {
-  translation_text: string;
-  created_at: string;
-  source_texts?: {
-    text_content: string;
-  };
-}
+import type { Translation } from '@/lib/types/translation';
 
 interface RecentTranslationsProps {
-  translations: RecentTranslation[];
+  translations: Translation[];
 }
 
-export const RecentTranslations = ({ translations }: RecentTranslationsProps) => {
+export const RecentTranslations = ({translations}: RecentTranslationsProps) => {
   if (translations.length === 0) {
     return (
       <div className="rounded-xl  p-6 shadow-md bg-input-bg
@@ -37,7 +30,7 @@ export const RecentTranslations = ({ translations }: RecentTranslationsProps) =>
         {translations.map((translation, index) => (
           <div key={index} className="border-b border-border-gray py-4 last:border-0 ">
             <p className="text-sm font-normal">
-              {translation.source_texts?.text_content || 'Source text'}
+              {translation.source_texts.text_content || 'Source text'}
             </p>
             <p className="mt-1 font-medium">{translation.translation_text}</p>
             <p className="mt-2 text-xs font-normal text-text-grey">
