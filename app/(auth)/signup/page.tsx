@@ -364,11 +364,11 @@ export default function SignupPage() {
               >
                 {showPassword ? (
                   <span>
-                    <EyeClosed className="icon" />
+                    <EyeClosed className="icon text-text-grey" />
                   </span>
                 ) : (
                   <span>
-                    <Eye className="icon" />
+                    <Eye className="icon text-text-grey" />
                   </span>
                 )}
               </button>
@@ -398,11 +398,11 @@ export default function SignupPage() {
               >
                 {showConfirmedPassword ? (
                   <span>
-                    <EyeClosed className="icon" />
+                    <EyeClosed className="icon text-text-grey" />
                   </span>
                 ) : (
                   <span>
-                    <Eye className="icon" />
+                    <Eye className="icon text-text-grey" />
                   </span>
                 )}
               </button>

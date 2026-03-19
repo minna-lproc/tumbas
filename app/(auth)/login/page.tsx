@@ -13,7 +13,7 @@ import { Eye, EyeClosed, EyeIcon } from 'lucide-react';
 
 const loginSchema = z.object({
   email: z.email('Invalid email address'),
-  password: z.string().min(8, 'Password must be at least 8 characters'),
+  password: z.string().min(1, 'Password required'),
 });
 
 type LoginFormData = z.infer<typeof loginSchema>;
@@ -139,11 +139,11 @@ export default function LoginPage() {
                 >
                   {showPassword ? (
                     <span>
-                      <Eye className="icon" />
+                      <Eye className="icon text-text-grey" />
                     </span>
                   ) : (
                     <span>
-                      <EyeClosed className="icon" />
+                      <EyeClosed className="icon text-text-grey" />
                     </span>
                   )}
                 </button>

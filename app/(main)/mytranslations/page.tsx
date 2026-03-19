@@ -5,7 +5,6 @@ import { useRouter } from 'next/navigation';
 import { Search, ListFilterPlus } from 'lucide-react';
 import { formatDistanceToNow } from 'date-fns';
 import { RecentTranslations } from '@/components/dashboard/user/RecentTranslations';
-import { mockUser, getRecentTranslations } from '@/lib/mock/data';
 import { useAuth } from '@/hooks/useAuth';
 import { useTranslation } from '@/hooks/useTranslation';
 
@@ -26,10 +25,9 @@ export default function MyTranslationsPage() {
 
     const router = useRouter();
     const { user, userProfile, loading: authLoading } = useAuth();
-    const { fetchUserTranslations, loading: translationLoading, error } =
-        useTranslation();
-    const [stats, setStats] = useState<DashboardStats | null>(null);
+    const [translations, setTranslations] = useState<DashboardStats | null>(null);
     const [loading, setLoading] = useState(true);
+    const [error, setError] = useState(false);
 
     useEffect(() => {
         if (!authLoading && !user) {
@@ -39,16 +37,31 @@ export default function MyTranslationsPage() {
     }, [user, userProfile, authLoading, router]);
 
     useEffect(() => {
-        if (userProfile?.source_language) {
-            getUserTranslations();
+        if (userProfile) {
+            fetchStats();
         }
-    }, [userProfile?.source_language]); // change this
+    }, [userProfile]);
 
-    const getUserTranslations = async () => {
+    const fetchStats = async () => {
         setLoading(true);
-        const allTranslations = await fetchUserTranslations();
-        setStats(allTranslations);
-        setLoading(false);
+
+        try {
+            const response = await fetch(`/api/stats?role=${userProfile?.role}`);
+            const data = await response.json();
+
+            if (data.error) {
+                console.error('Failed to fetch translations:', data.error);
+                return;
+            }
+            
+            setTranslations(data.data.recent_stats);
+            console.log(translations)
+        } catch (error) {
+            console.error(error);
+            setError(true);
+        } finally {
+            setLoading(false);
+        }
     };
 
     return (
@@ -75,7 +88,7 @@ export default function MyTranslationsPage() {
 
                     <div className='rounded-xl px-6 border border-border-gray w-full bg-input-bg'>
 
-                        {stats?.recent_translations.map((translation, index) => (
+                        {translations?.map((translation, index) => (
                             <div key={index} className="border-b border-border-gray py-6 last:border-0 ">
                                 <p className="text-sm font-normal">
                                     {translation.source_texts?.text_content || 'Source text'}

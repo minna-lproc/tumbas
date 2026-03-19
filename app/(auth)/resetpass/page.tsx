@@ -139,12 +139,12 @@ export default function ResetPassPage() {
                                     >
                                         {showPassword ? (
                                             <span>
-                                                <EyeClosed className="icon" />
+                                                <EyeClosed className="icon text-text-grey" />
                                             </span>
                                         ) : (
                                             <span>
-                                                <Eye className="icon" />
-                                            </span>
+                                                <Eye className="icon text-text-grey" />
+                                            </span> 
                                         )}
                                     </button>
 
@@ -177,11 +177,11 @@ export default function ResetPassPage() {
                                     >
                                         {showConfirmedPassword ? (
                                             <span>
-                                                <EyeClosed className="icon" />
+                                                <EyeClosed className="icon text-text-grey" />
                                             </span>
                                         ) : (
                                             <span>
-                                                <Eye className="icon" />
+                                                <Eye className="icon text-text-grey" />
                                             </span>
                                         )}
                                     </button>

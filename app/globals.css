@@ -71,7 +71,7 @@
   /* secondary button colors */
   --btn-secondary-background: var(--background);
   --btn-secondary-hover-background: var(--color-gray-200);
-  --btn-secondary-active-background: var(--color-gray-400);
+  --btn-secondary-active-background: var(--color-teal-200);
   --btn-secondary-text: var(--foreground);
 
   --header-gradient-from: var(--color-teal-500);
@@ -80,7 +80,7 @@
 
   /* gray colors */
   --border-gray: var(--color-gray-400);
-  --text-grey: var(--color-gray-400);
+  --text-grey: var(--color-gray-500);
 
   --box-background: var(--background);
 

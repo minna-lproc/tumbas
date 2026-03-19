@@ -79,7 +79,6 @@ export const TranslationCard = ({
           >
             {loading ? (
               <span className="flex items-center gap-2">
-                <Circle className='icon animate-spin' />
                 Submitting...
               </span>
             ) : (

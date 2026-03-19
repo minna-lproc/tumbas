@@ -25,8 +25,8 @@ export const RecentReviews = ({reviews}) => {
       <div className="space-y-4">
         {reviews.map((review, index) => (
           <div key={index} className="border-b border-border-gray py-4 last:border-0 ">
-            <p className={`${review.status == 'reviewed' ?  'bg-emerald-500 text-emerald-900': 'bg-gold-500 text-gold-900'} 
-             mb-4 px-1 text-xs w-fit rounded-sm`}> 
+            <p className={`${review.status == 'reviewed' ?  'bg-emerald-600': 'bg-gold-600'} 
+             text-btn-text mb-4 px-1 text-xs w-fit rounded-sm font-medium `}> 
               {review.status == 'reviewed' ? 'Reviewed' : 'Modified'}
             </p>
             <p className="text-sm font-normal">
