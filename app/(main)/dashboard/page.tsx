@@ -95,7 +95,7 @@ export default function DashboardPage() {
           <ReviewsToday stats={stats?.stats_today}/>
 
         </div>
-        {<RecentReviews reviews={stats?.recent_stats}/>}
+        {<RecentReviews reviews={stats?.recent_stats ?? []}/>}
       </div>)
     }
 
@@ -107,7 +107,7 @@ export default function DashboardPage() {
 
       </div>
 
-      {<RecentTranslations translations={stats?.recent_stats}/>}
+      {<RecentTranslations translations={stats?.recent_stats ?? []}/>}
 
     </div>)
   }
