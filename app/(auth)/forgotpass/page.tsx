@@ -5,9 +5,8 @@ import Link from 'next/link';
 import { useRouter } from 'next/navigation';
 import { useState, useEffect, useRef } from 'react';
 import { useForm } from 'react-hook-form';
-import { success, z } from 'zod';
+import { z } from 'zod';
 import { createClient } from '@/lib/supabase/client';
-import { time } from 'console';
 
 const forgotPassSchema = z.object({
     email: z.email('Invalid email address'),
@@ -56,19 +55,40 @@ export default function ForgotPassPage() {
         setIsRunning(true);
     };
 
-    const handleResend = async () => {
-        if (!emailSentTo) return;
+    const sendReset = async (email: string) => {
+        const { error } = await supabase.auth.resetPasswordForEmail(email, {
+            redirectTo: `${window.location.origin}/resetpass`,
+        });
+
+        if (error) throw error;
+    };
+
+    const onSubmit = async (data: forgotPassData) => {
         setLoading(true);
         setError(null);
+
         try {
-            const { error: resetError } = await supabase.auth.resetPasswordForEmail(
-                emailSentTo,
-                {
-                    redirectTo: `${window.location.origin}/resetpass`,
-                }
-            );
-            if (resetError) throw resetError;
-            // restart timer
+            await sendReset(data.email);
+
+            setSuccess(true);
+            setEmailSentTo(data.email);
+            startTimer(60);
+
+        } catch (err) {
+            setError(err instanceof Error ? err.message : 'An error occurred');
+        } finally {
+            setLoading(false);
+        }
+    };
+
+    const handleResend = async () => {
+        if (!emailSentTo) return;
+
+        setLoading(true);
+        setError(null);
+
+        try {
+            await sendReset(emailSentTo);
             startTimer(60);
         } catch (err) {
             setError(err instanceof Error ? err.message : 'An error occurred');
@@ -85,32 +105,6 @@ export default function ForgotPassPage() {
         resolver: zodResolver(forgotPassSchema),
     });
 
-    const onSubmit = async (data: forgotPassData) => {
-
-        setLoading(true);
-        setError(null);
-
-        try {
-            const { error: resetError } = await supabase.auth.resetPasswordForEmail(
-                data.email,
-                {
-                    redirectTo: `${window.location.origin}/resetpass`,
-                }
-            );
-
-            if (resetError) throw resetError;
-
-            setSuccess(true);
-            setEmailSentTo(data.email);
-            startTimer(60);
-            await new Promise((resolve) => setTimeout(resolve, 500));
-
-        } catch (err) {
-            setError(err instanceof Error ? err.message : 'An error occurred');
-        } finally {
-            setLoading(false);
-        }
-    };
 
     return (
         <div className="flex min-h-screen w-full items-center justify-center 
@@ -131,7 +125,6 @@ export default function ForgotPassPage() {
 
                     <div>
                         <p className="mt-2 text-text-grey text-center text-xs ">
-                            Remember your password?{' '}
                             <button
                                 onClick={handleResend}
                                 disabled={isRunning || loading}

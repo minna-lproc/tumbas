@@ -39,20 +39,43 @@ export default function ResetPassPage() {
         resolver: zodResolver(resetPassSchema),
     });
 
+    useEffect(() => {
+        const handleAuth = async () => {
+            const hash = window.location.hash;
+
+            if (hash) {
+                const { error } = await supabase.auth.exchangeCodeForSession(hash);
+                if (error) {
+                    setError(error.message);
+                }
+            }
+        };
+
+        handleAuth();
+    }, []);
+
     const onSubmit = async (data: resetPassData) => {
-
-        const { error: resetError } = await supabase.auth.updateUser({
-            password: data.password,
-        });
-
-        if (resetError) throw resetError;
-
         setLoading(true);
         setError(null);
 
         try {
-            setSuccess(!success);
-            await new Promise((resolve) => setTimeout(resolve, 500));
+            const { data: { session } } = await supabase.auth.getSession();
+
+            if (!session) {
+                setError('Session expired. Please request a new reset link.');
+                return;
+            }
+
+            const { error } = await supabase.auth.updateUser({
+                password: data.password,
+            });
+
+            if (error) {
+                setError(error.message);
+                return;
+            }
+
+            setSuccess(true);
 
         } catch (err) {
             setError(err instanceof Error ? err.message : 'An error occurred');
@@ -144,7 +167,7 @@ export default function ResetPassPage() {
                                         ) : (
                                             <span>
                                                 <Eye className="icon text-text-grey" />
-                                            </span> 
+                                            </span>
                                         )}
                                     </button>
 
