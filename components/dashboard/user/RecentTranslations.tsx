@@ -8,6 +8,7 @@ interface RecentTranslationsProps {
 }
 
 export const RecentTranslations = ({translations}: RecentTranslationsProps) => {
+
   if (translations.length === 0) {
     return (
       <div className="rounded-xl  p-6 shadow-md bg-input-bg

@@ -12,7 +12,7 @@ interface TranslationInputProps {
 export const TranslationInput = ({
   value,
   onChange,
-  placeholder = 'Enter your translation in Siargaonon...',
+  placeholder = 'Enter your translation in Cebuano...',
   maxLength = 1000,
 }: TranslationInputProps) => {
   const [isFocused, setIsFocused] = useState(false);

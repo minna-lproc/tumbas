@@ -5,7 +5,7 @@ import { useRouter } from 'next/navigation';
 import { useAuth } from '@/hooks/useAuth';
 import { useReview } from '@/hooks/useReview'
 import { ReviewCard } from '@/components/review/ReviewCard';
-import type { Translation } from '@/lib/types/translation';
+import type { SourceText } from '@/lib/types/translation';
 
 
 export default function ReviewPage() {
@@ -13,7 +13,7 @@ export default function ReviewPage() {
   const { user, userProfile, loading: authLoading } = useAuth();
   const { submitReview, fetchNextTranslation, loading: reviewLoading, error } =
     useReview();
-  const [currentSourceText, setCurrentSourceText] = useState<Translation | null>(null);
+  const [currentSourceText, setCurrentSourceText] = useState<SourceText | null>(null);
   const [translation, setTranslation] = useState('');
   const [currentTranslation, setCurrentTranslation] = useState('');
   const [loading, setLoading] = useState(true);
@@ -27,15 +27,15 @@ export default function ReviewPage() {
   }, [user, userProfile, authLoading, router]);
 
   useEffect(() => {
-    if (userProfile?.source_language) {
+    if (userProfile?.source_language_id) {
       loadNextText();
     }
-  }, [userProfile?.source_language]);
+  }, [userProfile?.source_language_id]);
 
   const loadNextText = async () => {
     setLoading(true);
-    const nextText = await fetchNextTranslation(Number(userProfile?.source_language), Number(userProfile?.target_language));
-    setCurrentSourceText(nextText);
+    const nextText = await fetchNextTranslation(Number(userProfile?.source_language_id), Number(userProfile?.target_language_id));
+    setCurrentSourceText(nextText?.source_texts ?? null);
     setTranslation(nextText?.translation_text ?? '');
     setCurrentTranslation(nextText?.translation_text ?? '');
     setLoading(false);
@@ -93,7 +93,7 @@ export default function ReviewPage() {
           </div>
         )}
         <ReviewCard
-          sourceText={currentSourceText.source_texts}
+          sourceText={currentSourceText}
           translation={translation}
           onTranslationChange={setTranslation}
           onSubmit={handleSubmit}

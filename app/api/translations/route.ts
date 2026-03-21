@@ -34,14 +34,18 @@ export async function GET(request: Request) {
     }
 
     const query = supabase
-      .from('pending_translations')
-      .select('*')
+      .from('translations')
+      .select('*, source_texts(*, parallel_source_texts(*))')
+      .eq('source_texts.parallel_source_texts.status', 'translated')
       .order('created_at', { ascending: false });
 
-    if (sourceLanguage != 0) query.eq('source_language', sourceLanguage);
+    if (sourceLanguage != 0) query.eq('source_texts.language', sourceLanguage);
     if (targetLanguage != 0) query.eq('target_language', targetLanguage);
 
     const { data, error: translationsError } = await query;
+
+    console.log(translationsError)
+    console.log(data)
 
     if (translationsError) throw translationsError;
 

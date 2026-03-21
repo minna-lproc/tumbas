@@ -25,15 +25,16 @@ export default function TranslatePage() {
   }, [user, userProfile, authLoading, router]);
 
   useEffect(() => {
-  if (userProfile?.source_language) {
+  if (userProfile?.source_language_id) {
     loadNextText();
   }
-}, [userProfile?.source_language]); 
+}, [userProfile?.source_language_id]); 
 
 
   const loadNextText = async () => {
     setLoading(true);
-    const nextText = await fetchNextSourceText(Number(userProfile?.source_language));
+    const nextText = await fetchNextSourceText(Number(userProfile?.source_language_id));
+    console.log(nextText)
     setCurrentSourceText(nextText);
     setTranslation('');
     setLoading(false);
@@ -43,7 +44,7 @@ export default function TranslatePage() {
     if (!currentSourceText || !translation.trim()) return;
 
     try {
-      await submitTranslation(currentSourceText.id, translation, Number(userProfile?.target_language));
+      await submitTranslation(currentSourceText.id, translation, Number(userProfile?.target_language_id));
       // Optimistic update - load next text immediately
       await loadNextText();
     } catch (err) {

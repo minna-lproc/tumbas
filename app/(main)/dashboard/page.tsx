@@ -22,7 +22,7 @@ import type { Translation, Review } from '@/lib/types/translation';
 interface DashboardStats {
   total_stats: number;
   stats_today: number;
-  recent_tranlations: Translation[];
+  recent_translations: Translation[];
   recent_reviews: Review[];
 }
 
@@ -109,7 +109,7 @@ export default function DashboardPage() {
 
       </div>
 
-      {<RecentTranslations translations={stats?.recent_tranlations ?? []}/>}
+      {<RecentTranslations translations={stats?.recent_translations ?? []}/>}
 
     </div>)
   }

@@ -1,7 +1,7 @@
 'use client';
 
-import { useState, useEffect } from 'react';
-import { Search, ListFilterPlus } from 'lucide-react';
+import { useState, useEffect, useMemo } from 'react';
+import { Search, ListFilterPlus, X } from 'lucide-react';
 import { formatDistanceToNow } from 'date-fns';
 import { useRouter } from 'next/navigation';
 import { useAuth } from '@/hooks/useAuth';
@@ -16,6 +16,7 @@ export default function MyReviewsPage() {
     const [reviews, setReviews] = useState<Review[]>([]);
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState(false);
+    const [searchQuery, setSearchQuery] = useState('');
 
     useEffect(() => {
         if (!authLoading && !user) {
@@ -42,8 +43,7 @@ export default function MyReviewsPage() {
                 return;
             }
 
-            setReviews(data.data.recent_stats);
-            console.log(reviews)
+            setReviews(data.data.recent_reviews);
         } catch (error) {
             console.error(error);
             setError(true);
@@ -51,6 +51,24 @@ export default function MyReviewsPage() {
             setLoading(false);
         }
     };
+
+    const filteredReviews = useMemo(() => {
+        const query = searchQuery.toLowerCase();
+
+        return reviews.filter((review) => {
+            const sourceText = review.translations.source_texts.text_content || '';
+            const translatedText =
+                review.modified_translation ||
+                review.translations.translation_text ||
+                '';
+
+            return (
+                sourceText.toLowerCase().includes(query) ||
+                translatedText.toLowerCase().includes(query)
+            );
+        });
+
+    }, [reviews, searchQuery]);
 
     if (authLoading || loading) {
         return (
@@ -80,21 +98,37 @@ export default function MyReviewsPage() {
                         My Reviews
                     </p>
 
-                    {/*<div className=' flex gap-4 h-10 items-center
-                        border border-border-gray rounded-lg
+                    {<div className=' flex gap-4 h-10 items-center
+                        border border-border-gray rounded-lg bg-input-bg
                         px-4'>
-                            <Search className='icon text-text-grey' />
-    
-                            <input type="text"
-                                className='w-full flex placeholder:text-text-grey'
-                                placeholder='Search' />
-    
-                            <ListFilterPlus className='icon text-text-grey' />
-                        </div>*/}
+                        <Search className='icon text-text-grey' />
+
+                        <input
+                            type="text"
+                            value={searchQuery}
+                            onChange={(e) => setSearchQuery(e.target.value)}
+                            className='w-full flex placeholder:text-text-grey outline-none'
+                            placeholder='Search reviews...' />
+
+
+                        {
+                            searchQuery &&
+                            (<X 
+                                onClick={() => setSearchQuery('')}
+                                className={`icon text-text-grey cursor-pointer`} />)
+                        }
+
+                        {/*<ListFilterPlus className='icon text-text-grey' />*/}
+
+                    </div>}
 
                     <div className='rounded-xl px-6 border border-border-gray w-full bg-input-bg'>
 
-                        {reviews.map((review, index) => (
+                        {filteredReviews.length === 0 && searchQuery && (
+                            <p className="py-4 text-sm text-text-grey">No reviews found.</p>
+                        )}
+
+                        {filteredReviews.map((review, index) => (
                             <div key={index} className="border-b border-border-gray py-4 last:border-0 ">
                                 <p className={`${review.translations.source_texts.parallel_source_texts.status == 'reviewed' ? 'bg-emerald-600' : 'bg-gold-600'} 
              text-btn-text mb-4 px-1 text-xs w-fit rounded-sm font-medium `}>
