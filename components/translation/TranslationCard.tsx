@@ -37,7 +37,7 @@ export const TranslationCard = ({
       dragConstraints={{ left: 0, right: 0 }}
       dragElastic={0.2}
       onDragEnd={handleDragEnd}
-      className="w-full mt-12 px-8"
+      className="w-full mt-12 px-8 min-h-screen"
     >
       <div className="space-y-4">
 
