@@ -69,12 +69,15 @@ export async function GET(request: Request) {
       .gte('created_at', today.toISOString());
 
 
-    const { data: recentTranslations, error } = await supabase
+    const query = supabase
       .from('translations')
       .select('*, source_texts(text_content)')
       .eq('translator', user.id)
       .order('created_at', { ascending: false })
-      .limit(3);
+    
+    if (limit != 0) query.limit(limit);
+
+    const { data: recentTranslations, error } = await query;
 
     return NextResponse.json({
       data: {

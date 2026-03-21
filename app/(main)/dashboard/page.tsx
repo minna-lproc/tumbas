@@ -51,7 +51,7 @@ export default function DashboardPage() {
     setLoading(true);
 
     try {
-      const response = await fetch(`/api/stats?role=${userProfile?.role}`);
+      const response = await fetch(`/api/stats?role=${userProfile?.role}&limit=3`);
       const data = await response.json();
 
       if (data.error) {
