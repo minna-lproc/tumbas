@@ -7,6 +7,10 @@ import { useReview } from '@/hooks/useReview'
 import { ReviewCard } from '@/components/review/ReviewCard';
 import type { SourceText } from '@/lib/types/translation';
 
+type TranslationProps = {
+  translation_id: number | 0,
+  translation_text: string | '',
+}
 
 export default function ReviewPage() {
   const router = useRouter();
@@ -15,7 +19,7 @@ export default function ReviewPage() {
     useReview();
   const [currentSourceText, setCurrentSourceText] = useState<SourceText | null>(null);
   const [translation, setTranslation] = useState('');
-  const [currentTranslation, setCurrentTranslation] = useState('');
+  const [currentTranslation, setCurrentTranslation] = useState<TranslationProps | null>(null);
   const [loading, setLoading] = useState(true);
 
 
@@ -35,19 +39,25 @@ export default function ReviewPage() {
   const loadNextText = async () => {
     setLoading(true);
     const nextText = await fetchNextTranslation(Number(userProfile?.source_language_id), Number(userProfile?.target_language_id));
+
+    const translationData: TranslationProps = {
+      translation_id: Number(nextText?.id) ?? 0,
+      translation_text:  nextText?.translation_text ?? ''
+    }
+
     setCurrentSourceText(nextText?.source_texts ?? null);
     setTranslation(nextText?.translation_text ?? '');
-    setCurrentTranslation(nextText?.translation_text ?? '');
+    setCurrentTranslation(translationData);
     setLoading(false);
   };
 
   const handleSubmit = async () => {
     if (!currentSourceText || !translation.trim()) return;
 
-    const hasModified = !(translation.trim() === currentTranslation);
+    const hasModified = !(translation.trim() === currentTranslation?.translation_text);
 
     try {
-      await submitReview(Number(currentSourceText.id), translation, hasModified);
+      await submitReview(Number(currentTranslation?.translation_id), translation, hasModified);
       // Optimistic update - load next text immediately
       await loadNextText();
     } catch (err) {

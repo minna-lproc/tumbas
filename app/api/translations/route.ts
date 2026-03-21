@@ -22,20 +22,20 @@ export async function GET(request: Request) {
         return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
       }
 
-      const {data, error: translationsError} = await supabase
-            .from('translations')
-            .select('*, source_texts(*)')
-            .eq('translator', user.id)
-            .order('created_at', { ascending: false });
+      const { data, error: translationsError } = await supabase
+        .from('translations')
+        .select('*, source_texts(*)')
+        .eq('translator', user.id)
+        .order('created_at', { ascending: false });
 
       if (translationsError) throw translationsError;
 
-      return NextResponse.json({ data, error: null }); 
+      return NextResponse.json({ data, error: null });
     }
 
     const query = supabase
       .from('translations')
-      .select('*, source_texts(*, parallel_source_texts(*))')
+      .select('*, source_texts!inner(*, parallel_source_texts!inner(*))')
       .eq('source_texts.parallel_source_texts.status', 'translated')
       .order('created_at', { ascending: false });
 
@@ -44,14 +44,11 @@ export async function GET(request: Request) {
 
     const { data, error: translationsError } = await query;
 
-    console.log(translationsError)
-    console.log(data)
-
     if (translationsError) throw translationsError;
 
-    const shuffled = data.sort(() => Math.random() - 0.5).slice(0, limit);
+    const random = data[Math.floor(Math.random() * data.length)];
 
-    return NextResponse.json({ shuffled, error: null });
+    return NextResponse.json({ shuffled: [random], error: null });
 
   } catch (error) {
 

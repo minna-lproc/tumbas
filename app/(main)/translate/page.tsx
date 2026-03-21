@@ -34,7 +34,6 @@ export default function TranslatePage() {
   const loadNextText = async () => {
     setLoading(true);
     const nextText = await fetchNextSourceText(Number(userProfile?.source_language_id));
-    console.log(nextText)
     setCurrentSourceText(nextText);
     setTranslation('');
     setLoading(false);
