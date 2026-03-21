@@ -9,7 +9,7 @@ export const useReview = () => {
   const [error, setError] = useState<string | null>(null);
 
   const submitReview = useCallback(
-    async (translationId: string, reviewText: string, hasModified: boolean) => {
+    async (translationId: number, reviewText: string, hasModified: boolean) => {
       setLoading(true);
       setError(null);
 

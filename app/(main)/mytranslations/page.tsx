@@ -4,28 +4,15 @@ import { useState, useEffect } from 'react';
 import { useRouter } from 'next/navigation';
 import { Search, ListFilterPlus } from 'lucide-react';
 import { formatDistanceToNow } from 'date-fns';
-import { RecentTranslations } from '@/components/dashboard/user/RecentTranslations';
 import { useAuth } from '@/hooks/useAuth';
 import { useTranslation } from '@/hooks/useTranslation';
-
-interface DashboardStats {
-    total_translations: number;
-    translations_today: number;
-    recent_translations: Array<{
-        translation_text: string;
-        created_at: string;
-        source_texts?: {
-            text_content: string;
-        };
-    }>;
-}
-
+import type { Translation } from '@/lib/types/translation';
 
 export default function MyTranslationsPage() {
 
     const router = useRouter();
     const { user, userProfile, loading: authLoading } = useAuth();
-    const [translations, setTranslations] = useState<DashboardStats | null>(null);
+    const [translations, setTranslations] = useState<Translation[]>([]);
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState(false);
 
@@ -53,7 +40,7 @@ export default function MyTranslationsPage() {
                 console.error('Failed to fetch translations:', data.error);
                 return;
             }
-            
+
             setTranslations(data.data.recent_stats);
             console.log(translations)
         } catch (error) {
@@ -88,10 +75,10 @@ export default function MyTranslationsPage() {
 
                     <div className='rounded-xl px-6 border border-border-gray w-full bg-input-bg'>
 
-                        {translations?.map((translation, index) => (
-                            <div key={index} className="border-b border-border-gray py-6 last:border-0 ">
+                        {translations.map((translation, index) => (
+                            <div key={index} className="border-b border-border-gray py-4 last:border-0 ">
                                 <p className="text-sm font-normal">
-                                    {translation.source_texts?.text_content || 'Source text'}
+                                    {translation.source_texts.text_content || 'Source text'}
                                 </p>
                                 <p className="mt-1 font-medium">{translation.translation_text}</p>
                                 <p className="mt-2 text-xs font-normal text-text-grey">

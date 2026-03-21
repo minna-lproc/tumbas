@@ -33,7 +33,7 @@ export default function TranslatePage() {
 
   const loadNextText = async () => {
     setLoading(true);
-    const nextText = await fetchNextSourceText(userProfile?.source_language);
+    const nextText = await fetchNextSourceText(Number(userProfile?.source_language));
     setCurrentSourceText(nextText);
     setTranslation('');
     setLoading(false);
@@ -43,7 +43,7 @@ export default function TranslatePage() {
     if (!currentSourceText || !translation.trim()) return;
 
     try {
-      await submitTranslation(currentSourceText.id, translation, userProfile?.target_language);
+      await submitTranslation(currentSourceText.id, translation, Number(userProfile?.target_language));
       // Optimistic update - load next text immediately
       await loadNextText();
     } catch (err) {

@@ -98,7 +98,7 @@ export async function POST(request: Request) {
   }
 }
 
-export async function PATCH(request: Request) {
+/*export async function PATCH(request: Request) {
   try {
     const supabase = await createServerSupabaseClient();
     const {
@@ -143,4 +143,4 @@ export async function PATCH(request: Request) {
       { status: 500 }
     );
   }
-}
+}*/

@@ -2,6 +2,12 @@ import { createServerSupabaseClient } from '@/lib/supabase/server';
 import { NextResponse } from 'next/server';
 import { z } from 'zod';
 
+type Payload = {
+    translation: any;
+    evaluator: string;
+    modified_translation?: string;
+};
+
 export async function GET(request: Request) {
 
     try {
@@ -71,7 +77,7 @@ export async function POST(request: Request) {
 
         const body = await request.json()
 
-        const payload = {
+        const payload: Payload = {
             translation: body.translation_id,
             evaluator: user.id,
         };
@@ -100,7 +106,7 @@ export async function POST(request: Request) {
     }
 }
 
-export async function PATCH(request: Request) {
+/*export async function PATCH(request: Request) {
     try {
         const supabase = await createServerSupabaseClient();
         const {
@@ -145,4 +151,4 @@ export async function PATCH(request: Request) {
             { status: 500 }
         );
     }
-}
+}*/

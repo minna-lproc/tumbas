@@ -5,7 +5,7 @@ import { useRouter } from 'next/navigation';
 import { useAuth } from '@/hooks/useAuth';
 import { useReview } from '@/hooks/useReview'
 import { ReviewCard } from '@/components/review/ReviewCard';
-import type { SourceText } from '@/lib/types/translation';
+import type { Translation } from '@/lib/types/translation';
 
 
 export default function ReviewPage() {
@@ -34,10 +34,10 @@ export default function ReviewPage() {
 
   const loadNextText = async () => {
     setLoading(true);
-    const nextText = await fetchNextTranslation(userProfile?.source_language, userProfile?.target_language);
+    const nextText = await fetchNextTranslation(Number(userProfile?.source_language), Number(userProfile?.target_language));
     setCurrentSourceText(nextText);
-    setTranslation(nextText?.translation_text);
-    setCurrentTranslation(nextText?.translation_text);
+    setTranslation(nextText?.translation_text ?? '');
+    setCurrentTranslation(nextText?.translation_text ?? '');
     setLoading(false);
   };
 
@@ -47,7 +47,7 @@ export default function ReviewPage() {
     const hasModified = !(translation.trim() === currentTranslation);
 
     try {
-      await submitReview(currentSourceText.id, translation, hasModified);
+      await submitReview(Number(currentSourceText.id), translation, hasModified);
       // Optimistic update - load next text immediately
       await loadNextText();
     } catch (err) {
@@ -93,7 +93,7 @@ export default function ReviewPage() {
           </div>
         )}
         <ReviewCard
-          sourceText={currentSourceText}
+          sourceText={currentSourceText.source_texts}
           translation={translation}
           onTranslationChange={setTranslation}
           onSubmit={handleSubmit}

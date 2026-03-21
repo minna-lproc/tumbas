@@ -5,27 +5,15 @@ import { Search, ListFilterPlus } from 'lucide-react';
 import { formatDistanceToNow } from 'date-fns';
 import { useRouter } from 'next/navigation';
 import { useAuth } from '@/hooks/useAuth';
-import { RecentTranslations } from '@/components/dashboard/user/RecentTranslations';
-import { mockUser, getRecentTranslations } from '@/lib/mock/data';
+import type { Review } from '@/lib/types/translation';
 
-interface DashboardStats {
-    total_translations: number;
-    translations_today: number;
-    recent_translations: Array<{
-        translation_text: string;
-        created_at: string;
-        source_texts?: {
-            text_content: string;
-        };
-    }>;
-}
 
 
 export default function MyReviewsPage() {
 
     const router = useRouter();
     const { user, userProfile, loading: authLoading } = useAuth();
-    const [reviews, setReviews] = useState<DashboardStats | null>(null);
+    const [reviews, setReviews] = useState<Review[]>([]);
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState(false);
 
@@ -108,14 +96,14 @@ export default function MyReviewsPage() {
 
                         {reviews.map((review, index) => (
                             <div key={index} className="border-b border-border-gray py-4 last:border-0 ">
-                                <p className={`${review.status == 'reviewed' ? 'bg-emerald-600' : 'bg-gold-600'} 
-                                         text-btn-text mb-4 px-1 text-xs w-fit rounded-sm font-medium `}>
-                                    {review.status == 'reviewed' ? 'Reviewed' : 'Modified'}
+                                <p className={`${review.translations.source_texts.parallel_source_texts.status == 'reviewed' ? 'bg-emerald-600' : 'bg-gold-600'} 
+             text-btn-text mb-4 px-1 text-xs w-fit rounded-sm font-medium `}>
+                                    {review.translations.source_texts.parallel_source_texts.status == 'reviewed' ? 'Reviewed' : 'Modified'}
                                 </p>
                                 <p className="text-sm font-normal">
-                                    {review.text_content || 'Source text'}
+                                    {review.translations.source_texts.text_content || 'Source text'}
                                 </p>
-                                <p className="mt-1 font-medium">{review.modified_translation ? review.modified_translation : review.translation_text}</p>
+                                <p className="mt-1 font-medium">{review.modified_translation ? review.modified_translation : review.translations.translation_text}</p>
                                 <p className="mt-2 text-xs font-normal text-text-grey">
                                     {formatDistanceToNow(new Date(review.created_at), { addSuffix: true })}
                                 </p>

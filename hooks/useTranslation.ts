@@ -9,7 +9,7 @@ export const useTranslation = () => {
   const [error, setError] = useState<string | null>(null);
 
   const submitTranslation = useCallback(
-    async (sourceTextId: string, translationText: string, dialect: string) => {
+    async (sourceTextId: number, translationText: string, dialect: number) => {
       setLoading(true);
       setError(null);
 

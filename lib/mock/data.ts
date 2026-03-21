@@ -1,4 +1,4 @@
-import type { Language, ParallelSourceText, SourceText, Translation } from '@/lib/types/translation';
+/*import type { Language, ParallelSourceText, SourceText, Translation } from '@/lib/types/translation';
 import type { User } from '@/lib/types/auth';
 import { id } from 'zod/locales';
 import { m } from 'framer-motion';
@@ -232,4 +232,4 @@ export const getRecentTranslations = () => {
           'Source text',
       },
     }));
-};
+};*/
