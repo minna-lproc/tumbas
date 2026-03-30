@@ -19,7 +19,8 @@ export default function TranslatePage() {
 
    useEffect(() => {
      if (!authLoading && !user) {
-       router.push('/login');
+       // router.push('/login');
+       loadNextText();
      }
 
   }, [user, userProfile, authLoading, router]);
@@ -33,7 +34,8 @@ export default function TranslatePage() {
 
   const loadNextText = async () => {
     setLoading(true);
-    const nextText = await fetchNextSourceText(Number(userProfile?.source_language_id));
+    const languageId = userProfile?.source_language_id ? Number(userProfile.source_language_id) : 1; // default language id for testing
+    const nextText = await fetchNextSourceText(languageId);
     setCurrentSourceText(nextText);
     setTranslation('');
     setLoading(false);

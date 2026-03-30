@@ -4,6 +4,7 @@ import { createServerSupabaseClient } from '@/lib/supabase/server';
 import { ThemeToggle } from '@/components/utils/ThemeToggle';
 import tumbas from '../assets/tumbas.png';
 import Nav from '@/components/utils/Nav';
+import Tutorial from '@/components/utils/Tutorial';
 
 export default async function MainLayout({
   children,
@@ -61,6 +62,9 @@ export default async function MainLayout({
           <Nav mobile={true} />
         </div>
       </nav>
+
+      <Tutorial />
+
     </div>
   );
 }

@@ -31,6 +31,8 @@ export const TranslationCard = ({
     }
   };
 
+  const isValidTranslation = translation.trim() && /^[A-Z]/.test(translation.trim()) && /[.!?]$/.test(translation.trim());
+
   return (
     <motion.div
       drag="x"
@@ -66,10 +68,10 @@ export const TranslationCard = ({
             Skip
           </motion.button>}
           <motion.button
-            whileHover={{ scale: !translation.trim() ? 1 : 1.02 }}
-            whileTap={{ scale: !translation.trim() ? 1 : 0.98 }}
+            whileHover={{ scale: !isValidTranslation ? 1 : 1.02 }}
+            whileTap={{ scale: !isValidTranslation ? 1 : 0.98 }}
             onClick={onSubmit}
-            disabled={!translation.trim() || loading}
+            disabled={!translation.trim() || !/[.!?]$/.test(translation.trim()) || loading}
             className="flex w-full min-w-12 items-center justify-center rounded-xl px-6 
       bg-btn hover:bg-btn-hover active:text-btn-active
       text-btn-text text-sm font-medium
@@ -86,6 +88,11 @@ export const TranslationCard = ({
             )}
           </motion.button>
         </div>
+        {!isValidTranslation && translation.trim() && (
+          <p className="text-center text-xs text-red-600">
+            Translation must start with a capital letter and end with a period (.), question mark (?), or exclamation mark (!).
+          </p>
+        )}
         <p className="text-center text-xs text-text-grey">
           Swipe right to skip • Tap to translate
         </p>

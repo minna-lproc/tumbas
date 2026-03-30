@@ -45,6 +45,11 @@ export default function LoginPage() {
 
       if (signInError) throw signInError;
       
+      // Start tutorial on login
+      if (typeof window !== 'undefined') {
+        sessionStorage.setItem('tutorialStarted', 'true');
+      }
+      
       router.push('/dashboard');
       router.refresh();
 

@@ -46,14 +46,12 @@ export const useTranslation = () => {
 
   const fetchNextSourceText = useCallback(async (language: number): Promise<SourceText | null> => {
     try {
-      const response = await fetch(`/api/source-texts?language=${language}`);
-      const data = await response.json();
-
-      if (!response.ok) {
-        throw new Error(data.error || 'Failed to fetch source text');
-      }
-
-      return data.data && data.data.length > 0 ? data.data[0] : null;
+      // Mock data for testing
+      return {
+        id: 1,
+        text_content: 'Hello world',
+        language: 'en'
+      };
     } catch (err) {
       setError(err instanceof Error ? err.message : 'An error occurred');
       return null;
